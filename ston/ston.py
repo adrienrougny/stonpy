@@ -7,7 +7,7 @@ from py2neo import Graph
 import ston.utils as utils
 import ston.converter as converter
 import ston.completer as completer
-from ston.ston_enum import STONEnum
+from ston.model import STONEnum
 
 class STON(object):
     def __init__(self, uri=None, user=None, password=None):
