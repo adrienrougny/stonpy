@@ -114,14 +114,24 @@ def complete_subgraph_with_relationship(
 
 def complete_subgraph_with_glyph_node(subgraph, node, completed, neograph):
     completed.add(node)
-    # BBOX
-    relationship = utils.match_one(
-        subgraph, (node,), STONEnum["HAS_BBOX"].value)
-    if relationship is None:
-        relationship = neograph.match_one((node,), STONEnum["HAS_BBOX"].value)
-    if relationship is not None:
-        subgraph |= relationship
-        subgraph |= relationship.end_node
+
+    # BBOX, COMPARTMENT
+    for name in ["HAS_BBOX", "IS_IN_COMPARTMENT"]:
+        relationship = utils.match_one(
+            subgraph, (node,), STONEnum[name].value)
+        if relationship is None:
+            relationship = neograph.match_one((node,), STONEnum[name].value)
+        if relationship is not None:
+            subglyph_node = relationship.end_node
+            subgraph |= relationship
+            subgraph |= subglyph_node
+            if name == "IS_IN_COMPARTMENT" and subglyph_node not in completed:
+                subgraph |= complete_subgraph_with_glyph_node(
+                    subgraph,
+                    subglyph_node,
+                    completed,
+                    neograph)
+
     # PORTs only of node is a process or a logical operator
     if node.has_label(STONEnum["STOICHIOMETRIC_PROCESS"].value) or \
             node.has_label(STONEnum["LOGICAL_OPERATOR"].value) or \
@@ -137,7 +147,8 @@ def complete_subgraph_with_glyph_node(subgraph, node, completed, neograph):
                     port_node,
                     completed,
                     neograph)
-    #STATE_VARIABLEs, UNIT_OF_INFORMATIONs, SUBUNITs, OUTCOMEs, TERMINALS
+
+    # STATE_VARIABLEs, UNIT_OF_INFORMATIONs, SUBUNITs, OUTCOMEs, TERMINALS
     for name in ["HAS_STATE_VARIABLE",
                  "HAS_UNIT_OF_INFORMATION",
                  "HAS_SUBUNIT", "HAS_OUTCOME",
@@ -153,6 +164,7 @@ def complete_subgraph_with_glyph_node(subgraph, node, completed, neograph):
                     subglyph_node,
                     completed,
                     neograph)
+
     # MAP
     relationship = utils.match_one(
         subgraph, (None, node), STONEnum["HAS_GLYPH"].value)
@@ -163,6 +175,7 @@ def complete_subgraph_with_glyph_node(subgraph, node, completed, neograph):
         sbgnmap = relationship.start_node
         subgraph |= relationship
         subgraph |= sbgnmap
+
     # STATE_VARIABLE, UNIT_OF_INFORMATION, SUBUNIT, OR OUTCOME OWNER
     for name in [
         "HAS_STATE_VARIABLE",
@@ -185,6 +198,7 @@ def complete_subgraph_with_glyph_node(subgraph, node, completed, neograph):
                 elif owner.has_label(STONEnum["ARC"].value):
                     subgraph |= complete_subgraph_with_arc_node(
                         subgraph, owner, completed, neograph)
+
     return subgraph
 
 
@@ -245,7 +259,6 @@ def complete_subgraph_with_bbox_node(subgraph, bbox_node, completed, neograph):
         if owner not in completed:
             subgraph |= complete_subgraph_with_glyph_node(
                 subgraph, owner, completed, neograph)
-    print_subgraph(subgraph)
     return subgraph
 
 

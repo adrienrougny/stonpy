@@ -1,8 +1,8 @@
 setup.py
-ston/all.py
-ston/completion.py
+ston/__init__.py
+ston/completer.py
 ston/converter.py
-ston/essai.py
+ston/model.py
 ston/ston.py
 ston/utils.py
 ston.egg-info/PKG-INFO

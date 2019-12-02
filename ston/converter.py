@@ -3,31 +3,34 @@ from py2neo import Database, Graph, Node, Relationship, Subgraph
 import libsbgnpy.libsbgn as libsbgn
 
 from ston.model import *
-import ston.utils
-
+import ston.utils as utils
 
 def map_to_subgraph(sbgnmap, map_id=None, make_shortcuts=True):
     dids = {}
     dpids = {}
     map_node = Node()
+
     map_node.add_label(STONEnum["MAP"].value)
     language = sbgnmap.get_language().value
     map_node[STONEnum["LANGUAGE"].value] = language
     map_node[STONEnum["MAP_ID"].value] = map_id
+
     subgraph = None
     for glyph in sbgnmap.get_glyph():
         if glyph.get_class().name == "COMPARTMENT":
             glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
-            subgraph = ston.utils.subgraph_union(subgraph, glyph_subgraph)
+            subgraph = utils.subgraph_union(subgraph, glyph_subgraph)
             dids[glyph.get_id()] = glyph_node
             subgraph |= Relationship(
                 map_node, STONEnum["HAS_GLYPH"].value, glyph_node)
+
     for glyph in sbgnmap.get_glyph():
         if glyph.get_class().name != "COMPARTMENT":
             glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
-            subgraph = ston.utils.subgraph_union(subgraph, glyph_subgraph)
+            subgraph = utils.subgraph_union(subgraph, glyph_subgraph)
             subgraph |= Relationship(
                 map_node, STONEnum["HAS_GLYPH"].value, glyph_node)
+
     for arc in sbgnmap.get_arc():
         if arc.get_class().name == "ASSIGNMENT" or \
                 arc.get_class().name == "INTERACTION":
@@ -36,6 +39,7 @@ def map_to_subgraph(sbgnmap, map_id=None, make_shortcuts=True):
             subgraph |= Relationship(
                 map_node, STONEnum["HAS_ARC"].value, arc_node)
             dids[arc.get_id()] = arc_node
+
     for arc in sbgnmap.get_arc():
         if arc.get_class().name != "ASSIGNMENT" and \
                 arc.get_class().name != "INTERACTION":
@@ -44,6 +48,7 @@ def map_to_subgraph(sbgnmap, map_id=None, make_shortcuts=True):
             subgraph |= arc_subgraph
             subgraph |= Relationship(
                 map_node, STONEnum["HAS_ARC"].value, arc_node)
+
     for arcgroup in sbgnmap.get_arcgroup():
         arcgroup_node, arcgroup_subgraph = _arcgroup_to_subgraph(
             arcgroup, dids, dpids, make_shortcuts)
@@ -52,10 +57,11 @@ def map_to_subgraph(sbgnmap, map_id=None, make_shortcuts=True):
             map_node,
             STONEnum["HAS_ARCGROUP"].value,
             arcgroup_node)
+
     return subgraph
 
 
-def _glyph_to_subgraph(glyph, dids, dpids, subunit=False):
+def _glyph_to_subgraph(glyph, dids, dpids, subunit=False, order=None):
     node = Node()
     subgraph = node
     ston_type = glyph.get_class().name
@@ -65,12 +71,18 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False):
         ston_type = "GENERIC_{}".format(ston_type)
     if subunit:
         ston_type = "{}_SUBUNIT".format(ston_type)
-    for onto_name in ONTOLOGIES:
-        if ston_type in ONTOLOGIES[onto_name]:
-            node.add_label(STONEnum[onto_name].value)
+
+    for ontology in Ontologies:
+        if ston_type in ontology.value:
+            node.add_label(STONEnum[ontology.name].value)
     node.add_label(STONEnum[ston_type].value)
+
     node[STONEnum["CLASS"].value] = glyph.get_class().value
     node[STONEnum["ID"].value] = glyph.get_id()
+
+    if order is not None:
+        node[STONEnum["ORDER"].value] = order
+
     if glyph.get_label():
         label = glyph.get_label().get_text()
         if ston_type == "UNIT_OF_INFORMATION":
@@ -81,6 +93,7 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False):
                 node[STONEnum["VALUE"].value] = label
         else:
             node[STONEnum["LABEL"].value] = label
+
     if glyph.get_clone():
         node[STONEnum["CLONE"].value] = True
         if glyph.get_clone().get_label():
@@ -89,6 +102,7 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False):
                         glyph.get_clone().get_label().get_text()
     else:
         node[STONEnum["CLONE"].value] = False
+
     if glyph.get_compartmentRef():
         node[STONEnum["COMPARTMENT_ORDER"].value] = \
                 glyph.get_compartmentOrder()
@@ -97,13 +111,17 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False):
                                          STONEnum["IS_IN_COMPARTMENT"].value,
                                          dids[glyph.get_compartmentRef()])
         subgraph |= is_in_compartment
+
     if glyph.get_bbox():
-        bbox_node = _bbox_to_node(glyph.get_bbox())
+        bbox = glyph.get_bbox()
+        bbox_node = _bbox_to_node(bbox)
         subgraph |= bbox_node
         has_bbox = Relationship(node, STONEnum["HAS_BBOX"].value, bbox_node)
         subgraph |= has_bbox
+
     if glyph.orientation:
         node[STONEnum["ORIENTATION"].value] = glyph.orientation
+
     if glyph.get_state():
         value = glyph.get_state().get_value()
         if value == "":
@@ -115,15 +133,49 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False):
         node[STONEnum["VARIABLE"].value] = variable
     if glyph.get_entity():
         node[STONEnum["UI_TYPE"].value] = glyph.get_entity().name
+
+    # If the glyph and all its svs have a bbox, we order the svs following
+    # their angular placement on the border of the glyph (counter clock-wise).
+    # This is useful when multiple svs have undefined variables.
+    # If the glyph or one of the svs do not have a bbox, we do not order the
+    # svs.
+    svs = []
+    bbox = glyph.get_bbox()
+    all_bbox = bbox is not None
     for subglyph in glyph.get_glyph():
         sub_ston_type = subglyph.get_class().name
+        if sub_ston_type == "STATE_VARIABLE":
+            if subglyph.get_bbox() is None:
+                all_bbox = False
+            svs.append(subglyph)
+    if all_bbox:
+        center = (bbox.get_x() + bbox.get_w() / 2,
+                bbox.get_y() + bbox.get_h() / 2)
+        svs = sorted(svs, key = lambda g: utils.atan2pi(
+                -(g.get_bbox().get_y() + g.get_bbox().get_h() / 2 - center[1]),
+                g.get_bbox().get_x() + g.get_bbox().get_w() / 2 - center[0]))
+    for i, subglyph in enumerate(svs):
+        if all_bbox:
+            order = i
+        else:
+            order = None
+        subglyph_node, subglyph_subgraph = _glyph_to_subgraph(
+                subglyph, dids, dpids, subunit = False, order = order)
+        subgraph |= subglyph_subgraph
+        dids[subglyph.get_id()] = subglyph_node
+        subgraph |= Relationship(
+            node, STONEnum["HAS_STATE_VARIABLE"].value, subglyph_node)
+
+    for subglyph in glyph.get_glyph() + svs:
+        sub_ston_type = subglyph.get_class().name
         if sub_ston_type == "UNIT_OF_INFORMATION" or \
-                sub_ston_type == "STATE_VARIABLE" or \
                 sub_ston_type == "TERMINAL" or \
                 sub_ston_type == "OUTCOME":
             subglyph_node, subglyph_subgraph = _glyph_to_subgraph(
                 subglyph, dids, dpids)
             r_type = "HAS_{}".format(sub_ston_type)
+        elif sub_ston_type == "STATE_VARIABLE":
+            continue
         else:
             subglyph_node, subglyph_subgraph = _glyph_to_subgraph(
                 subglyph, dids, dpids, subunit = True)
@@ -132,6 +184,7 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False):
         dids[subglyph.get_id()] = subglyph_node
         subgraph |= Relationship(
             node, STONEnum[r_type].value, subglyph_node)
+
     for port in glyph.get_port():
         port_node = _port_to_node(port)
         subgraph |= port_node
@@ -139,6 +192,7 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False):
         dids[port.get_id()] = port_node
         dpids[port.get_id()] = node
     dids[glyph.get_id()] = node
+
     return node, subgraph
 
 
@@ -164,17 +218,21 @@ def _port_to_node(port):
 def _arc_to_subgraph(arc, dids, dpids, make_shortcuts=True):
     node = Node()
     subgraph = node
+
     ston_type = arc.get_class().name
-    for onto_name in ONTOLOGIES:
-        if ston_type in ONTOLOGIES[onto_name]:
-            node.add_label(STONEnum[onto_name].value)
+    for ontology in Ontologies:
+        if ston_type in ontology.value:
+            node.add_label(STONEnum[ontology.name].value)
     node.add_label(STONEnum[ston_type].value)
+
     node[STONEnum["CLASS"].value] = arc.get_class().value
     node[STONEnum["ID"].value] = arc.get_id()
+
     source = dids[arc.get_source()]
     subgraph |= Relationship(node, STONEnum["HAS_SOURCE"].value, source)
     target = dids[arc.get_target()]
     subgraph |= Relationship(node, STONEnum["HAS_TARGET"].value, target)
+
     start = Node()
     start.add_label(STONEnum["START"].value)
     start[STONEnum["X"].value] = arc.get_start().get_x()
@@ -201,21 +259,26 @@ def _arc_to_subgraph(arc, dids, dpids, make_shortcuts=True):
         prev_node = next_node
     if prev_node != start:
         subgraph |= Relationship(prev_node, STONEnum["HAS_NEXT"].value, end)
+
+    cardinality = None
     for glyph in arc.get_glyph():
         glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
         subgraph |= glyph_subgraph
         if glyph.get_class().name == "CARDINALITY":
             subgraph |= Relationship(
                 node, STONEnum["HAS_CARDINALITY"].value, glyph_node)
+            cardinality = glyph.get_label().get_text()
         elif glyph.get_class().name == "OUTCOME":
             subgraph |= Relationship(
                 node, STONEnum["HAS_OUTCOME"].value, glyph_node)
+
     for port in arc.get_port():
         port_node = _port_to_node(port)
         subgraph |= port_node
         subgraph |= Relationship(node, STONEnum["HAS_PORT"].value, port_node)
         dids[port.get_id()] = port_node
         dpids[port.get_id()] = node
+
     if make_shortcuts:
         if "{}_{}".format(ston_type, "SHORTCUT") in \
                 [attr.name for attr in STONEnum]:
@@ -229,12 +292,24 @@ def _arc_to_subgraph(arc, dids, dpids, make_shortcuts=True):
                 target_node = dpids[target_id]
             else:
                 target_node = dids[target_id]
+            if cardinality is not None:
+                props = {STONEnum["CARDINALITY_PROP"].value: cardinality}
+            else:
+                props = {}
             if ston_type == "CONSUMPTION" or \
                     ston_type == "LOGIC_ARC" or \
                     ston_type == "EQUIVALENCE_ARC":
-                subgraph |= Relationship(target_node, STONEnum["{}_{}".format(ston_type, "SHORTCUT")].value, source_node)
+                left_node = target_node
+                right_node = source_node
             else:
-                subgraph |= Relationship(source_node, STONEnum["{}_{}".format(ston_type, "SHORTCUT")].value, target_node)
+                left_node = source_node
+                right_node = target_node
+
+            subgraph |= Relationship(
+                    left_node,
+                    STONEnum["{}_{}".format(ston_type, "SHORTCUT")].value,
+                    right_node,
+                    **props)
     return node, subgraph
 
 
@@ -247,10 +322,11 @@ def _arcgroup_to_subgraph(arcgroup, dids, dpids, make_shortcuts=True):
         ston_type = arcgroup.get_class().name
     if ston_type == "INTERACTION":
         ston_type = "{}_ARCGROUP".format(ston_type)
-    for onto_name in ONTOLOGIES:
-        if ston_type in ONTOLOGIES[onto_name]:
-            node.add_label(STONEnum[onto_name].value)
+    for ontology in Ontologies:
+        if ston_type in ontology.value:
+            node.add_label(STONEnum[ontology.name].value)
     node.add_label(STONEnum[ston_type].value)
+
     if ston_type == "INTERACTION_ARCGROUP":  # class interaction is just a string for arcgroups
         node[STONEnum["CLASS"].value] = arcgroup.get_class()
     else:
@@ -342,8 +418,8 @@ def subgraph_to_map(subgraph):
         elif rtype == STONEnum["HAS_ARCGROUP"].value:
             dobjects[relationship.start_node].add_arcgroup(
                 dobjects[relationship.end_node])
-    return sbgnmaps
-
+    for sbgnmap in sbgnmaps:
+        yield sbgnmap
 
 def _glyph_from_node(node):
     glyph = libsbgn.glyph()

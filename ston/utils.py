@@ -1,3 +1,5 @@
+from math import atan2, pi
+
 import libsbgnpy.libsbgn as libsbgn
 
 from py2neo import NodeMatcher, RelationshipMatcher
@@ -153,3 +155,57 @@ def node_to_cypher(node, name=None):
         props = ""
     s = "({}{}{})".format(name, labels, props)
     return s
+
+def map_to_top_left(sbgnmap):
+
+    def _find_mins(sbgnmap):
+        min_x = None
+        min_y = None
+        for glyph in sbgnmap.get_glyph():
+            bbox = glyph.get_bbox()
+            if bbox is not None:
+                if min_x is None or bbox.get_x() < min_x:
+                    min_x = bbox.get_x()
+                if min_y is None or bbox.get_y() < min_y:
+                    min_y = bbox.get_y()
+            for subglyph in glyph.get_glyph():
+                bbox = subglyph.get_bbox()
+                if min_x is None or bbox.get_x() < min_x:
+                    min_x = bbox.get_x()
+                if min_y is None or bbox.get_y() < min_y:
+                    min_y = bbox.get_y()
+        return min_x, min_y
+
+    def _glyph_to_top_left(glyph, min_x, min_y):
+        bbox = glyph.get_bbox()
+        if bbox is not None:
+            bbox.set_x(bbox.get_x() - min_x)
+            bbox.set_y(bbox.get_y() - min_y)
+        for subglyph in glyph.get_glyph():
+            _glyph_to_top_left(subglyph, min_x, min_y)
+
+    def _arc_to_top_left(arc, min_x, min_y):
+        points = [arc.get_start(), arc.get_end()] + arc.get_next()
+        for point in points:
+            point.set_x(point.get_x() - min_x)
+            point.set_y(point.get_y() - min_y)
+
+    def _arcgroup_to_top_left(arcgroup, min_x, min_y):
+        for glyph in arcgroup.get_glyph():
+            _glyph_to_top_left(glyph, min_x, min_y)
+        for arc in arcgroup.get_arc():
+            _arc_to_top_left(arc, min_x, min_y)
+
+    min_x, min_y = _find_mins(sbgnmap)
+    for glyph in sbgnmap.get_glyph():
+        _glyph_to_top_left(glyph, min_x, min_y)
+    for arc in sbgnmap.get_arc():
+        _arc_to_top_left(arc, min_x, min_y)
+    for arcgroup in sbgnmap.get_arcgroup():
+        _arcgroup_to_top_left(arcgroup, min_x, min_y)
+
+def atan2pi(y, x):
+    a = atan2(y, x)
+    if a < 0:
+        a = a + 2 * pi
+    return a
