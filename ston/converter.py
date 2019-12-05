@@ -5,18 +5,30 @@ import libsbgnpy.libsbgn as libsbgn
 from ston.model import *
 import ston.utils as utils
 
-def map_to_subgraph(sbgnmap, map_id=None, make_shortcuts=True):
+def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
+    """Converts an SBGN map to a subgraph and returns it.
+
+    :param sbgn_map: the SBGN map
+    :type sbgn_map: `libsbgnpy.libsbgn.map`
+    :param map_id: the ID of the SBGN map, default is `None`
+    :type map_id: `str`, optional
+    :param make_shortcuts: if set to `True`, \
+            shortcut relationships will be added. Defaults to `True`.
+    :type make_shortcuts: `bool`, optional
+    :return: the resulting subgraph
+    :rtype: `py2neo.Subgraph`
+    """
     dids = {}
     dpids = {}
     map_node = Node()
 
     map_node.add_label(STONEnum["MAP"].value)
-    language = sbgnmap.get_language().value
+    language = sbgn_map.get_language().value
     map_node[STONEnum["LANGUAGE"].value] = language
     map_node[STONEnum["MAP_ID"].value] = map_id
 
     subgraph = None
-    for glyph in sbgnmap.get_glyph():
+    for glyph in sbgn_map.get_glyph():
         if glyph.get_class().name == "COMPARTMENT":
             glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
             subgraph = utils.subgraph_union(subgraph, glyph_subgraph)
@@ -24,14 +36,14 @@ def map_to_subgraph(sbgnmap, map_id=None, make_shortcuts=True):
             subgraph |= Relationship(
                 map_node, STONEnum["HAS_GLYPH"].value, glyph_node)
 
-    for glyph in sbgnmap.get_glyph():
+    for glyph in sbgn_map.get_glyph():
         if glyph.get_class().name != "COMPARTMENT":
             glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
             subgraph = utils.subgraph_union(subgraph, glyph_subgraph)
             subgraph |= Relationship(
                 map_node, STONEnum["HAS_GLYPH"].value, glyph_node)
 
-    for arc in sbgnmap.get_arc():
+    for arc in sbgn_map.get_arc():
         if arc.get_class().name == "ASSIGNMENT" or \
                 arc.get_class().name == "INTERACTION":
             arc_node, arc_subgraph = _arc_to_subgraph(arc, dids, dpids)
@@ -40,7 +52,7 @@ def map_to_subgraph(sbgnmap, map_id=None, make_shortcuts=True):
                 map_node, STONEnum["HAS_ARC"].value, arc_node)
             dids[arc.get_id()] = arc_node
 
-    for arc in sbgnmap.get_arc():
+    for arc in sbgn_map.get_arc():
         if arc.get_class().name != "ASSIGNMENT" and \
                 arc.get_class().name != "INTERACTION":
             arc_node, arc_subgraph = _arc_to_subgraph(
@@ -49,7 +61,7 @@ def map_to_subgraph(sbgnmap, map_id=None, make_shortcuts=True):
             subgraph |= Relationship(
                 map_node, STONEnum["HAS_ARC"].value, arc_node)
 
-    for arcgroup in sbgnmap.get_arcgroup():
+    for arcgroup in sbgn_map.get_arcgroup():
         arcgroup_node, arcgroup_subgraph = _arcgroup_to_subgraph(
             arcgroup, dids, dpids, make_shortcuts)
         subgraph |= arcgroup_subgraph
@@ -299,16 +311,16 @@ def _arc_to_subgraph(arc, dids, dpids, make_shortcuts=True):
             if ston_type == "CONSUMPTION" or \
                     ston_type == "LOGIC_ARC" or \
                     ston_type == "EQUIVALENCE_ARC":
-                left_node = target_node
-                right_node = source_node
+                start_node = target_node
+                end_node = source_node
             else:
-                left_node = source_node
-                right_node = target_node
+                start_node = source_node
+                end_node = target_node
 
             subgraph |= Relationship(
-                    left_node,
+                    start_node,
                     STONEnum["{}_{}".format(ston_type, "SHORTCUT")].value,
-                    right_node,
+                    end_node,
                     **props)
     return node, subgraph
 
@@ -344,18 +356,25 @@ def _arcgroup_to_subgraph(arcgroup, dids, dpids, make_shortcuts=True):
 
 
 def subgraph_to_map(subgraph):
+    """Converts a subgraph to zero or more SBGN maps and returns them.
+
+    :param subgraph: the subgraph
+    :type subgraph: `py2neo.Subgraph`
+    :return: the resulting SBGN maps, under the form of a generator. Each returned element is a tuple of the form (map, map_id).
+    :rtype: `Iterator[(`libsbgnpy.libsbgn.map`, `str`)]`
+    """
     dobjects = {}
-    sbgnmaps = set([])
+    sbgn_maps = set([])
     if subgraph is None:
-        return sbgnmaps
+        return sbgn_maps
     for node in subgraph.nodes:
         if node.has_label(STONEnum["MAP"].value):
-            sbgnmap = libsbgn.map()
+            sbgn_map = libsbgn.map()
             language = node[STONEnum["LANGUAGE"].value]
             map_id = node[STONEnum["ID"].value]
-            sbgnmap.set_language(libsbgn.Language(language))
-            sbgnmaps.add((sbgnmap, map_id))
-            dobjects[node] = sbgnmap
+            sbgn_map.set_language(libsbgn.Language(language))
+            sbgn_maps.add((sbgn_map, map_id))
+            dobjects[node] = sbgn_map
         if node.has_label(STONEnum["BBOX"].value):
             bbox = _bbox_from_node(node)
             dobjects[node] = bbox
@@ -418,8 +437,8 @@ def subgraph_to_map(subgraph):
         elif rtype == STONEnum["HAS_ARCGROUP"].value:
             dobjects[relationship.start_node].add_arcgroup(
                 dobjects[relationship.end_node])
-    for sbgnmap in sbgnmaps:
-        yield sbgnmap
+    for sbgn_map in sbgn_maps:
+        yield sbgn_map
 
 def _glyph_from_node(node):
     glyph = libsbgn.glyph()

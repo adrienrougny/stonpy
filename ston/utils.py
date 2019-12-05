@@ -50,21 +50,20 @@ def print_subgraph(subgraph):
     for r in subgraph.relationships:
         print(r)
 
-def map_to_sbgnfile(sbgnmap, sbgnfile):
+def map_to_sbgn_file(sbgnmap, sbgn_file):
     sbgn = libsbgn.sbgn()
     sbgn.set_map(sbgnmap)
-    sbgn.write_file(sbgnfile)
-    with open(sbgnfile) as f:
+    sbgn.write_file(sbgn_file)
+    with open(sbgn_file) as f:
         s = f.read()
         s = s.replace("sbgn:","")
         s = s.replace(' xmlns:sbgn="http://sbgn.org/libsbgn/0.2"', "")
         s = s.replace('."', '.0"')
-    with open(sbgnfile, 'w') as f:
+    with open(sbgn_file, 'w') as f:
         f.write(s)
-    print("Written map to {}".format(sbgnfile))
 
-def sbgnfile_to_map(sbgnfile):
-    sbgn = libsbgn.parse(sbgnfile, silence = True)
+def sbgn_file_to_map(sbgn_file):
+    sbgn = libsbgn.parse(sbgn_file, silence = True)
     sbgnmap = sbgn.get_map()
     return sbgnmap
 

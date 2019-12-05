@@ -1,0 +1,1165 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>ston package &#8212; pyston 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="ston-package">
+<h1>ston package<a class="headerlink" href="#ston-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ston.completer">
+<span id="ston-completer-module"></span><h2>ston.completer module<a class="headerlink" href="#module-ston.completer" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ston.completer.complete_subgraph">
+<code class="sig-prename descclassname">ston.completer.</code><code class="sig-name descname">complete_subgraph</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">neograph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.completer.complete_subgraph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.completer.complete_subgraph_with_arc_node">
+<code class="sig-prename descclassname">ston.completer.</code><code class="sig-name descname">complete_subgraph_with_arc_node</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">node</em>, <em class="sig-param">completed</em>, <em class="sig-param">neograph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.completer.complete_subgraph_with_arc_node" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.completer.complete_subgraph_with_arcgroup_node">
+<code class="sig-prename descclassname">ston.completer.</code><code class="sig-name descname">complete_subgraph_with_arcgroup_node</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">node</em>, <em class="sig-param">completed</em>, <em class="sig-param">neograph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.completer.complete_subgraph_with_arcgroup_node" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.completer.complete_subgraph_with_bbox_node">
+<code class="sig-prename descclassname">ston.completer.</code><code class="sig-name descname">complete_subgraph_with_bbox_node</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">bbox_node</em>, <em class="sig-param">completed</em>, <em class="sig-param">neograph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.completer.complete_subgraph_with_bbox_node" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.completer.complete_subgraph_with_glyph_node">
+<code class="sig-prename descclassname">ston.completer.</code><code class="sig-name descname">complete_subgraph_with_glyph_node</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">node</em>, <em class="sig-param">completed</em>, <em class="sig-param">neograph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.completer.complete_subgraph_with_glyph_node" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.completer.complete_subgraph_with_map_node">
+<code class="sig-prename descclassname">ston.completer.</code><code class="sig-name descname">complete_subgraph_with_map_node</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">node</em>, <em class="sig-param">completed</em>, <em class="sig-param">neograph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.completer.complete_subgraph_with_map_node" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.completer.complete_subgraph_with_port_node">
+<code class="sig-prename descclassname">ston.completer.</code><code class="sig-name descname">complete_subgraph_with_port_node</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">port_node</em>, <em class="sig-param">completed</em>, <em class="sig-param">neograph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.completer.complete_subgraph_with_port_node" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.completer.complete_subgraph_with_relationship">
+<code class="sig-prename descclassname">ston.completer.</code><code class="sig-name descname">complete_subgraph_with_relationship</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">relationship</em>, <em class="sig-param">completed</em>, <em class="sig-param">neograph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.completer.complete_subgraph_with_relationship" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-ston.converter">
+<span id="ston-converter-module"></span><h2>ston.converter module<a class="headerlink" href="#module-ston.converter" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ston.converter.map_to_subgraph">
+<code class="sig-prename descclassname">ston.converter.</code><code class="sig-name descname">map_to_subgraph</code><span class="sig-paren">(</span><em class="sig-param">sbgnmap</em>, <em class="sig-param">map_id=None</em>, <em class="sig-param">make_shortcuts=True</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.converter.map_to_subgraph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.converter.subgraph_to_map">
+<code class="sig-prename descclassname">ston.converter.</code><code class="sig-name descname">subgraph_to_map</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.converter.subgraph_to_map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-ston.model">
+<span id="ston-model-module"></span><h2>ston.model module<a class="headerlink" href="#module-ston.model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ston.model.Ontologies">
+<em class="property">class </em><code class="sig-prename descclassname">ston.model.</code><code class="sig-name descname">Ontologies</code><a class="headerlink" href="#ston.model.Ontologies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="attribute">
+<dt id="ston.model.Ontologies.ACTIVITY">
+<code class="sig-name descname">ACTIVITY</code><em class="property"> = {'BIOLOGICAL_ACTIVITY', 'PHENOTYPE'}</em><a class="headerlink" href="#ston.model.Ontologies.ACTIVITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.ARC">
+<code class="sig-name descname">ARC</code><em class="property"> = {'ABOSLUTE_INHIBITION', 'ABSOLUTE_STIMULATION', 'ASSIGNMENT', 'CATALYSIS', 'CONSUMPTION', 'EQUIVALENCE_ARC', 'INHIBITION', 'INTERACTION', 'LOGIC_ARC', 'MODULATION', 'NECESSARY_STIMULATION', 'NEGATIVE_INFLUENCE', 'POSITIVE_INFLUENCE', 'PRODUCTION', 'STIMULATION', 'UNKNOWN_INFLUENCE'}</em><a class="headerlink" href="#ston.model.Ontologies.ARC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.ARCGROUP">
+<code class="sig-name descname">ARCGROUP</code><em class="property"> = {'INTERACTION_ARCGROUP'}</em><a class="headerlink" href="#ston.model.Ontologies.ARCGROUP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.AUXILLIARY_UNIT">
+<code class="sig-name descname">AUXILLIARY_UNIT</code><em class="property"> = {'CARDINALITY', 'COMPLEX_MULTIMER_SUBUNIT', 'COMPLEX_SUBUNIT', 'MACROMOLECULE_MULTIMER_SUBUNIT', 'MACROMOLECULE_SUBUNIT', 'NUCLEIC_ACID_FEATURE_MULTIMER_SUBUNIT', 'NUCLEIC_ACID_FEATURE_SUBUNIT', 'PHENOTYPE_SUBUNIT', 'SIMPLE_CHEMICAL_MULTIMER_SUBUNIT', 'SIMPLE_CHEMICAL_SUBUNIT', 'STATE_VARIABLE', 'TERMINAL', 'UNIT_OF_INFORMATION', 'UNSPECIFIED_ENTITY_SUBUNIT'}</em><a class="headerlink" href="#ston.model.Ontologies.AUXILLIARY_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.EPN">
+<code class="sig-name descname">EPN</code><em class="property"> = {'COMPLEX', 'COMPLEX_MULTIMER', 'MACROMOLECULE', 'MACROMOLECULE_MULTIMER', 'NUCLEIC_ACID_FEATURE', 'NUCLEIC_ACID_FEATURE_MULTIMER', 'PERTURBING_AGENT', 'SIMPLE_CHEMICAL', 'SIMPLE_CHEMICAL_MULTIMER', 'SOURCE_AND_SINK', 'UNSPECIFIED_ENTITY'}</em><a class="headerlink" href="#ston.model.Ontologies.EPN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.FLUX_ARC">
+<code class="sig-name descname">FLUX_ARC</code><em class="property"> = {'CONSUMPTION', 'PRODUCTION'}</em><a class="headerlink" href="#ston.model.Ontologies.FLUX_ARC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.GLYPH">
+<code class="sig-name descname">GLYPH</code><em class="property"> = {'AND', 'ASSOCIATION', 'BIOLOGICAL_ACTIVITY', 'CARDINALITY', 'COMPARTMENT', 'COMPLEX', 'COMPLEX_MULTIMER', 'COMPLEX_MULTIMER_SUBUNIT', 'COMPLEX_SUBUNIT', 'DELAY', 'DISSOCIATION', 'ENTITY', 'EQUIVALENCE', 'GENERIC_PROCESS', 'INTERACTION_NODE', 'MACROMOLECULE', 'MACROMOLECULE_MULTIMER', 'MACROMOLECULE_MULTIMER_SUBUNIT', 'MACROMOLECULE_SUBUNIT', 'NOT', 'NUCLEIC_ACID_FEATURE', 'NUCLEIC_ACID_FEATURE_MULTIMER', 'NUCLEIC_ACID_FEATURE_MULTIMER_SUBUNIT', 'NUCLEIC_ACID_FEATURE_SUBUNIT', 'OMITTED_PROCESS', 'OR', 'OUTCOME', 'PERTURBING_AGENT', 'PHENOTYPE', 'PHENOTYPE_SUBUNIT', 'SIMPLE_CHEMICAL', 'SIMPLE_CHEMICAL_MULTIMER', 'SIMPLE_CHEMICAL_MULTIMER_SUBUNIT', 'SIMPLE_CHEMICAL_SUBUNIT', 'SOURCE_AND_SINK', 'STATE_VARIABLE', 'SUBMAP', 'TAG', 'TERMINAL', 'UNCERTAIN_PROCESS', 'UNIT_OF_INFORMATION', 'UNSPECIFIED_ENTITY', 'UNSPECIFIED_ENTITY_SUBUNIT', 'VARIABLE_VALUE'}</em><a class="headerlink" href="#ston.model.Ontologies.GLYPH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.INFLUENCE">
+<code class="sig-name descname">INFLUENCE</code><em class="property"> = {'NEGATIVE_INFLUENCE', 'POSITIVE_INFLUENCE', 'UNKNOWN_INFLUENCE'}</em><a class="headerlink" href="#ston.model.Ontologies.INFLUENCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.INHIBITION">
+<code class="sig-name descname">INHIBITION</code><em class="property"> = {'ABOSLUTE_INHIBITION', 'INHIBITION'}</em><a class="headerlink" href="#ston.model.Ontologies.INHIBITION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.LOGICAL_OPERATOR">
+<code class="sig-name descname">LOGICAL_OPERATOR</code><em class="property"> = {'AND', 'DELAY', 'NOT', 'OR'}</em><a class="headerlink" href="#ston.model.Ontologies.LOGICAL_OPERATOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.MODULATION">
+<code class="sig-name descname">MODULATION</code><em class="property"> = {'ABOSLUTE_INHIBITION', 'ABSOLUTE_STIMULATION', 'CATALYSIS', 'INHIBITION', 'MODULATION', 'NECESSARY_STIMULATION', 'STIMULATION'}</em><a class="headerlink" href="#ston.model.Ontologies.MODULATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.MULTIMER">
+<code class="sig-name descname">MULTIMER</code><em class="property"> = {'COMPLEX_MULTIMER', 'MACROMOLECULE_MULTIMER', 'NUCLEIC_ACID_FEATURE_MULTIMER', 'SIMPLE_CHEMICAL_MULTIMER'}</em><a class="headerlink" href="#ston.model.Ontologies.MULTIMER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.PROCESS">
+<code class="sig-name descname">PROCESS</code><em class="property"> = {'ASSOCIATION', 'DISSOCIATION', 'GENERIC_PROCESS', 'OMITTED_PROCESS', 'PHENOTYPE', 'UNCERTAIN_PROCESS'}</em><a class="headerlink" href="#ston.model.Ontologies.PROCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.STIMULATION">
+<code class="sig-name descname">STIMULATION</code><em class="property"> = {'ABSOLUTE_STIMULATION', 'CATALYSIS', 'NECESSARY_STIMULATION', 'STIMULATION'}</em><a class="headerlink" href="#ston.model.Ontologies.STIMULATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.STOICHIOMETRIC_PROCESS">
+<code class="sig-name descname">STOICHIOMETRIC_PROCESS</code><em class="property"> = {'ASSOCIATION', 'DISSOCIATION', 'GENERIC_PROCESS', 'OMITTED_PROCESS', 'UNCERTAIN_PROCESS'}</em><a class="headerlink" href="#ston.model.Ontologies.STOICHIOMETRIC_PROCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.Ontologies.SUBUNIT">
+<code class="sig-name descname">SUBUNIT</code><em class="property"> = {'COMPLEX_MULTIMER_SUBUNIT', 'COMPLEX_SUBUNIT', 'MACROMOLECULE_MULTIMER_SUBUNIT', 'MACROMOLECULE_SUBUNIT', 'NUCLEIC_ACID_FEATURE_MULTIMER_SUBUNIT', 'NUCLEIC_ACID_FEATURE_SUBUNIT', 'PHENOTYPE_SUBUNIT', 'SIMPLE_CHEMICAL_MULTIMER_SUBUNIT', 'SIMPLE_CHEMICAL_SUBUNIT', 'UNIT_OF_INFORMATION', 'UNSPECIFIED_ENTITY_SUBUNIT'}</em><a class="headerlink" href="#ston.model.Ontologies.SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ston.model.STONEnum">
+<em class="property">class </em><code class="sig-prename descclassname">ston.model.</code><code class="sig-name descname">STONEnum</code><a class="headerlink" href="#ston.model.STONEnum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>The Enum for the labels, relationship types and properties names used
+in STON’s neo4j database.</p>
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ABSOLUTE_INHIBITION">
+<code class="sig-name descname">ABSOLUTE_INHIBITION</code><em class="property"> = 'AsboluteInhibition'</em><a class="headerlink" href="#ston.model.STONEnum.ABSOLUTE_INHIBITION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ABSOLUTE_STIMULATION">
+<code class="sig-name descname">ABSOLUTE_STIMULATION</code><em class="property"> = 'AsboluteStimulation'</em><a class="headerlink" href="#ston.model.STONEnum.ABSOLUTE_STIMULATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ACTIVITY">
+<code class="sig-name descname">ACTIVITY</code><em class="property"> = 'Activity'</em><a class="headerlink" href="#ston.model.STONEnum.ACTIVITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.AND">
+<code class="sig-name descname">AND</code><em class="property"> = 'AndOperator'</em><a class="headerlink" href="#ston.model.STONEnum.AND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ARC">
+<code class="sig-name descname">ARC</code><em class="property"> = 'Arc'</em><a class="headerlink" href="#ston.model.STONEnum.ARC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ARCGROUP">
+<code class="sig-name descname">ARCGROUP</code><em class="property"> = 'Arcgroup'</em><a class="headerlink" href="#ston.model.STONEnum.ARCGROUP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ASSIGNMENT">
+<code class="sig-name descname">ASSIGNMENT</code><em class="property"> = 'Assignment'</em><a class="headerlink" href="#ston.model.STONEnum.ASSIGNMENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ASSIGNMENT_SHORTCUT">
+<code class="sig-name descname">ASSIGNMENT_SHORTCUT</code><em class="property"> = 'IS_ASSIGNED_TO'</em><a class="headerlink" href="#ston.model.STONEnum.ASSIGNMENT_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ASSOCIATION">
+<code class="sig-name descname">ASSOCIATION</code><em class="property"> = 'Association'</em><a class="headerlink" href="#ston.model.STONEnum.ASSOCIATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.AUXILLIARY_UNIT">
+<code class="sig-name descname">AUXILLIARY_UNIT</code><em class="property"> = 'AuxilliaryUnit'</em><a class="headerlink" href="#ston.model.STONEnum.AUXILLIARY_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.BBOX">
+<code class="sig-name descname">BBOX</code><em class="property"> = 'Bbox'</em><a class="headerlink" href="#ston.model.STONEnum.BBOX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.BIOLOGICAL_ACTIVITY">
+<code class="sig-name descname">BIOLOGICAL_ACTIVITY</code><em class="property"> = 'BiologicalActivity'</em><a class="headerlink" href="#ston.model.STONEnum.BIOLOGICAL_ACTIVITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.CARDINALITY">
+<code class="sig-name descname">CARDINALITY</code><em class="property"> = 'Cardinality'</em><a class="headerlink" href="#ston.model.STONEnum.CARDINALITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.CARDINALITY_PROP">
+<code class="sig-name descname">CARDINALITY_PROP</code><em class="property"> = 'cardinality'</em><a class="headerlink" href="#ston.model.STONEnum.CARDINALITY_PROP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.CATALYSIS">
+<code class="sig-name descname">CATALYSIS</code><em class="property"> = 'Catalyzis'</em><a class="headerlink" href="#ston.model.STONEnum.CATALYSIS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.CATALYSIS_SHORTCUT">
+<code class="sig-name descname">CATALYSIS_SHORTCUT</code><em class="property"> = 'CATALYZES'</em><a class="headerlink" href="#ston.model.STONEnum.CATALYSIS_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.CLASS">
+<code class="sig-name descname">CLASS</code><em class="property"> = 'class'</em><a class="headerlink" href="#ston.model.STONEnum.CLASS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.CLONE">
+<code class="sig-name descname">CLONE</code><em class="property"> = 'clone'</em><a class="headerlink" href="#ston.model.STONEnum.CLONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.CLONE_LABEL">
+<code class="sig-name descname">CLONE_LABEL</code><em class="property"> = 'cloneLabel'</em><a class="headerlink" href="#ston.model.STONEnum.CLONE_LABEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.COMPARTMENT">
+<code class="sig-name descname">COMPARTMENT</code><em class="property"> = 'Compartment'</em><a class="headerlink" href="#ston.model.STONEnum.COMPARTMENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.COMPARTMENT_ORDER">
+<code class="sig-name descname">COMPARTMENT_ORDER</code><em class="property"> = 'compartmentOrder'</em><a class="headerlink" href="#ston.model.STONEnum.COMPARTMENT_ORDER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.COMPLEX">
+<code class="sig-name descname">COMPLEX</code><em class="property"> = 'Complex'</em><a class="headerlink" href="#ston.model.STONEnum.COMPLEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.COMPLEX_MULTIMER">
+<code class="sig-name descname">COMPLEX_MULTIMER</code><em class="property"> = 'ComplexMultimer'</em><a class="headerlink" href="#ston.model.STONEnum.COMPLEX_MULTIMER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.COMPLEX_MULTIMER_SUBUNIT">
+<code class="sig-name descname">COMPLEX_MULTIMER_SUBUNIT</code><em class="property"> = 'ComplexMultimerSubunit'</em><a class="headerlink" href="#ston.model.STONEnum.COMPLEX_MULTIMER_SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.COMPLEX_SUBUNIT">
+<code class="sig-name descname">COMPLEX_SUBUNIT</code><em class="property"> = 'ComplexSubunit'</em><a class="headerlink" href="#ston.model.STONEnum.COMPLEX_SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.CONSUMPTION">
+<code class="sig-name descname">CONSUMPTION</code><em class="property"> = 'Consumption'</em><a class="headerlink" href="#ston.model.STONEnum.CONSUMPTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.CONSUMPTION_SHORTCUT">
+<code class="sig-name descname">CONSUMPTION_SHORTCUT</code><em class="property"> = 'CONSUMES'</em><a class="headerlink" href="#ston.model.STONEnum.CONSUMPTION_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.DELAY">
+<code class="sig-name descname">DELAY</code><em class="property"> = 'DelayOperator'</em><a class="headerlink" href="#ston.model.STONEnum.DELAY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.DISSOCIATION">
+<code class="sig-name descname">DISSOCIATION</code><em class="property"> = 'Dissociation'</em><a class="headerlink" href="#ston.model.STONEnum.DISSOCIATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.END">
+<code class="sig-name descname">END</code><em class="property"> = 'End'</em><a class="headerlink" href="#ston.model.STONEnum.END" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ENTITY">
+<code class="sig-name descname">ENTITY</code><em class="property"> = 'Entity'</em><a class="headerlink" href="#ston.model.STONEnum.ENTITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.EPN">
+<code class="sig-name descname">EPN</code><em class="property"> = 'Epn'</em><a class="headerlink" href="#ston.model.STONEnum.EPN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.EQUIVALENCE">
+<code class="sig-name descname">EQUIVALENCE</code><em class="property"> = 'EquivalenceOperator'</em><a class="headerlink" href="#ston.model.STONEnum.EQUIVALENCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.EQUIVALENCE_ARC">
+<code class="sig-name descname">EQUIVALENCE_ARC</code><em class="property"> = 'EquivalenceArc'</em><a class="headerlink" href="#ston.model.STONEnum.EQUIVALENCE_ARC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.EQUIVALENCE_ARC_SHORTCUT">
+<code class="sig-name descname">EQUIVALENCE_ARC_SHORTCUT</code><em class="property"> = 'HAS_INPUT'</em><a class="headerlink" href="#ston.model.STONEnum.EQUIVALENCE_ARC_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.EXISTENCE">
+<code class="sig-name descname">EXISTENCE</code><em class="property"> = 'Existence'</em><a class="headerlink" href="#ston.model.STONEnum.EXISTENCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.FLUX_ARC">
+<code class="sig-name descname">FLUX_ARC</code><em class="property"> = 'FluxArc'</em><a class="headerlink" href="#ston.model.STONEnum.FLUX_ARC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.GENERIC_PROCESS">
+<code class="sig-name descname">GENERIC_PROCESS</code><em class="property"> = 'GenericProcess'</em><a class="headerlink" href="#ston.model.STONEnum.GENERIC_PROCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.GLYPH">
+<code class="sig-name descname">GLYPH</code><em class="property"> = 'Glyph'</em><a class="headerlink" href="#ston.model.STONEnum.GLYPH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.H">
+<code class="sig-name descname">H</code><em class="property"> = 'h'</em><a class="headerlink" href="#ston.model.STONEnum.H" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_ARC">
+<code class="sig-name descname">HAS_ARC</code><em class="property"> = 'HAS_ARC'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_ARC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_ARCGROUP">
+<code class="sig-name descname">HAS_ARCGROUP</code><em class="property"> = 'HAS_ARCGROUP'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_ARCGROUP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_BBOX">
+<code class="sig-name descname">HAS_BBOX</code><em class="property"> = 'HAS_BBOX'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_BBOX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_CARDINALITY">
+<code class="sig-name descname">HAS_CARDINALITY</code><em class="property"> = 'HAS_CARDINALITY'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_CARDINALITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_END">
+<code class="sig-name descname">HAS_END</code><em class="property"> = 'HAS_END'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_END" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_GLYPH">
+<code class="sig-name descname">HAS_GLYPH</code><em class="property"> = 'HAS_GLYPH'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_GLYPH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_NEXT">
+<code class="sig-name descname">HAS_NEXT</code><em class="property"> = 'HAS_NEXT'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_NEXT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_OUTCOME">
+<code class="sig-name descname">HAS_OUTCOME</code><em class="property"> = 'HAS_OUTCOME'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_OUTCOME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_PORT">
+<code class="sig-name descname">HAS_PORT</code><em class="property"> = 'HAS_PORT'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_PORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_SOURCE">
+<code class="sig-name descname">HAS_SOURCE</code><em class="property"> = 'HAS_SOURCE'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_SOURCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_START">
+<code class="sig-name descname">HAS_START</code><em class="property"> = 'HAS_START'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_START" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_STATE_VARIABLE">
+<code class="sig-name descname">HAS_STATE_VARIABLE</code><em class="property"> = 'HAS_STATE_VARIABLE'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_STATE_VARIABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_SUBUNIT">
+<code class="sig-name descname">HAS_SUBUNIT</code><em class="property"> = 'HAS_SUBUNIT'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_TARGET">
+<code class="sig-name descname">HAS_TARGET</code><em class="property"> = 'HAS_TARGET'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_TARGET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_TERMINAL">
+<code class="sig-name descname">HAS_TERMINAL</code><em class="property"> = 'HAS_TERMINAL'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_TERMINAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_UNIT_OF_INFORMATION">
+<code class="sig-name descname">HAS_UNIT_OF_INFORMATION</code><em class="property"> = 'HAS_UNIT_OF_INFORMATION'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_UNIT_OF_INFORMATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.HAS_VALUE">
+<code class="sig-name descname">HAS_VALUE</code><em class="property"> = 'HAS_VALUE'</em><a class="headerlink" href="#ston.model.STONEnum.HAS_VALUE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ID">
+<code class="sig-name descname">ID</code><em class="property"> = 'id'</em><a class="headerlink" href="#ston.model.STONEnum.ID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.INFLUENCE">
+<code class="sig-name descname">INFLUENCE</code><em class="property"> = 'Influence'</em><a class="headerlink" href="#ston.model.STONEnum.INFLUENCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.INHIBITION">
+<code class="sig-name descname">INHIBITION</code><em class="property"> = 'Inhibition'</em><a class="headerlink" href="#ston.model.STONEnum.INHIBITION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.INHIBITION_SHORTCUT">
+<code class="sig-name descname">INHIBITION_SHORTCUT</code><em class="property"> = 'INHIBITS'</em><a class="headerlink" href="#ston.model.STONEnum.INHIBITION_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.INTERACTION">
+<code class="sig-name descname">INTERACTION</code><em class="property"> = 'Interaction'</em><a class="headerlink" href="#ston.model.STONEnum.INTERACTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.INTERACTION_ARCGROUP">
+<code class="sig-name descname">INTERACTION_ARCGROUP</code><em class="property"> = 'InteractionArcgroup'</em><a class="headerlink" href="#ston.model.STONEnum.INTERACTION_ARCGROUP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.INTERACTION_GLYPH">
+<code class="sig-name descname">INTERACTION_GLYPH</code><em class="property"> = 'InteractionGlyph'</em><a class="headerlink" href="#ston.model.STONEnum.INTERACTION_GLYPH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.INTERACTION_SHORTCUT">
+<code class="sig-name descname">INTERACTION_SHORTCUT</code><em class="property"> = 'INTERACTS_WITH'</em><a class="headerlink" href="#ston.model.STONEnum.INTERACTION_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.IS_IN_COMPARTMENT">
+<code class="sig-name descname">IS_IN_COMPARTMENT</code><em class="property"> = 'IS_IN_COMPARTMENT'</em><a class="headerlink" href="#ston.model.STONEnum.IS_IN_COMPARTMENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.LABEL">
+<code class="sig-name descname">LABEL</code><em class="property"> = 'label'</em><a class="headerlink" href="#ston.model.STONEnum.LABEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.LANGUAGE">
+<code class="sig-name descname">LANGUAGE</code><em class="property"> = 'language'</em><a class="headerlink" href="#ston.model.STONEnum.LANGUAGE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.LOCATION">
+<code class="sig-name descname">LOCATION</code><em class="property"> = 'Location'</em><a class="headerlink" href="#ston.model.STONEnum.LOCATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.LOGICAL_OPERATOR">
+<code class="sig-name descname">LOGICAL_OPERATOR</code><em class="property"> = 'LogicalOperator'</em><a class="headerlink" href="#ston.model.STONEnum.LOGICAL_OPERATOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.LOGIC_ARC">
+<code class="sig-name descname">LOGIC_ARC</code><em class="property"> = 'LogicArc'</em><a class="headerlink" href="#ston.model.STONEnum.LOGIC_ARC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.LOGIC_ARC_SHORTCUT">
+<code class="sig-name descname">LOGIC_ARC_SHORTCUT</code><em class="property"> = 'HAS_INPUT'</em><a class="headerlink" href="#ston.model.STONEnum.LOGIC_ARC_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.MACROMOLECULE">
+<code class="sig-name descname">MACROMOLECULE</code><em class="property"> = 'Macromolecule'</em><a class="headerlink" href="#ston.model.STONEnum.MACROMOLECULE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.MACROMOLECULE_MULTIMER">
+<code class="sig-name descname">MACROMOLECULE_MULTIMER</code><em class="property"> = 'MacromoleculeMultimer'</em><a class="headerlink" href="#ston.model.STONEnum.MACROMOLECULE_MULTIMER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.MACROMOLECULE_MULTIMER_SUBUNIT">
+<code class="sig-name descname">MACROMOLECULE_MULTIMER_SUBUNIT</code><em class="property"> = 'MacromoleculeMultimerSubunit'</em><a class="headerlink" href="#ston.model.STONEnum.MACROMOLECULE_MULTIMER_SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.MACROMOLECULE_SUBUNIT">
+<code class="sig-name descname">MACROMOLECULE_SUBUNIT</code><em class="property"> = 'MacromoleculeSubunit'</em><a class="headerlink" href="#ston.model.STONEnum.MACROMOLECULE_SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.MAP">
+<code class="sig-name descname">MAP</code><em class="property"> = 'Map'</em><a class="headerlink" href="#ston.model.STONEnum.MAP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.MAP_ID">
+<code class="sig-name descname">MAP_ID</code><em class="property"> = 'id'</em><a class="headerlink" href="#ston.model.STONEnum.MAP_ID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.MODULATION">
+<code class="sig-name descname">MODULATION</code><em class="property"> = 'Modulation'</em><a class="headerlink" href="#ston.model.STONEnum.MODULATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.MODULATION_SHORTCUT">
+<code class="sig-name descname">MODULATION_SHORTCUT</code><em class="property"> = 'MODULATES'</em><a class="headerlink" href="#ston.model.STONEnum.MODULATION_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.MULTIMER">
+<code class="sig-name descname">MULTIMER</code><em class="property"> = 'Multimer'</em><a class="headerlink" href="#ston.model.STONEnum.MULTIMER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.NECESSARY_STIMULATION">
+<code class="sig-name descname">NECESSARY_STIMULATION</code><em class="property"> = 'NecessaryStimulation'</em><a class="headerlink" href="#ston.model.STONEnum.NECESSARY_STIMULATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.NECESSARY_STIMULATION_SHORTCUT">
+<code class="sig-name descname">NECESSARY_STIMULATION_SHORTCUT</code><em class="property"> = 'NECESSARY_STIMULATES'</em><a class="headerlink" href="#ston.model.STONEnum.NECESSARY_STIMULATION_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.NEGATIVE_INFLUENCE">
+<code class="sig-name descname">NEGATIVE_INFLUENCE</code><em class="property"> = 'NegativeInfluence'</em><a class="headerlink" href="#ston.model.STONEnum.NEGATIVE_INFLUENCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.NEGATIVE_INFLUENCE_SHORTCUT">
+<code class="sig-name descname">NEGATIVE_INFLUENCE_SHORTCUT</code><em class="property"> = 'NEGATIVELY_INFLUENCES'</em><a class="headerlink" href="#ston.model.STONEnum.NEGATIVE_INFLUENCE_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.NEXT">
+<code class="sig-name descname">NEXT</code><em class="property"> = 'Next'</em><a class="headerlink" href="#ston.model.STONEnum.NEXT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.NOT">
+<code class="sig-name descname">NOT</code><em class="property"> = 'NotOperator'</em><a class="headerlink" href="#ston.model.STONEnum.NOT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.NUCLEIC_ACID_FEATURE">
+<code class="sig-name descname">NUCLEIC_ACID_FEATURE</code><em class="property"> = 'NucleicAcidFeature'</em><a class="headerlink" href="#ston.model.STONEnum.NUCLEIC_ACID_FEATURE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.NUCLEIC_ACID_FEATURE_MULTIMER">
+<code class="sig-name descname">NUCLEIC_ACID_FEATURE_MULTIMER</code><em class="property"> = 'NucleicAcidFeatureMultimer'</em><a class="headerlink" href="#ston.model.STONEnum.NUCLEIC_ACID_FEATURE_MULTIMER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.NUCLEIC_ACID_FEATURE_MULTIMER_SUBUNIT">
+<code class="sig-name descname">NUCLEIC_ACID_FEATURE_MULTIMER_SUBUNIT</code><em class="property"> = 'NucleicAcidFeatureMultimerSubunit'</em><a class="headerlink" href="#ston.model.STONEnum.NUCLEIC_ACID_FEATURE_MULTIMER_SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.NUCLEIC_ACID_FEATURE_SUBUNIT">
+<code class="sig-name descname">NUCLEIC_ACID_FEATURE_SUBUNIT</code><em class="property"> = 'NucleicAcidFeatureSubunit'</em><a class="headerlink" href="#ston.model.STONEnum.NUCLEIC_ACID_FEATURE_SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.OMITTED_PROCESS">
+<code class="sig-name descname">OMITTED_PROCESS</code><em class="property"> = 'OmittedProcess'</em><a class="headerlink" href="#ston.model.STONEnum.OMITTED_PROCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.OR">
+<code class="sig-name descname">OR</code><em class="property"> = 'OrOperator'</em><a class="headerlink" href="#ston.model.STONEnum.OR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ORDER">
+<code class="sig-name descname">ORDER</code><em class="property"> = 'order'</em><a class="headerlink" href="#ston.model.STONEnum.ORDER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.ORIENTATION">
+<code class="sig-name descname">ORIENTATION</code><em class="property"> = 'orientation'</em><a class="headerlink" href="#ston.model.STONEnum.ORIENTATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.OUTCOME">
+<code class="sig-name descname">OUTCOME</code><em class="property"> = 'Outcome'</em><a class="headerlink" href="#ston.model.STONEnum.OUTCOME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.PERTURBING_AGENT">
+<code class="sig-name descname">PERTURBING_AGENT</code><em class="property"> = 'PerturbingAgent'</em><a class="headerlink" href="#ston.model.STONEnum.PERTURBING_AGENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.PHENOTYPE">
+<code class="sig-name descname">PHENOTYPE</code><em class="property"> = 'Phenotype'</em><a class="headerlink" href="#ston.model.STONEnum.PHENOTYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.PHENOTYPE_SUBUNIT">
+<code class="sig-name descname">PHENOTYPE_SUBUNIT</code><em class="property"> = 'PhenotypeSubunit'</em><a class="headerlink" href="#ston.model.STONEnum.PHENOTYPE_SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.PORT">
+<code class="sig-name descname">PORT</code><em class="property"> = 'Port'</em><a class="headerlink" href="#ston.model.STONEnum.PORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.POSITIVE_INFLUENCE">
+<code class="sig-name descname">POSITIVE_INFLUENCE</code><em class="property"> = 'PositiveInfluence'</em><a class="headerlink" href="#ston.model.STONEnum.POSITIVE_INFLUENCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.POSITIVE_INFLUENCE_SHORTCUT">
+<code class="sig-name descname">POSITIVE_INFLUENCE_SHORTCUT</code><em class="property"> = 'POSITIVELY_INFLUENCES'</em><a class="headerlink" href="#ston.model.STONEnum.POSITIVE_INFLUENCE_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.PREFIX">
+<code class="sig-name descname">PREFIX</code><em class="property"> = 'prefix'</em><a class="headerlink" href="#ston.model.STONEnum.PREFIX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.PROCESS">
+<code class="sig-name descname">PROCESS</code><em class="property"> = 'Process'</em><a class="headerlink" href="#ston.model.STONEnum.PROCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.PRODUCTION">
+<code class="sig-name descname">PRODUCTION</code><em class="property"> = 'Production'</em><a class="headerlink" href="#ston.model.STONEnum.PRODUCTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.PRODUCTION_SHORTCUT">
+<code class="sig-name descname">PRODUCTION_SHORTCUT</code><em class="property"> = 'PRODUCES'</em><a class="headerlink" href="#ston.model.STONEnum.PRODUCTION_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.SIMPLE_CHEMICAL">
+<code class="sig-name descname">SIMPLE_CHEMICAL</code><em class="property"> = 'SimpleChemical'</em><a class="headerlink" href="#ston.model.STONEnum.SIMPLE_CHEMICAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.SIMPLE_CHEMICAL_MULTIMER">
+<code class="sig-name descname">SIMPLE_CHEMICAL_MULTIMER</code><em class="property"> = 'SimpleChemicalMultimer'</em><a class="headerlink" href="#ston.model.STONEnum.SIMPLE_CHEMICAL_MULTIMER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.SIMPLE_CHEMICAL_MULTIMER_SUBUNIT">
+<code class="sig-name descname">SIMPLE_CHEMICAL_MULTIMER_SUBUNIT</code><em class="property"> = 'SimpleChemicalMultimerSubunit'</em><a class="headerlink" href="#ston.model.STONEnum.SIMPLE_CHEMICAL_MULTIMER_SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.SIMPLE_CHEMICAL_SUBUNIT">
+<code class="sig-name descname">SIMPLE_CHEMICAL_SUBUNIT</code><em class="property"> = 'SimpleChemicalSubunit'</em><a class="headerlink" href="#ston.model.STONEnum.SIMPLE_CHEMICAL_SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.SOURCE">
+<code class="sig-name descname">SOURCE</code><em class="property"> = 'source'</em><a class="headerlink" href="#ston.model.STONEnum.SOURCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.SOURCE_AND_SINK">
+<code class="sig-name descname">SOURCE_AND_SINK</code><em class="property"> = 'EmptySet'</em><a class="headerlink" href="#ston.model.STONEnum.SOURCE_AND_SINK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.START">
+<code class="sig-name descname">START</code><em class="property"> = 'Start'</em><a class="headerlink" href="#ston.model.STONEnum.START" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.STATE_VARIABLE">
+<code class="sig-name descname">STATE_VARIABLE</code><em class="property"> = 'StateVariable'</em><a class="headerlink" href="#ston.model.STONEnum.STATE_VARIABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.STIMULATION">
+<code class="sig-name descname">STIMULATION</code><em class="property"> = 'Stimulation'</em><a class="headerlink" href="#ston.model.STONEnum.STIMULATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.STIMULATION_SHORTCUT">
+<code class="sig-name descname">STIMULATION_SHORTCUT</code><em class="property"> = 'STIMULATES'</em><a class="headerlink" href="#ston.model.STONEnum.STIMULATION_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.STOICHIOMETRIC_PROCESS">
+<code class="sig-name descname">STOICHIOMETRIC_PROCESS</code><em class="property"> = 'StoichiometricProcess'</em><a class="headerlink" href="#ston.model.STONEnum.STOICHIOMETRIC_PROCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.SUBMAP">
+<code class="sig-name descname">SUBMAP</code><em class="property"> = 'Submap'</em><a class="headerlink" href="#ston.model.STONEnum.SUBMAP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.SUBUNIT">
+<code class="sig-name descname">SUBUNIT</code><em class="property"> = 'Subunit'</em><a class="headerlink" href="#ston.model.STONEnum.SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.TAG">
+<code class="sig-name descname">TAG</code><em class="property"> = 'Tag'</em><a class="headerlink" href="#ston.model.STONEnum.TAG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.TARGET">
+<code class="sig-name descname">TARGET</code><em class="property"> = 'target'</em><a class="headerlink" href="#ston.model.STONEnum.TARGET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.TERMINAL">
+<code class="sig-name descname">TERMINAL</code><em class="property"> = 'Terminal'</em><a class="headerlink" href="#ston.model.STONEnum.TERMINAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.UI_TYPE">
+<code class="sig-name descname">UI_TYPE</code><em class="property"> = 'type'</em><a class="headerlink" href="#ston.model.STONEnum.UI_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.UNCERTAIN_PROCESS">
+<code class="sig-name descname">UNCERTAIN_PROCESS</code><em class="property"> = 'UncertainProcess'</em><a class="headerlink" href="#ston.model.STONEnum.UNCERTAIN_PROCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.UNIT_OF_INFORMATION">
+<code class="sig-name descname">UNIT_OF_INFORMATION</code><em class="property"> = 'UnitOfInformation'</em><a class="headerlink" href="#ston.model.STONEnum.UNIT_OF_INFORMATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.UNKNOWN_INFLUENCE">
+<code class="sig-name descname">UNKNOWN_INFLUENCE</code><em class="property"> = 'UnknownInfluence'</em><a class="headerlink" href="#ston.model.STONEnum.UNKNOWN_INFLUENCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.UNKNOWN_INFLUENCE_SHORTCUT">
+<code class="sig-name descname">UNKNOWN_INFLUENCE_SHORTCUT</code><em class="property"> = 'INFLUENCES'</em><a class="headerlink" href="#ston.model.STONEnum.UNKNOWN_INFLUENCE_SHORTCUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.UNSPECIFIED_ENTITY">
+<code class="sig-name descname">UNSPECIFIED_ENTITY</code><em class="property"> = 'UnspecifiedEntity'</em><a class="headerlink" href="#ston.model.STONEnum.UNSPECIFIED_ENTITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.UNSPECIFIED_ENTITY_SUBUNIT">
+<code class="sig-name descname">UNSPECIFIED_ENTITY_SUBUNIT</code><em class="property"> = 'UnspecifiedEntitySubunit'</em><a class="headerlink" href="#ston.model.STONEnum.UNSPECIFIED_ENTITY_SUBUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.VALUE">
+<code class="sig-name descname">VALUE</code><em class="property"> = 'value'</em><a class="headerlink" href="#ston.model.STONEnum.VALUE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.VARIABLE">
+<code class="sig-name descname">VARIABLE</code><em class="property"> = 'variable'</em><a class="headerlink" href="#ston.model.STONEnum.VARIABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.VARIABLE_VALUE">
+<code class="sig-name descname">VARIABLE_VALUE</code><em class="property"> = 'VariableValue'</em><a class="headerlink" href="#ston.model.STONEnum.VARIABLE_VALUE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.W">
+<code class="sig-name descname">W</code><em class="property"> = 'w'</em><a class="headerlink" href="#ston.model.STONEnum.W" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.X">
+<code class="sig-name descname">X</code><em class="property"> = 'x'</em><a class="headerlink" href="#ston.model.STONEnum.X" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ston.model.STONEnum.Y">
+<code class="sig-name descname">Y</code><em class="property"> = 'y'</em><a class="headerlink" href="#ston.model.STONEnum.Y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ston.ston">
+<span id="ston-ston-module"></span><h2>ston.ston module<a class="headerlink" href="#module-ston.ston" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ston.ston.STON">
+<em class="property">class </em><code class="sig-prename descclassname">ston.ston.</code><code class="sig-name descname">STON</code><span class="sig-paren">(</span><em class="sig-param">uri=None</em>, <em class="sig-param">user=None</em>, <em class="sig-param">password=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.ston.STON" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="ston.ston.STON.create_map">
+<code class="sig-name descname">create_map</code><span class="sig-paren">(</span><em class="sig-param">sbgn_map</em>, <em class="sig-param">map_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.ston.STON.create_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an SBGN map to the database (with the CREATE instruction).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sbgn_map</strong> (<cite>str</cite> or <cite>libsbgnpy.libsbgn.map</cite>) – the SBGN map, either a path to an SBGN-ML file or an SBGN map object</p></li>
+<li><p><strong>map_id</strong> (<cite>str</cite>, optional) – the ID of the SBGN map, default is <cite>None</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ston.ston.STON.delete_map">
+<code class="sig-name descname">delete_map</code><span class="sig-paren">(</span><em class="sig-param">map_id=None</em>, <em class="sig-param">sbgn_map=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.ston.STON.delete_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an SBGN map from the database.</p>
+<p>If only a map ID is provided, deletes all maps with this ID from the database.
+If only an SBGN map is provided, deletes this map from the database.
+If both a map ID and an SBGN map are provided, deletes the map from the database onlty if it has this ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>map_id</strong> (<cite>str</cite>, optional) – the ID of the SBGN map, default is <cite>None</cite></p></li>
+<li><p><strong>sbgn_map</strong> (<cite>str</cite> or <cite>libsbgnpy.libsbgn.map</cite>) – the SBGN map, either a path to an SBGN-ML file or an SBGN map object</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ston.ston.STON.get_map">
+<code class="sig-name descname">get_map</code><span class="sig-paren">(</span><em class="sig-param">map_id</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.ston.STON.get_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve an SBGN map with given ID from the database and returns it.</p>
+<p>If no map is retrieved, returns <cite>None</cite>.
+If multiple maps are retrieved, only the first one is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>map_id</strong> (<cite>str</cite>) – the ID of the SBGN map to retrieve</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the SBGN map or <cite>None</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>libsbgnpy.libsbgn.map</cite> or <cite>None</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ston.ston.STON.get_map_to_sbgn_file">
+<code class="sig-name descname">get_map_to_sbgn_file</code><span class="sig-paren">(</span><em class="sig-param">map_id</em>, <em class="sig-param">sbgn_file</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.ston.STON.get_map_to_sbgn_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a map with given ID from the database and write it to the given SBGN-ML file.</p>
+<p>Nothing is done if no map is retrieved.
+If multiple maps are retrieved, only the first one is written to the SBGN-ML file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>map_id</strong> (<cite>str</cite>) – the ID of the SBGN map to retrieve</p></li>
+<li><p><strong>sbgn_file</strong> (<cite>str</cite>) – the path of the the SBGN-ML where to write the retrieved map</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ston.ston.STON.has_map">
+<code class="sig-name descname">has_map</code><span class="sig-paren">(</span><em class="sig-param">map_id=None</em>, <em class="sig-param">sbgn_map=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.ston.STON.has_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the database contains a given SBGN map</p>
+<p>If only a map ID is provided, checks whether the database contains a map with that ID.
+If only an SBGN map is provided, checks whether the database contains this map.
+If both a map ID and an SBGN map are provided, checks whether the database contains this map with this ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>map_id</strong> (<cite>str</cite>, optional) – the ID of the SBGN map, default is <cite>None</cite></p></li>
+<li><p><strong>sbgn_map</strong> (<cite>str</cite> or <cite>libsbgnpy.libsbgn.map</cite>) – the SBGN map, either a path to an SBGN-ML file or an SBGN map object, default is <cite>None</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>True</cite> if the database contains the SBGN map, <cite>False</cite> otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>bool</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ston.ston.STON.merge_map">
+<code class="sig-name descname">merge_map</code><span class="sig-paren">(</span><em class="sig-param">sbgn_map</em>, <em class="sig-param">map_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.ston.STON.merge_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an SBGN map to the database (with the MERGE instruction).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sbgn_map</strong> (<cite>str</cite> or <cite>libsbgnpy.libsbgn.map</cite>) – the SBGN map, either a path to an SBGN-ML file or an SBGN map object</p></li>
+<li><p><strong>map_id</strong> (<cite>str</cite>, optional) – the ID of the SBGN map, default is <cite>None</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ston.ston.STON.query_to_map">
+<code class="sig-name descname">query_to_map</code><span class="sig-paren">(</span><em class="sig-param">query</em>, <em class="sig-param">complete=True</em>, <em class="sig-param">merge_records=False</em>, <em class="sig-param">to_top_left=False</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.ston.STON.query_to_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a cypher query against the database and return the resulting SBGN maps.</p>
+<p>By default, each record resulting from the query is transformed to zero or more SBGN maps, one for each Map node it contains.
+The resulting SBGN maps are then returned one by one. Only distinct SBGN maps are returned.
+When <cite>merge_records</cite> is set to <cite>True</cite>, records are merged before being transformed to SBGN maps.
+When <cite>complete</cite> is set to <cite>True</cite>, records are completed before being transformed; a node or a relationship of a record is always completed by the Map node it belongs to, and by all other nodes and relationships that are ultimately necessary to form a valid map from it.
+Hence if <cite>complete</cite> is set to <cite>True</cite>, at least one valid SBGN map will be returned as long as at least one record contains a node or a relationship.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<cite>str</cite>) – the cypher query</p></li>
+<li><p><strong>complete</strong> (<cite>bool</cite>, optional) – if set to <cite>True</cite>, the nodes and relationships of every record are completed</p></li>
+<li><p><strong>merge_records</strong> (<cite>bool</cite>, optional) – if set to <cite>True</cite>, the records of the result are merged</p></li>
+<li><p><strong>to_top_left</strong> (<em>bool</em><em>, </em><em>optional</em>) – if set to <cite>True</cite>, each resulting map is moved to the top left of its canvas</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the resulting SBGN maps, under the form of a generator. Each returned element is a tuple of the form (map, map_id).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>Iterator[(`libsbgnpy.libsbgn.map</cite>, <cite>str</cite>)]`</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ston.ston.STON.query_to_sbgn_file">
+<code class="sig-name descname">query_to_sbgn_file</code><span class="sig-paren">(</span><em class="sig-param">query</em>, <em class="sig-param">sbgn_file</em>, <em class="sig-param">complete=True</em>, <em class="sig-param">merge_records=True</em>, <em class="sig-param">to_top_left=False</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.ston.STON.query_to_sbgn_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a cypher query against the database and write the resulting SBGN maps to one or more SBGN-ML files.</p>
+<p>By default, each record resulting from the query is transformed to zero or more SBGN maps, one for each Map node it contains, and each SBGN map is written to a distinct SBGN-ML file.
+When <cite>merge_records</cite> is set to <cite>True</cite>, records are merged before being transformed to SBGN maps.
+When <cite>complete</cite> is set to <cite>True</cite>, records are completed before being transformed; a node or a relationship of a record is always completed by the Map node it belongs to, and by all other nodes and relationships that are ultimately necessary to form a valid map from it.
+Hence if <cite>complete</cite> is set to <cite>True</cite>, at least one valid SBGN map will be written as long as at least one record contains a node or a relationship.
+If there is only one resulting SBGN map, it is written to sbgn_file.
+If there are multiple resulting SBGN maps, each distinct SBGN map is written to a different file formatted as follows: the ith distinct SBGN map is written to file &lt;name&gt;-i.&lt;ext&gt; if <cite>sbgn_file</cite> is of the form &lt;name&gt;.&lt;ext&gt;, and to file <cite>sbgn_file</cite>-i.sbgn otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<cite>str</cite>) – the cypher query</p></li>
+<li><p><strong>sbgn_file</strong> – the file name where to write the resulting SBGN maps</p></li>
+<li><p><strong>complete</strong> (<em>bool</em><em>, </em><em>optional</em>) – if set to <cite>True</cite>, the nodes and relationships of every record are completed</p></li>
+<li><p><strong>merge_records</strong> (<cite>bool</cite>, optional) – if set to <cite>True</cite>, the records of the result are merged</p></li>
+<li><p><strong>to_top_left</strong> (<cite>bool</cite>, optional) – if set to <cite>True</cite>, each resulting map is moved to the top left of its canvas</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ston.utils">
+<span id="ston-utils-module"></span><h2>ston.utils module<a class="headerlink" href="#module-ston.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ston.utils.atan2pi">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">atan2pi</code><span class="sig-paren">(</span><em class="sig-param">y</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.atan2pi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.exists_subgraph">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">exists_subgraph</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">graph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.exists_subgraph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.map_to_sbgn_file">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">map_to_sbgn_file</code><span class="sig-paren">(</span><em class="sig-param">sbgnmap</em>, <em class="sig-param">sbgn_file</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.map_to_sbgn_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.map_to_top_left">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">map_to_top_left</code><span class="sig-paren">(</span><em class="sig-param">sbgnmap</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.map_to_top_left" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.match">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">match</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">nodes=None</em>, <em class="sig-param">rtype=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.match" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.match_node">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">match_node</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">graph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.match_node" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.match_one">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">match_one</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">nodes=None</em>, <em class="sig-param">rtype=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.match_one" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.match_relationship">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">match_relationship</code><span class="sig-paren">(</span><em class="sig-param">relationship</em>, <em class="sig-param">graph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.match_relationship" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.match_subgraph">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">match_subgraph</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em>, <em class="sig-param">graph</em>, <em class="sig-param">exact=False</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.match_subgraph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.node_to_cypher">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">node_to_cypher</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.node_to_cypher" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.print_subgraph">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">print_subgraph</code><span class="sig-paren">(</span><em class="sig-param">subgraph</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.print_subgraph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.sbgn_file_to_map">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">sbgn_file_to_map</code><span class="sig-paren">(</span><em class="sig-param">sbgn_file</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.sbgn_file_to_map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ston.utils.subgraph_union">
+<code class="sig-prename descclassname">ston.utils.</code><code class="sig-name descname">subgraph_union</code><span class="sig-paren">(</span><em class="sig-param">subgraph1</em>, <em class="sig-param">subgraph2</em><span class="sig-paren">)</span><a class="headerlink" href="#ston.utils.subgraph_union" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-ston">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ston" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pyston</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Adrien Rougny.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/ston.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
