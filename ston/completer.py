@@ -197,8 +197,7 @@ def _complete_subgraph_with_glyph_node(node, subgraph, db_graph, completed):
 
     # COMPARTMENT
     if node.has_label(STONEnum["EPN"].value) or \
-            node.has_label(STONEnum["ACTIVITY"].value) or \
-            node.has_label(STONEnum["PHENOTYPE"].value):
+            node.has_label(STONEnum["ACTIVITY"].value):
         subgraph = _find_relationship_and_complete_subgraph(
             "IS_IN_COMPARTMENT",
             subgraph,
