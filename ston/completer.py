@@ -296,14 +296,26 @@ def _complete_subgraph_with_glyph_node(node, subgraph, db_graph, completed):
 def _complete_subgraph_with_port_node(node, subgraph, db_graph, completed):
     completed.add(node)
 
-    # OWNER GLYPH, SOURCE OF ARC, TARGET OF ARC
-    for r_name in ["HAS_PORT", "HAS_SOURCE", "HAS_TARGET"]:
+    # OWNER GLYPH
+    subgraph = _find_relationship_and_complete_subgraph(
+            "HAS_PORT",
+            subgraph,
+            db_graph,
+            completed,
+            nary = False,
+            start_node = None,
+            end_node = node,
+            complete_start_node = True,
+            complete_end_node = False)
+
+    # SOURCE OF ARC, TARGET OF ARC
+    for r_name in ["HAS_SOURCE", "HAS_TARGET"]:
         subgraph = _find_relationship_and_complete_subgraph(
             r_name,
             subgraph,
             db_graph,
             completed,
-            nary = False,
+            nary = True,
             start_node = None,
             end_node = node,
             complete_start_node = True,
