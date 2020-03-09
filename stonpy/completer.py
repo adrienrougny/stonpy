@@ -144,10 +144,8 @@ def _find_relationship_and_complete_subgraph(
         relationship = utils.match_one(
             subgraph, (start_node, end_node), STONEnum[r_name].value)
         if relationship is None:
-            print("AAA")
             relationship = db_graph.match_one(
                     (start_node, end_node), STONEnum[r_name].value)
-            print("BBB")
         relationships = [relationship]
     elif nary:
         relationships = db_graph.match(

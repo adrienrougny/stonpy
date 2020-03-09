@@ -4,6 +4,8 @@ import libsbgnpy.libsbgn as libsbgn
 
 from py2neo import NodeMatcher, RelationshipMatcher
 
+from stonpy.sbgn import cast_map
+
 def match(subgraph, nodes=None, rtype=None):
     relationships = set([])
     if subgraph is None:
@@ -210,3 +212,6 @@ def atan2pi(y, x):
     if a < 0:
         a = a + 2 * pi
     return a
+
+def are_maps_equal(map1, map2):
+    return cast_map(map1) == cast_map(map2)
