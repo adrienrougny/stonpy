@@ -1,11 +1,11 @@
 from distutils.core import setup
 
-setup(name = 'ston',
-    version = '2.0',
+setup(name = 'stonpy',
+    version = '0.1',
     description = 'SBGN to Neo4j database',
     author = 'Adrien Rougny',
     author_email = 'rougny.adrien@aist.go.jp',
-    packages = ['ston'],
+    packages = ['stonpy'],
     install_requires = [
         "libsbgnpy",
         "py2neo",

@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
-Name: ston
-Version: 2.0
+Name: stonpy
+Version: 0.1
 Summary: SBGN to Neo4j database
 Home-page: UNKNOWN
 Author: Adrien Rougny

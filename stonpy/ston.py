@@ -4,23 +4,23 @@ import libsbgnpy.libsbgn as libsbgn
 
 from py2neo import Graph
 
-import ston.utils as utils
-import ston.converter as converter
-import ston.completer as completer
-from ston.model import STONEnum
+import stonpy.utils as utils
+import stonpy.converter as converter
+import stonpy.completer as completer
+from stonpy.model import STONEnum
 
 class STON(object):
     def __init__(self, uri=None, user=None, password=None):
         self.uri = uri
         self.user = user
         self.password = password
-        self.neograph = Graph(uri = uri, user = user, password = password)
-        self.neograph.run(
-            'CREATE CONSTRAINT ON (m:Map) \
-            ASSERT m.{} IS UNIQUE'.format(STONEnum["ID"].value))
+        self.graph = Graph(uri = uri, user = user, password = password)
+        # self.graph.run(
+        #     'CREATE CONSTRAINT ON (m:{}) \
+        #     ASSERT m.{} IS UNIQUE'.format(STONEnum["MAP"].value, STONEnum["ID"].value))
 
     def has_map(self, map_id=None, sbgn_map=None):
-        """Checks whether the database contains a given SBGN map
+        """Check whether the database contains a given SBGN map
 
         If only a map ID is provided, checks whether the database contains a map with that ID.
         If only an SBGN map is provided, checks whether the database contains this map.
@@ -34,7 +34,7 @@ class STON(object):
         :rtype: `bool`
         """
         if sbgn_map is None and map_id is not None:
-            tx = self.neograph.begin()
+            tx = self.graph.begin()
             query = 'MATCH (m:{} {{{}: "{}"}}) RETURN m'.format(
                 STONEnum["MAP"].value, STONEnu["ID"].value, map_id)
             res = tx.evaluate(query)
@@ -47,28 +47,29 @@ class STON(object):
             if isinstance(sbgn_map, str):
                 if os.path.isfile(sbgn_map):
                     sbgn_map = utils.sbgn_file_to_map(sbgn_map)
-            subgraph = converter.map_to_subgraph(sbgn_map, map_id = map_id)
+            subgraph = converter.map_to_subgraph(sbgn_map, map_id=map_id)
             # we get the Map node and one node in rel with the Map node
             node = None
-            for relationship in subgraph.relatinships:
+            for relationship in subgraph.relationships:
                 if relationship.start_node.has_label(STONEnum["MAP"].value) and \
                         type(relationship).__name__ == STONEnum["HAS_GLYPH"].value:
                     node = relationship.end_node
                     break
             if node is not None: # i.e. the map is not empty
-                query = 'MATCH (m:Map)-[{}]->{} RETURN id(m)'.format(
-                    STONEnum["HAS_GLYPH"].value, utils.node_to_cypher(node))
-                cursor = self.neograph.run(query)
+                query = 'MATCH (m:{})-[{}]->{} RETURN id(m)'.format(
+                    STONEnum["MAP"].value, STONEnum["HAS_GLYPH"].value,
+                    utils.node_to_cypher(node))
+                cursor = self.graph.run(query)
                 for record in cursor:
                     neo_id = record["id(m)"]
                     query = 'MATCH p=(m:{})-[*]->() WHERE id(m) = {} \
                         RETURN p'.format(STONEnum["MAP"].value, neo_id)
-                    subgraph2 = self.neograph.run(query).to_subgraph()
+                    subgraph2 = self.graph.run(query).to_subgraph()
                     if subgraph == subgraph2:
                         return True
             else:
-                query = 'MATCH (m:Map) WHERE NOT (m)-[]->() RETURN m'
-                cursor = self.neograph.run(query)
+                query = 'MATCH (m:{}) WHERE NOT (m)-[]->() RETURN m'.format(STONEnum["MAP"].value)
+                cursor = self.graph.run(query)
                 for record in cursor:
                     subgraph2 = record.to_subgraph()
                     if subgraph == subgraph2:
@@ -88,7 +89,7 @@ class STON(object):
             sbgn_file = sbgn_map
             sbgn_map = utils.sbgn_file_to_map(sbgn_file)
         subgraph = converter.map_to_subgraph(sbgn_map, map_id)
-        tx = self.neograph.begin()
+        tx = self.graph.begin()
         tx.create(subgraph)
         tx.commit()
 
@@ -105,7 +106,7 @@ class STON(object):
             sbgn_file = sbgn_map
             sbgn_map = utils.sbgn_file_to_map(sbgn_file)
         subgraph = converter.map_to_subgraph(sbgn_map, map_id)
-        tx = self.neograph.begin()
+        tx = self.graph.begin()
         tx.merge(subgraph)
         tx.commit()
 
@@ -123,7 +124,7 @@ class STON(object):
         :type sbgn_map: `str` or `libsbgnpy.libsbgn.map`
         """
         if sbgn_map is None and map_id is not None:
-            tx = self.neograph.begin()
+            tx = self.graph.begin()
             query = 'MATCH p=(m:{} {{id: "{}"}})-[*]->() \
                     FOREACH(n IN nodes(p) | DETACH DELETE n'.format(
                         STONEnum["MAP"].value, map_id)
@@ -134,7 +135,7 @@ class STON(object):
                 if os.path.isfile(sbgn_map):
                     sbgn_map = utils.sbgn_file_to_map(sbgn_map)
             subgraph = converter.map_to_subgraph(sbgn_map, map_id = map_id)
-            return utils.exists_subgraph(subgraph, self.neograph)
+            return utils.exists_subgraph(subgraph, self.graph)
         else:
             return False
 
@@ -151,7 +152,7 @@ class STON(object):
         :return: the SBGN map or `None`
         :rtype: `libsbgnpy.libsbgn.map` or `None`
         """
-        tx = self.neograph.begin()
+        tx = self.graph.begin()
         query = 'MATCH p=(m:{} {{id: "{}"}})-[*]->() RETURN p'.format(
                 STONEnum["MAP"].value, map_id)
         cursor = tx.run(query)
@@ -199,7 +200,7 @@ class STON(object):
         :return: the resulting SBGN maps, under the form of a generator. Each returned element is a tuple of the form (map, map_id).
         :rtype: `Iterator[(`libsbgnpy.libsbgn.map`, `str`)]`
         """
-        tx = self.neograph.begin()
+        tx = self.graph.begin()
         cursor = tx.run(query)
         tx.commit()
         subgraphs = set([])
@@ -210,7 +211,9 @@ class STON(object):
                 subgraphs.add(record.to_subgraph())
         for subgraph in subgraphs:
             if complete:
-                subgraph = completer.complete_subgraph(subgraph, self.neograph)
+                subgraph = completer.complete_subgraph(subgraph, self.graph)
+            print("AAAA")
+            utils.print_subgraph(subgraph)
             sbgn_maps = converter.subgraph_to_map(subgraph)
             for sbgn_map in sbgn_maps:
                 if to_top_left:
@@ -240,7 +243,7 @@ class STON(object):
         """
 
         sbgn_maps = self.query_to_map(
-                query, complete = complete, merge_records = merge_records, to_top_left = to_top_left)
+                query, complete=complete, merge_records=merge_records, to_top_left = to_top_left)
         try:
             sbgn_map1 = next(sbgn_maps)
         except:

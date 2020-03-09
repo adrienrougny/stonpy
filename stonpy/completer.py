@@ -1,6 +1,6 @@
-from ston.model import STONEnum
+from stonpy.model import STONEnum
 
-import ston.utils as utils
+import stonpy.utils as utils
 
 def complete_subgraph(subgraph, db_graph):
     """Completes a subgraph w.r.t to a graph and returns it.
@@ -47,6 +47,7 @@ def complete_subgraph(subgraph, db_graph):
             elif node.has_label(STONEnum["PORT"].value):
                 subgraph = _complete_subgraph_with_port_node(
                     node, subgraph, db_graph, completed)
+
     return subgraph
 
 
@@ -143,8 +144,10 @@ def _find_relationship_and_complete_subgraph(
         relationship = utils.match_one(
             subgraph, (start_node, end_node), STONEnum[r_name].value)
         if relationship is None:
+            print("AAA")
             relationship = db_graph.match_one(
                     (start_node, end_node), STONEnum[r_name].value)
+            print("BBB")
         relationships = [relationship]
     elif nary:
         relationships = db_graph.match(

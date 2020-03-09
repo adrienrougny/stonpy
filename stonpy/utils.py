@@ -45,6 +45,8 @@ def subgraph_union(subgraph1, subgraph2):
         return None
 
 def print_subgraph(subgraph):
+    if not subgraph.nodes and not subgraph.relationships:
+        print("Empty subgraph")
     for n in subgraph.nodes:
         print(n)
     for r in subgraph.relationships:

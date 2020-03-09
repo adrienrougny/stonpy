@@ -2,8 +2,8 @@ from py2neo import Database, Graph, Node, Relationship, Subgraph
 
 import libsbgnpy.libsbgn as libsbgn
 
-from ston.model import *
-import ston.utils as utils
+from stonpy.model import *
+import stonpy.utils as utils
 
 def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
     """Converts an SBGN map to a subgraph and returns it.
