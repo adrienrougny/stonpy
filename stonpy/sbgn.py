@@ -174,22 +174,16 @@ class Map(object):
     def add_arcgroup(self, arcgroup):
         self.arcgroups.append(arcgroup)
 
+    def to_tuple(self):
+        return (self.language, sorted(self.glyphs),
+            sorted(self.arcs), sorted(self.arcgroups))
+
     def __eq__(self, other):
-        return isinstance(other, Map) and (self.language, sorted(self.glyphs),
-            sorted(self.arcs), sorted(self.arcgroups)
-            ) == (
-                other.language, sorted(other.glyphs), sorted(other.arcs),
-                sorted(other.arcgroups)
-                )
+        return  isinstance(other, Map) and self.to_tuple() == other.to_tuple()
 
     def __lt__(self, other):
         if isinstance(other, Map):
-            return (self.language, sorted(self.glyphs), sorted(self.arcs),
-                sorted(self.arcgroups)
-                ) < (
-                    other.language, sorted(other.glyphs), sorted(other.arcs),
-                    sorted(other.arcgroups)
-                    )
+            return self.to_tuple() < other.to_tuple()
         else:
             return TypeError
 
@@ -241,29 +235,19 @@ class Glyph(object):
         self.glyphs.append(glyph)
         glyph.owner = self
 
-    def __eq__(self, other):
-        return isinstance(other, Glyph) and (self.clazz, self.label,
+    def to_tuple(self):
+        return (self.clazz, self.label,
             self.clone, self.bbox,
             self.orientation, sorted(self.glyphs),
             sorted(self.ports), self.compartmentRef,
-            self.compartmentOrder
-            ) == (other.clazz, other.label, other.clone, other.bbox,
-                other.orientation, sorted(other.glyphs),
-                sorted(other.ports), other.compartmentRef,
-                other.compartmentOrder
-                )
+            self.compartmentOrder)
+
+    def __eq__(self, other):
+        return isinstance(other, Glyph) and self.to_tuple() == other.to_tuple()
 
     def __lt__(self, other):
         if isinstance(other, Glyph):
-            return (self.clazz, self.label, self.clone, self.bbox,
-                self.orientation, sorted(self.glyphs),
-                sorted(self.ports), self.compartmentRef,
-                self.compartmentOrder
-                ) < (other.clazz, other.label, other.clone, other.bbox,
-                    other.orientation, sorted(other.glyphs),
-                    sorted(other.ports), other.compartmentRef,
-                    other.compartmentOrder
-                    )
+            return self.to_tuple() < other.to_tuple()
         else:
             return TypeError
 
@@ -301,23 +285,19 @@ class Arc(object):
                 return g
         return None
 
-    def __eq__(self, other):
-        return isinstance(other, Arc) and (self.clazz, self.source,
+    def to_tuple(self):
+        return (self.clazz, self.source,
             self.target, self.start, self.end, sorted(self.nexts),
-            sorted(self.ports), sorted(self.glyphs)
-            ) == (other.clazz, other.source, other.target, other.start,
-                other.end, sorted(other.nexts), sorted(other.ports),
-                sorted(other.glyphs)
-                )
+            sorted(self.ports), sorted(self.glyphs))
+
+    def __eq__(self, other):
+        return isinstance(other, Arc) and self.to_tuple() == other.to_tuple()
 
     def __lt__(self, other):
         if isinstance(other, Arc):
-            return (self.clazz, self.source, self.target, self.start, self.end,
-                sorted(self.nexts), sorted(self.ports), sorted(self.glyphs)
-                ) < (other.clazz, other.source, other.target, other.start,
-                    other.end, sorted(other.nexts), sorted(other.ports),
-                    sorted(other.glyphs)
-                    )
+            return self.to_tuple() < other.to_tuple()
+        else:
+            return TypeError
 
 @total_ordering
 class Arcgroup(object):
@@ -332,16 +312,15 @@ class Arcgroup(object):
     def add_arc(self, arc):
         self.arcs.append(arc)
 
+    def to_tuple(self):
+        return (sorted(self.glyphs), sorted(self.arcs))
+
     def __eq__(self, other):
-        return isinstance(other, Arcgroup) and (sorted(self.glyphs),
-            sorted(self.arcs)
-            ) == (sorted(other.glyphs), sorted(other.arcs))
+        return isinstance(other, Arcgroup) and self.to_tuple() == other.to_tuple()
 
     def __lt__(self, other):
         if isinstance(other, Arcgroup):
-            return (sorted(self.glyphs), sorted(self.arcs)) < (
-                sorted(other.glyphs), sorted(other.arcs)
-                )
+            return self.to_tuple() < other.to_tuple()
         else:
             return TypeError
 
@@ -352,14 +331,15 @@ class Label(object):
         self.text = text
         self.bbox = bbox
 
+    def to_tuple(self):
+        return (self.text, self.bbox)
+
     def __eq__(self, other):
-        return isinstance(other, Label) and (self.text, self.bbox) == (
-            other.text, other.bbox
-            )
+        return isinstance(other, Label) and  self.to_tuple() == other.to_tuple()
 
     def __lt__(self, other):
         if isinstance(other, Label):
-            return (self.text, self.bbox) < (other.text, other.bbox)
+            return self.to_tuple() < other.to_tuple()
         else:
             return TypeError
 
@@ -372,14 +352,15 @@ class Bbox(object):
         self.h = h
         self.w = w
 
+    def to_tuple(self):
+        return (self.x, self.y, self.w, self.h)
+
     def __eq__(self, other):
-        return isinstance(other, Bbox) and (self.x, self.y, self.w,
-            self.h) == (other.x, other.y, other.w, other.h)
+        return isinstance(other, Bbox) and self.to_tuple() == other.to_tuple()
 
     def __lt__(self, other):
         if isinstance(other, Bbox):
-            return (self.x, self.y, self.w, self.h) < (other.x, other.y,
-                other.w, other.h)
+            return self.to_tuple() < other.to_tuple()
         else:
             return TypeError
 
@@ -389,12 +370,15 @@ class Clone(object):
     def __init__(self, label=None):
         self.label = label
 
+    def to_tuple(self):
+        return (self.label)
+
     def __eq__(self, other):
-        return isinstance(other, Clone) and self.label == other.label
+        return isinstance(other, Clone) and self.to_tuple() == other.to_tuple()
 
     def __lt__(self, other):
         if isinstance(other, Clone):
-            return self.label < other.label
+            return self.to_tuple() < other.to_tuple()
         else:
             return TypeError
 
@@ -405,13 +389,15 @@ class Point(object):
         self.x = x
         self.y = y
 
+    def to_tuple(self):
+        return (self.x, self.y)
+
     def __eq__(self, other):
-        return self.__class__.__name__ == other.__class__.__name__ and (self.x,
-            self.y) == (other.x, other.y)
+        return self.__class__.__name__ == other.__class__.__name__ and self.to_tuple() == other.to_tuple()
 
     def __lt__(self, other):
         if isinstance(other, Point):
-            return (self.x, self.y) < (other.x, other.y)
+            return self.to_tuple() < other.to_tuple()
         else:
             return TypeError
 

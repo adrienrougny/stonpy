@@ -1,4 +1,5 @@
 from math import atan2, pi
+from collections import defaultdict
 
 import libsbgnpy.libsbgn as libsbgn
 
@@ -158,6 +159,57 @@ def node_to_cypher(node, name=None):
         props = ""
     s = "({}{}{})".format(name, labels, props)
     return s
+
+def reduce_compartments_of_map(sbgnmap, margin=10):
+    dcompartments = defaultdict(list)
+    for glyph in sbgnmap.get_glyph():
+        if glyph.compartmentRef is not None:
+            bbox = glyph.get_bbox()
+            compartment_id = glyph.compartmentRef
+            if compartment_id not in dcompartments:
+                dcompartments[compartment_id] = {
+                    "min_x": bbox.get_x(),
+                    "min_y": bbox.get_y(),
+                    "max_x": bbox.get_x() + bbox.get_w(),
+                    "max_y": bbox.get_y() + bbox.get_h()}
+            else:
+                if dcompartments[compartment_id]["min_x"] > bbox.get_x():
+                    dcompartments[compartment_id]["min_x"] = bbox.get_x()
+                if dcompartments[compartment_id]["min_y"] > bbox.get_y():
+                    dcompartments[compartment_id]["min_y"] = bbox.get_y()
+                if dcompartments[compartment_id]["max_x"] < bbox.get_x() + \
+                        bbox.get_w():
+                    dcompartments[compartment_id]["max_x"] = bbox.get_x() + \
+                        bbox.get_w()
+                if dcompartments[compartment_id]["max_y"] < bbox.get_y() + \
+                        bbox.get_h():
+                    dcompartments[compartment_id]["max_x"] = bbox.get_y() + \
+                        bbox.get_h()
+            for subglyph in glyph.get_glyph():
+                bbox = subglyph.get_bbox()
+                if dcompartments[compartment_id]["min_x"] > bbox.get_x():
+                    dcompartments[compartment_id]["min_x"] = bbox.get_x()
+                if dcompartments[compartment_id]["min_y"] > bbox.get_y():
+                    dcompartments[compartment_id]["min_y"] = bbox.get_y()
+                if dcompartments[compartment_id]["max_x"] < bbox.get_x() + \
+                        bbox.get_w():
+                    dcompartments[compartment_id]["max_x"] = bbox.get_x() + \
+                        bbox.get_w()
+                if dcompartments[compartment_id]["max_y"] < bbox.get_y() + \
+                        bbox.get_h():
+                    dcompartments[compartment_id]["max_x"] = bbox.get_y() + \
+                        bbox.get_h()
+    for glyph in sbgnmap.get_glyph():
+        if glyph.get_class().name == "COMPARTMENT":
+            min_x = dcompartments[glyph.get_id()]["min_x"] - margin
+            min_y = dcompartments[glyph.get_id()]["min_y"] - margin
+            max_x = dcompartments[glyph.get_id()]["max_x"] + margin
+            max_y = dcompartments[glyph.get_id()]["max_y"] + margin
+            bbox = glyph.get_bbox()
+            bbox.set_x(min_x)
+            bbox.set_y(min_y)
+            bbox.set_w(max_x - min_x)
+            bbox.set_h(max_y - min_y)
 
 def map_to_top_left(sbgnmap):
 
