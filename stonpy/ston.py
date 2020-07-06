@@ -51,9 +51,15 @@ class STON(object):
                 if os.path.isfile(sbgn_map):
                     sbgn_map = utils.sbgn_file_to_map(sbgn_map)
             if map_id is not None:
-                query = 'MATCH p=(m:{} {{{}: "{}"}})-[*]->() RETURN p'.format(
+                # query = 'MATCH p=(m:{} {{{}: "{}"}})-[*]->() RETURN p'.format(
+                #     STONEnum["MAP"].value, STONEnum["ID"].value, map_id)
+                # maps_to_test = list(self.query_to_map(query, merge_records=True, complete=False))
+                # FOLLOWING SEEMS FASTER THAN ABOVE, TO TEST FURTHER
+                query = 'MATCH (m:{} {{{}: "{}"}}) RETURN m'.format(
                     STONEnum["MAP"].value, STONEnum["ID"].value, map_id)
-                maps_to_test = self.query_to_map(query, complete=False)
+                maps_to_test = list(self.query_to_map(query, complete=True))
+
+
             else:
                 maps_to_test = []
                 subgraph = converter.map_to_subgraph(sbgn_map)
@@ -71,13 +77,13 @@ class STON(object):
                     cursor = self.graph.run(query)
                     for record in cursor:
                         neo_id = record["id(m)"]
-                        query = 'MATCH p=(m:{})-[*]->() WHERE id(m) = {} \
-                            RETURN p'.format(STONEnum["MAP"].value, neo_id)
-                        sbgn_maps = self.query_to_map(query, complete=False)
-                        try:
-                            maps_to_test.append(next(sbgn_maps))
-                        except:
-                            pass
+                        # query = 'MATCH p=(m:{})-[*]->() WHERE id(m) = {} \
+                        #     RETURN p'.format(STONEnum["MAP"].value, neo_id)
+                        # maps_to_test += list(self.query_to_map(query, merge_records=True, complete=False))
+                        # FOLLOWING SEEMS FASTER THAN ABOVE, TO TEST FURTHER
+                        query = 'MATCH (m:{}) WHERE id(m) = {} \
+                            RETURN m'.format(STONEnum["MAP"].value, neo_id)
+                        maps_to_test += list(self.query_to_map(query, complete=True))
             for sbgn_map2 in maps_to_test:
                 if utils.are_maps_equal(sbgn_map, sbgn_map2[0]):
                     return True
@@ -216,6 +222,7 @@ class STON(object):
         else:
             for record in cursor:
                 subgraphs.add(record.to_subgraph())
+        i = 0
         for subgraph in subgraphs:
             if complete:
                 subgraph = completer.complete_subgraph(subgraph, self.graph)

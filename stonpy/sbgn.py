@@ -70,7 +70,6 @@ def cast_arc(old, dids):
     new = Arc()
     new.id = old.get_id()
     new.clazz = ArcClass[old.get_class().name]
-    print(old.get_id(), old.get_source(), old.get_target())
     new.source = dids[old.get_source()]
     new.target = dids[old.get_target()]
     new.start = cast_start(old.get_start())
@@ -175,8 +174,11 @@ class Map(object):
         self.arcgroups.append(arcgroup)
 
     def to_tuple(self):
-        return (self.language, sorted(self.glyphs),
-            sorted(self.arcs), sorted(self.arcgroups))
+        return (self.__class__.__name__,
+            self.language,
+            tuple([glyph.to_tuple() for glyph in sorted(self.glyphs)]),
+            tuple([arc.to_tuple() for arc in sorted(self.arcs)]),
+            tuple([arcgroup.to_tuple() for arcgroup in sorted(self.arcgroups)]))
 
     def __eq__(self, other):
         return  isinstance(other, Map) and self.to_tuple() == other.to_tuple()
@@ -236,10 +238,16 @@ class Glyph(object):
         glyph.owner = self
 
     def to_tuple(self):
-        return (self.clazz, self.label,
-            self.clone, self.bbox,
-            self.orientation, sorted(self.glyphs),
-            sorted(self.ports), self.compartmentRef,
+        return (self.__class__.__name__,
+            self.clazz,
+            self.label.to_tuple() if self.label is not None else None,
+            self.clone.to_tuple() if self.clone is not None else None,
+            self.bbox.to_tuple() if self.bbox is not None else None,
+            self.orientation,
+            tuple([glyph.to_tuple() for glyph in sorted(self.glyphs)]),
+            tuple([port.to_tuple() for port in sorted(self.ports)]),
+            self.compartmentRef.to_tuple() if self.compartmentRef is not None \
+                    else None,
             self.compartmentOrder)
 
     def __eq__(self, other):
@@ -286,9 +294,13 @@ class Arc(object):
         return None
 
     def to_tuple(self):
-        return (self.clazz, self.source,
-            self.target, self.start, self.end, sorted(self.nexts),
-            sorted(self.ports), sorted(self.glyphs))
+        return (self.__class__.__name__,
+            self.clazz,
+            self.source.to_tuple(), self.target.to_tuple(),
+            self.start.to_tuple(), self.end.to_tuple(),
+            tuple([next.to_tuple() for next in sorted(self.nexts)]),
+            tuple([glyph.to_tuple() for glyph in sorted(self.glyphs)]),
+            tuple([port.to_tuple() for port in sorted(self.ports)]))
 
     def __eq__(self, other):
         return isinstance(other, Arc) and self.to_tuple() == other.to_tuple()
@@ -313,7 +325,9 @@ class Arcgroup(object):
         self.arcs.append(arc)
 
     def to_tuple(self):
-        return (sorted(self.glyphs), sorted(self.arcs))
+        return (self.__class__.__name__,
+            tuple([glyph.to_tuple() for glyph in sorted(self.glyphs)]),
+            tuple([arc.to_tuple() for arc in sorted(self.arcs)]))
 
     def __eq__(self, other):
         return isinstance(other, Arcgroup) and self.to_tuple() == other.to_tuple()
@@ -332,7 +346,8 @@ class Label(object):
         self.bbox = bbox
 
     def to_tuple(self):
-        return (self.text, self.bbox)
+        return (self.__class__.__name__,
+            self.text, self.bbox.to_tuple() if self.bbox is not None else None)
 
     def __eq__(self, other):
         return isinstance(other, Label) and  self.to_tuple() == other.to_tuple()
@@ -353,7 +368,8 @@ class Bbox(object):
         self.w = w
 
     def to_tuple(self):
-        return (self.x, self.y, self.w, self.h)
+        return (self.__class__.__name__,
+            self.x, self.y, self.w, self.h)
 
     def __eq__(self, other):
         return isinstance(other, Bbox) and self.to_tuple() == other.to_tuple()
@@ -371,7 +387,8 @@ class Clone(object):
         self.label = label
 
     def to_tuple(self):
-        return (self.label)
+        return (self.__class__.__name__,
+            self.label.to_tuple() if self.label is not None else None)
 
     def __eq__(self, other):
         return isinstance(other, Clone) and self.to_tuple() == other.to_tuple()
@@ -390,7 +407,8 @@ class Point(object):
         self.y = y
 
     def to_tuple(self):
-        return (self.x, self.y)
+        return (self.__class__.__name__,
+            self.x, self.y)
 
     def __eq__(self, other):
         return self.__class__.__name__ == other.__class__.__name__ and self.to_tuple() == other.to_tuple()

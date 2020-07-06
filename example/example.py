@@ -1,6 +1,5 @@
 import stonpy
 
-
 uri = "bolt://localhost:7687"
 user = "neo4j"
 password = "neofourj"
@@ -9,13 +8,13 @@ ston = stonpy.STON(uri, user, password)
 
 sbgn_file = "insulin.sbgn"
 
-# ston.graph.delete_all()
-# ston.create_map(sbgn_file, "id1")
+ston.graph.delete_all()
+ston.create_map(sbgn_file, "id1")
 
-print(ston.has_map("id1"))
-print(ston.has_map(sbgn_map=sbgn_file))
-print(ston.has_map(map_id="id1", sbgn_map=sbgn_file))
-print(ston.has_map(map_id="id2", sbgn_map=sbgn_file))
+assert ston.has_map("id1") is True
+assert ston.has_map(sbgn_map=sbgn_file) is True
+assert ston.has_map(map_id="id1", sbgn_map=sbgn_file) is True
+assert ston.has_map(map_id="id2", sbgn_map=sbgn_file) is False
 
 ston.get_map_to_sbgn_file("id1", "insulin_exported.sbgn")
 

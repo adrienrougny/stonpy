@@ -115,7 +115,7 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False, order=None):
     else:
         node[STONEnum["CLONE"].value] = False
 
-    if glyph.get_compartmentRef():
+    if glyph.get_compartmentOrder():
         node[STONEnum["COMPARTMENT_ORDER"].value] = \
                 glyph.get_compartmentOrder()
     if glyph.get_compartmentRef():
@@ -468,6 +468,9 @@ def _glyph_from_node(node):
         glyph.set_clone(clone)
     if node[STONEnum["ORIENTATION"].value]:
         glyph.orientation = node[STONEnum["ORIENTATION"].value]
+    if node[STONEnum["COMPARTMENT_ORDER"].value]:
+        glyph.set_compartmentOrder(node[STONEnum["COMPARTMENT_ORDER"].value])
+
     return glyph
 
 

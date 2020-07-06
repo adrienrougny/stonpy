@@ -3,13 +3,11 @@
     <map language="process description">
         <glyph compartmentOrder="-41.0" id="glyph5" class="compartment">
             <label text="CYTOSOL">
-                <bbox y="174.0" x="687.0" h="31.0" w="126.0"/>
             </label>
             <bbox y="170.0" x="20.0" h="1140.0" w="1460.0"/>
         </glyph>
         <glyph compartmentOrder="-40.0" id="glyph2" class="compartment">
             <label text="EXTRACELLULAR">
-                <bbox y="64.0" x="639.0" h="31.0" w="222.0"/>
             </label>
             <bbox y="60.0" x="20.0" h="110.0" w="1460.0"/>
         </glyph>
@@ -211,7 +209,6 @@
         </arc>
         <arc target="glyph37.1" source="glyph6" id="arc2" class="consumption">
             <start y="150.0" x="165.0"/>
-            <next y="210.0" x="225.0"/>
             <end y="210.0" x="251.0"/>
         </arc>
         <arc target="glyph7" source="glyph38.2" id="arc4" class="production">
@@ -220,7 +217,6 @@
         </arc>
         <arc target="glyph32" source="glyph38.2" id="arc5" class="production">
             <start y="475.0" x="454.0"/>
-            <next y="475.0" x="485.0"/>
             <end y="391.33685" x="530.63446"/>
         </arc>
         <arc target="glyph38" source="glyph3" id="arc6" class="catalysis">
@@ -233,7 +229,6 @@
         </arc>
         <arc target="glyph38.1" source="glyph30" id="arc8" class="consumption">
             <start y="392.311" x="337.4141"/>
-            <next y="475.0" x="375.0"/>
             <end y="475.0" x="406.0"/>
         </arc>
         <arc target="glyph40.2" source="glyph14" id="arc9" class="consumption">
@@ -270,7 +265,6 @@
         </arc>
         <arc target="glyph26" source="glyph41.2" id="arc19" class="production">
             <start y="990.0" x="299.0"/>
-            <next y="990.0" x="315.0"/>
             <end y="1059.6354" x="358.98022"/>
         </arc>
         <arc target="glyph4" source="glyph18" id="arc20" class="consumption">
@@ -331,7 +325,6 @@
         </arc>
         <arc target="glyph41.1" source="glyph29" id="arc18" class="consumption">
             <start y="1057.8878" x="192.84259"/>
-            <next y="990.0" x="225.0"/>
             <end y="990.0" x="251.0"/>
         </arc>
         <arc target="glyph3" source="glyph37.2" id="arc3" class="production">
