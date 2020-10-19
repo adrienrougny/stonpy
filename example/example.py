@@ -9,7 +9,7 @@ ston = stonpy.STON(uri, user, password)
 sbgn_file = "insulin.sbgn"
 
 ston.graph.delete_all()
-ston.create_map(sbgn_file, "id1")
+ston.create_map(sbgn_file, map_id="id1")
 
 assert ston.has_map("id1") is True
 assert ston.has_map(sbgn_map=sbgn_file) is True
@@ -18,8 +18,10 @@ assert ston.has_map(map_id="id2", sbgn_map=sbgn_file) is False
 
 ston.get_map_to_sbgn_file("id1", "insulin_exported.sbgn")
 
+# process which consumes IRS1-4
 query1 = 'MATCH (p)-[:CONSUMES]->(n {label:"IRS1-4"}) RETURN p'
 
+# phosphorylation process
 query2 = '''MATCH (process)-[:CONSUMES]->(reactant),
     (process)-[:PRODUCES]->(product),
     (reactant)-[:HAS_STATE_VARIABLE]-(reactant_sv),
