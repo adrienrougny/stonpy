@@ -178,7 +178,6 @@ class STON(object):
                 subgraph = subgraph | node
             for relationship in record["relationships"]:
                 subgraph = subgraph | relationship
-        # subgraph = cursor.to_subgraph()
         sbgn_maps = converter.subgraph_to_map(subgraph)
         try:
             return next(sbgn_maps)
@@ -199,6 +198,8 @@ class STON(object):
         sbgn_map = self.get_map(map_id)
         if sbgn_map is not None:
             utils.map_to_sbgn_file(sbgn_map[0], sbgn_file)
+        else:
+            raise Exception("No map found")
 
 
     def query_to_map(self, query, complete=True, merge_records=False, to_top_left=False):
