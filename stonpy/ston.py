@@ -147,11 +147,10 @@ class STON(object):
             if isinstance(sbgn_map, str):
                 if os.path.isfile(sbgn_map):
                     sbgn_map = utils.sbgn_file_to_map(sbgn_map)
-            subgraph = converter.map_to_subgraph(sbgn_map, map_id = map_id)
+            subgraph = converter.map_to_subgraph(sbgn_map, map_id=map_id)
             return utils.exists_subgraph(subgraph, self.graph)
         else:
             return False
-
 
 
     def get_map(self, map_id):
@@ -166,11 +165,20 @@ class STON(object):
         :rtype: `libsbgnpy.libsbgn.map` or `None`
         """
         tx = self.graph.begin()
-        query = 'MATCH p=(m:{} {{id: "{}"}})-[*]->() RETURN p'.format(
-                STONEnum["MAP"].value, map_id)
+        query = 'MATCH (m:{} {{id: "{}"}}) \
+                CALL apoc.path.subgraphAll(m, {{relationshipFilter: ">"}}) \
+                YIELD nodes, relationships \
+                RETURN m, nodes, relationships'.format(
+                    STONEnum["MAP"].value, map_id)
         cursor = tx.run(query)
         tx.commit()
-        subgraph = cursor.to_subgraph()
+        for record in cursor:
+            subgraph = record["m"]
+            for node in record["nodes"]:
+                subgraph = subgraph | node
+            for relationship in record["relationships"]:
+                subgraph = subgraph | relationship
+        # subgraph = cursor.to_subgraph()
         sbgn_maps = converter.subgraph_to_map(subgraph)
         try:
             return next(sbgn_maps)
