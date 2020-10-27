@@ -1,2 +1,0 @@
-libsbgnpy
-py2neo
