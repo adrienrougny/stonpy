@@ -143,6 +143,8 @@ class STONEnum(Enum):
     CARDINALITY_PROP = "cardinality"
     UI_TYPE = "type"
     ORDER = "order"
+    NOTES = "notes"
+    EXTENSION = "extension"
 
 class Ontologies(Enum):
     ACTIVITY = set(["BIOLOGICAL_ACTIVITY", "PHENOTYPE"])

@@ -1,6 +1,7 @@
 from py2neo import Database, Graph, Node, Relationship, Subgraph
 
 import libsbgnpy.libsbgn as libsbgn
+import libsbgnpy.libsbgnSubs as libsbgnSubs
 
 from stonpy.model import *
 import stonpy.utils as utils
@@ -23,11 +24,14 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
     map_node = Node()
 
     map_node.add_label(STONEnum["MAP"].value)
-    language = sbgn_map.get_language().value
-    map_node[STONEnum["LANGUAGE"].value] = language
+    map_node[STONEnum["LANGUAGE"].value] = sbgn_map.get_language().value
     map_node[STONEnum["MAP_ID"].value] = map_id
+    if sbgn_map.get_extension() is not None:
+        map_node[STONEnum["EXTENSION"].value] = str(utils.decode_notes_and_extension(sbgn_map.get_extension()))
+    if sbgn_map.get_notes() is not None:
+        map_node[STONEnum["NOTES"].value] = str(utils.decode_notes_and_extension(sbgn_map.get_notes()))
 
-    subgraph = None
+    subgraph = map_node
     for glyph in sbgn_map.get_glyph():
         if glyph.get_class().name == "COMPARTMENT":
             glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
@@ -91,6 +95,10 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False, order=None):
 
     node[STONEnum["CLASS"].value] = glyph.get_class().value
     node[STONEnum["ID"].value] = glyph.get_id()
+    if glyph.get_notes():
+        node[STONEnum["NOTES"].value] = str(utils.decode_notes_and_extension(glyph.get_notes()))
+    if glyph.get_extension():
+        node[STONEnum["EXTENSION"].value] = str(utils.decode_notes_and_extension(glyph.get_extension()))
 
     if order is not None:
         node[STONEnum["ORDER"].value] = order
@@ -239,6 +247,10 @@ def _arc_to_subgraph(arc, dids, dpids, make_shortcuts=True):
 
     node[STONEnum["CLASS"].value] = arc.get_class().value
     node[STONEnum["ID"].value] = arc.get_id()
+    if arc.get_notes():
+        node[STONEnum["NOTES"].value] = str(utils.decode_notes_and_extension(arc.get_notes()))
+    if arc.get_extension():
+        node[STONEnum["EXTENSION"].value] = str(utils.decode_notes_and_extension(arc.get_extension()))
 
     source = dids[arc.get_source()]
     subgraph |= Relationship(node, STONEnum["HAS_SOURCE"].value, source)
@@ -343,6 +355,12 @@ def _arcgroup_to_subgraph(arcgroup, dids, dpids, make_shortcuts=True):
         node[STONEnum["CLASS"].value] = arcgroup.get_class()
     else:
         node[STONEnum["CLASS"].value] = arcgroup.get_class().value
+
+    if arcgroup.get_notes():
+        node[STONEnum["NOTES"].value] = str(utils.decode_notes_and_extension(arcgroup.get_notes()))
+    if arcgroup.get_extension():
+        node[STONEnum["EXTENSION"].value] = str(utils.decode_notes_and_extension(arcgroup.get_extension()))
+
     for glyph in arcgroup.get_glyph():
         glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
         subgraph |= glyph_subgraph
@@ -373,6 +391,10 @@ def subgraph_to_map(subgraph):
             language = node[STONEnum["LANGUAGE"].value]
             map_id = node[STONEnum["ID"].value]
             sbgn_map.set_language(libsbgn.Language(language))
+            if node[STONEnum["NOTES"].value]:
+                sbgn_map.set_notes(libsbgnSubs.Notes(node[STONEnum["NOTES"].value]))
+            if node[STONEnum["EXTENSION"].value]:
+                sbgn_map.set_extension(libsbgnSubs.Extension(node[STONEnum["EXTENSION"].value]))
             sbgn_maps.add((sbgn_map, map_id))
             dobjects[node] = sbgn_map
         if node.has_label(STONEnum["BBOX"].value):
@@ -444,6 +466,11 @@ def _glyph_from_node(node):
     glyph = libsbgn.glyph()
     glyph.set_id(node[STONEnum["ID"].value])
     glyph.set_class(libsbgn.GlyphClass(node[STONEnum["CLASS"].value]))
+    if node[STONEnum["NOTES"].value]:
+        glyph.set_notes(libsbgnSubs.Notes(node[STONEnum["NOTES"].value]))
+    if node[STONEnum["EXTENSION"].value]:
+        glyph.set_extension(libsbgnSubs.Extension(node[STONEnum["EXTENSION"].value]))
+
     if node.has_label(STONEnum["STATE_VARIABLE"].value):
         state = libsbgn.stateType()
         state.set_value(node[STONEnum["VALUE"].value])
@@ -512,6 +539,10 @@ def _arc_from_node(node):
     arc = libsbgn.arc()
     arc.set_id(node[STONEnum["ID"].value])
     arc.set_class(libsbgn.ArcClass(node[STONEnum["CLASS"].value]))
+    if node[STONEnum["NOTES"].value]:
+        arc.set_notes(libsbgnSubs.Notes(node[STONEnum["NOTES"].value]))
+    if node[STONEnum["EXTENSION"].value]:
+        arc.set_extension(libsbgnSubs.Extension(node[STONEnum["EXTENSION"].value]))
     return arc
 
 
@@ -523,4 +554,6 @@ def _arcgroup_from_node(node):
         arcgroup.set_class(node[STONEnum["CLASS"].value])
     else:
         arcgroup.set_class(libsbgn.ArcClass(node[STONEnum["CLASS"].value]))
+    arcgroup.set_notes(libsbgnSubs.Notes(node[STONEnum["NOTES"].value]))
+    arcgroup.set_extension(libsbgnSubs.Extension(node[STONEnum["EXTENSION"].value]))
     return arcgroup

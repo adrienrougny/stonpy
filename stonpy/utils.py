@@ -267,3 +267,7 @@ def atan2pi(y, x):
 
 def are_maps_equal(map1, map2):
     return cast_map(map1) == cast_map(map2)
+
+def decode_notes_and_extension(obj):
+    obj.anytypeobjs_ = [s.decode() for s in obj.anytypeobjs_]
+    return obj
