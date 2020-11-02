@@ -1,4 +1,4 @@
-from py2neo import Database, Graph, Node, Relationship, Subgraph
+from py2neo import Graph, Node, Relationship, Subgraph
 
 import libsbgnpy.libsbgn as libsbgn
 import libsbgnpy.libsbgnSubs as libsbgnSubs
