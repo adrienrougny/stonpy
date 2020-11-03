@@ -2,7 +2,7 @@ import os.path
 
 import libsbgnpy.libsbgn as libsbgn
 
-from py2neo import Graph
+from py2neo import Graph, Subgraph
 
 import stonpy.utils as utils
 import stonpy.converter as converter
@@ -173,11 +173,7 @@ class STON(object):
         cursor = tx.run(query)
         tx.commit()
         for record in cursor:
-            subgraph = record["m"]
-            for node in record["nodes"]:
-                subgraph = subgraph | node
-            for relationship in record["relationships"]:
-                subgraph = subgraph | relationship
+            subgraph = Subgraph(nodes=[record["m"]] + record["nodes"], relationships=record["relationships"])
         sbgn_maps = converter.subgraph_to_map(subgraph)
         try:
             return next(sbgn_maps)
