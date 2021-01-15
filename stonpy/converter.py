@@ -27,15 +27,15 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
     map_node[STONEnum["LANGUAGE"].value] = sbgn_map.get_language().value
     map_node[STONEnum["MAP_ID"].value] = map_id
     if sbgn_map.get_extension() is not None:
-        map_node[STONEnum["EXTENSION"].value] = str(utils.decode_notes_and_extension(sbgn_map.get_extension()))
+        map_node[STONEnum["EXTENSION"].value] = str(sbgn_map.get_extension())
     if sbgn_map.get_notes() is not None:
-        map_node[STONEnum["NOTES"].value] = str(utils.decode_notes_and_extension(sbgn_map.get_notes()))
+        map_node[STONEnum["NOTES"].value] = str(sbgn_map.get_notes())
 
     subgraph = map_node
     for glyph in sbgn_map.get_glyph():
         if glyph.get_class().name == "COMPARTMENT":
             glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
-            subgraph = utils.subgraph_union(subgraph, glyph_subgraph)
+            subgraph |= glyph_subgraph
             dids[glyph.get_id()] = glyph_node
             subgraph |= Relationship(
                 map_node, STONEnum["HAS_GLYPH"].value, glyph_node)
@@ -43,7 +43,7 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
     for glyph in sbgn_map.get_glyph():
         if glyph.get_class().name != "COMPARTMENT":
             glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
-            subgraph = utils.subgraph_union(subgraph, glyph_subgraph)
+            subgraph |= glyph_subgraph
             subgraph |= Relationship(
                 map_node, STONEnum["HAS_GLYPH"].value, glyph_node)
 
@@ -73,7 +73,6 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
             map_node,
             STONEnum["HAS_ARCGROUP"].value,
             arcgroup_node)
-
     return subgraph
 
 
@@ -96,9 +95,9 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False, order=None):
     node[STONEnum["CLASS"].value] = glyph.get_class().value
     node[STONEnum["ID"].value] = glyph.get_id()
     if glyph.get_notes():
-        node[STONEnum["NOTES"].value] = str(utils.decode_notes_and_extension(glyph.get_notes()))
+        node[STONEnum["NOTES"].value] = str(glyph.get_notes())
     if glyph.get_extension():
-        node[STONEnum["EXTENSION"].value] = str(utils.decode_notes_and_extension(glyph.get_extension()))
+        node[STONEnum["EXTENSION"].value] = str(glyph.get_extension())
 
     if order is not None:
         node[STONEnum["ORDER"].value] = order
@@ -248,9 +247,9 @@ def _arc_to_subgraph(arc, dids, dpids, make_shortcuts=True):
     node[STONEnum["CLASS"].value] = arc.get_class().value
     node[STONEnum["ID"].value] = arc.get_id()
     if arc.get_notes():
-        node[STONEnum["NOTES"].value] = str(utils.decode_notes_and_extension(arc.get_notes()))
+        node[STONEnum["NOTES"].value] = str(arc.get_notes())
     if arc.get_extension():
-        node[STONEnum["EXTENSION"].value] = str(utils.decode_notes_and_extension(arc.get_extension()))
+        node[STONEnum["EXTENSION"].value] = str(arc.get_extension())
 
     source = dids[arc.get_source()]
     subgraph |= Relationship(node, STONEnum["HAS_SOURCE"].value, source)
@@ -357,9 +356,9 @@ def _arcgroup_to_subgraph(arcgroup, dids, dpids, make_shortcuts=True):
         node[STONEnum["CLASS"].value] = arcgroup.get_class().value
 
     if arcgroup.get_notes():
-        node[STONEnum["NOTES"].value] = str(utils.decode_notes_and_extension(arcgroup.get_notes()))
+        node[STONEnum["NOTES"].value] = str(arcgroup.get_notes())
     if arcgroup.get_extension():
-        node[STONEnum["EXTENSION"].value] = str(utils.decode_notes_and_extension(arcgroup.get_extension()))
+        node[STONEnum["EXTENSION"].value] = str(arcgroup.get_extension())
 
     for glyph in arcgroup.get_glyph():
         glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)

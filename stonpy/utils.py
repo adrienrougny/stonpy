@@ -36,17 +36,6 @@ def match_one(subgraph, nodes=None, rtype=None):
         return relationship
     return None
 
-def subgraph_union(subgraph1, subgraph2):
-    if subgraph1 is not None:
-        if subgraph2 is not None:
-            return subgraph1 | subgraph2
-        else:
-            return subgraph1
-    elif subgraph2 is not None:
-        return subgraph2
-    else:
-        return None
-
 def print_subgraph(subgraph):
     if not subgraph.nodes and not subgraph.relationships:
         print("Empty subgraph")
