@@ -395,54 +395,54 @@ def subgraph_to_map(subgraph):
             if node[STONEnum["EXTENSION"].value]:
                 sbgn_map.set_extension(libsbgnSubs.Extension(node[STONEnum["EXTENSION"].value]))
             sbgn_maps.add((sbgn_map, map_id))
-            dobjects[node] = sbgn_map
+            dobjects[node.identity] = sbgn_map
         if node.has_label(STONEnum["BBOX"].value):
             bbox = _bbox_from_node(node)
-            dobjects[node] = bbox
+            dobjects[node.identity] = bbox
         elif node.has_label(STONEnum["PORT"].value):
             port = _port_from_node(node)
-            dobjects[node] = port
+            dobjects[node.identity] = port
         elif node.has_label(STONEnum["GLYPH"].value):
             glyph = _glyph_from_node(node)
-            dobjects[node] = glyph
+            dobjects[node.identity] = glyph
         elif node.has_label(STONEnum["ARC"].value):
             arc = _arc_from_node(node)
-            dobjects[node] = arc
+            dobjects[node.identity] = arc
         elif node.has_label(STONEnum["START"].value):
             start = _start_from_node(node)
-            dobjects[node] = start
+            dobjects[node.identity] = start
         elif node.has_label(STONEnum["END"].value):
             end = _end_from_node(node)
-            dobjects[node] = end
+            dobjects[node.identity] = end
         elif node.has_label(STONEnum["NEXT"].value):
             nextt = _next_from_node(node)
-            dobjects[node] = nextt
+            dobjects[node.identity] = nextt
         elif node.has_label(STONEnum["ARCGROUP"].value):
             arcgroup = _arcgroup_from_node(node)
-            dobjects[node] = arcgroup
+            dobjects[node.identity] = arcgroup
     for relationship in subgraph.relationships:
         rtype = type(relationship).__name__
         if rtype == STONEnum["HAS_BBOX"].value:
-            dobjects[relationship.start_node].set_bbox(
-                dobjects[relationship.end_node])
+            dobjects[relationship.start_node.identity].set_bbox(
+                dobjects[relationship.end_node.identity])
         elif rtype == STONEnum["HAS_PORT"].value:
-            dobjects[relationship.start_node].add_port(
-                dobjects[relationship.end_node])
+            dobjects[relationship.start_node.identity].add_port(
+                dobjects[relationship.end_node.identity])
         elif rtype == STONEnum["IS_IN_COMPARTMENT"].value:
-            dobjects[relationship.start_node].set_compartmentRef(
-                dobjects[relationship.end_node].get_id())
+            dobjects[relationship.start_node.identity].set_compartmentRef(
+                dobjects[relationship.end_node.identity].get_id())
         elif rtype == STONEnum["HAS_START"].value:
-            dobjects[relationship.start_node].set_start(
-                dobjects[relationship.end_node])
+            dobjects[relationship.start_node.identity].set_start(
+                dobjects[relationship.end_node.identity])
         elif rtype == STONEnum["HAS_END"].value:
-            dobjects[relationship.start_node].set_end(
-                dobjects[relationship.end_node])
+            dobjects[relationship.start_node.identity].set_end(
+                dobjects[relationship.end_node.identity])
         elif rtype == STONEnum["HAS_SOURCE"].value:
-            dobjects[relationship.start_node].set_source(
-                dobjects[relationship.end_node].get_id())
+            dobjects[relationship.start_node.identity].set_source(
+                dobjects[relationship.end_node.identity].get_id())
         elif rtype == STONEnum["HAS_TARGET"].value:
-            dobjects[relationship.start_node].set_target(
-                dobjects[relationship.end_node].get_id())
+            dobjects[relationship.start_node.identity].set_target(
+                dobjects[relationship.end_node.identity].get_id())
         elif rtype == STONEnum["HAS_GLYPH"].value or \
                 rtype == STONEnum["HAS_SUBUNIT"].value or \
                 rtype == STONEnum["HAS_STATE_VARIABLE"].value or \
@@ -450,14 +450,14 @@ def subgraph_to_map(subgraph):
                 rtype == STONEnum["HAS_TERMINAL"].value or \
                 rtype == STONEnum["HAS_OUTCOME"].value or \
                 rtype == STONEnum["HAS_CARDINALITY"].value:
-            dobjects[relationship.start_node].add_glyph(
-                dobjects[relationship.end_node])
+            dobjects[relationship.start_node.identity].add_glyph(
+                dobjects[relationship.end_node.identity])
         elif rtype == STONEnum["HAS_ARC"].value:
-            dobjects[relationship.start_node].add_arc(
-                dobjects[relationship.end_node])
+            dobjects[relationship.start_node.identity].add_arc(
+                dobjects[relationship.end_node.identity])
         elif rtype == STONEnum["HAS_ARCGROUP"].value:
-            dobjects[relationship.start_node].add_arcgroup(
-                dobjects[relationship.end_node])
+            dobjects[relationship.start_node.identity].add_arcgroup(
+                dobjects[relationship.end_node.identity])
     for sbgn_map in sbgn_maps:
         yield sbgn_map
 
