@@ -6,7 +6,7 @@ import libsbgnpy.libsbgnSubs as libsbgnSubs
 from stonpy.model import *
 import stonpy.utils as utils
 
-def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
+def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True, verbose=False):
     """Converts an SBGN map to a subgraph and returns it.
 
     :param sbgn_map: the SBGN map
@@ -34,6 +34,8 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
     subgraph = map_node
     for glyph in sbgn_map.get_glyph():
         if glyph.get_class().name == "COMPARTMENT":
+            if verbose:
+                print("Creating subgraph for glyph {}...".format(glyph.get_id()))
             glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
             subgraph |= glyph_subgraph
             dids[glyph.get_id()] = glyph_node
@@ -42,6 +44,8 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
 
     for glyph in sbgn_map.get_glyph():
         if glyph.get_class().name != "COMPARTMENT":
+            if verbose:
+                print("Creating subgraph for glyph {}...".format(glyph.get_id()))
             glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
             subgraph |= glyph_subgraph
             subgraph |= Relationship(
@@ -50,6 +54,8 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
     for arc in sbgn_map.get_arc():
         if arc.get_class().name == "ASSIGNMENT" or \
                 arc.get_class().name == "INTERACTION":
+            if verbose:
+                print("Creating subgraph for arc {}...".format(arc.get_id()))
             arc_node, arc_subgraph = _arc_to_subgraph(arc, dids, dpids)
             subgraph |= arc_subgraph
             subgraph |= Relationship(
@@ -59,6 +65,8 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
     for arc in sbgn_map.get_arc():
         if arc.get_class().name != "ASSIGNMENT" and \
                 arc.get_class().name != "INTERACTION":
+            if verbose:
+                print("Creating subgraph for arc {}...".format(arc.get_id()))
             arc_node, arc_subgraph = _arc_to_subgraph(
                     arc, dids, dpids, make_shortcuts)
             subgraph |= arc_subgraph
@@ -66,6 +74,8 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True):
                 map_node, STONEnum["HAS_ARC"].value, arc_node)
 
     for arcgroup in sbgn_map.get_arcgroup():
+        if verbose:
+            print("Creating subgraph for arcgroup...")
         arcgroup_node, arcgroup_subgraph = _arcgroup_to_subgraph(
             arcgroup, dids, dpids, make_shortcuts)
         subgraph |= arcgroup_subgraph

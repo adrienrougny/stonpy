@@ -1,4 +1,5 @@
 import os.path
+import time
 
 import libsbgnpy.libsbgn as libsbgn
 
@@ -90,7 +91,7 @@ class STON(object):
             return False
 
 
-    def create_map(self, sbgn_map, map_id):
+    def create_map(self, sbgn_map, map_id, verbose=False):
         """Add an SBGN map to the database (with the CREATE instruction).
 
         :param sbgn_map: the SBGN map, either a path to an SBGN-ML file or an SBGN map object
@@ -98,13 +99,23 @@ class STON(object):
         :param map_id: the ID of the SBGN map
         :type map_id: `str`, optional
         """
+        if verbose:
+            t = time.time()
         if os.path.isfile(sbgn_map):
+            if verbose:
+                print("Reading file {}...".format(sbgn_map))
             sbgn_file = sbgn_map
             sbgn_map = utils.sbgn_file_to_map(sbgn_file)
-        subgraph = converter.map_to_subgraph(sbgn_map, map_id)
+        if verbose:
+            print("Creating subgraph for map {}...".format(map_id))
+        subgraph = converter.map_to_subgraph(sbgn_map, map_id, verbose=verbose)
+        if verbose:
+            print("Adding subgraph to database...")
         tx = self.graph.begin()
         tx.create(subgraph)
         tx.commit()
+        if verbose:
+            print("Done in {}s".format(time.time() - t))
 
 
     def merge_map(self, sbgn_map, map_id):
@@ -260,7 +271,8 @@ class STON(object):
         """
 
         sbgn_maps = self.query_to_map(
-                query, complete=complete, merge_records=merge_records, to_top_left = to_top_left)
+                query, complete=complete, merge_records=merge_records,
+                to_top_left=to_top_left)
         try:
             sbgn_map1 = next(sbgn_maps)
         except:
