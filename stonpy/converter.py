@@ -30,8 +30,10 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True, make_sbml_annota
     """
     dids = {}
     dpids = {}
+    nodes = set([])
+    relationships = set([])
     map_node = Node()
-    subgraph = map_node
+    nodes.add(map_node)
 
     map_node.add_label(STONEnum["MAP"].value)
     map_node[STONEnum["LANGUAGE"].value] = sbgn_map.get_language().value
@@ -39,10 +41,12 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True, make_sbml_annota
     if sbgn_map.get_extension() is not None:
         map_node[STONEnum["EXTENSION"].value] = str(sbgn_map.get_extension())
         if make_sbml_annotations and _extension_has_sbml_annotation(sbgn_map.get_extension()):
-            annotation_nodes, annotation_subgraph = _extension_as_sbml_annotation_to_subgraph(sbgn_map.get_extension())
-            subgraph |= annotation_subgraph
+            annotation_nodes, annotation_other_nodes, annotation_relationships = _extension_as_sbml_annotation_to_subgraph(sbgn_map.get_extension())
+            nodes |= annotation_nodes
+            nodes |= annotation_other_nodes
+            relationships |= annotation_relationships
             for annotation_node in annotation_nodes:
-                subgraph |= Relationship(map_node, STONEnum["HAS_ANNOTATION"].value, annotation_node)
+                relationships.add(Relationship(map_node, STONEnum["HAS_ANNOTATION"].value, annotation_node))
 
     if sbgn_map.get_notes() is not None:
         map_node[STONEnum["NOTES"].value] = str(sbgn_map.get_notes())
@@ -51,30 +55,38 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True, make_sbml_annota
         if glyph.get_class().name == "COMPARTMENT":
             if verbose:
                 print("Creating subgraph for glyph {}...".format(glyph.get_id()))
-            glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
-            subgraph |= glyph_subgraph
+            glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids)
+            nodes.add(glyph_node)
+            nodes |= glyph_other_nodes
+            relationships |= glyph_relationships
+            relationships.add(Relationship(
+                map_node, STONEnum["HAS_GLYPH"].value, glyph_node))
             dids[glyph.get_id()] = glyph_node
-            subgraph |= Relationship(
-                map_node, STONEnum["HAS_GLYPH"].value, glyph_node)
 
     for glyph in sbgn_map.get_glyph():
         if glyph.get_class().name != "COMPARTMENT":
             if verbose:
                 print("Creating subgraph for glyph {}...".format(glyph.get_id()))
-            glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
-            subgraph |= glyph_subgraph
-            subgraph |= Relationship(
-                map_node, STONEnum["HAS_GLYPH"].value, glyph_node)
+            glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids)
+            nodes.add(glyph_node)
+            nodes |= glyph_other_nodes
+            relationships |= glyph_relationships
+            relationships.add(Relationship(
+                map_node, STONEnum["HAS_GLYPH"].value, glyph_node))
+            dids[glyph.get_id()] = glyph_node
 
     for arc in sbgn_map.get_arc():
         if arc.get_class().name == "ASSIGNMENT" or \
                 arc.get_class().name == "INTERACTION":
             if verbose:
                 print("Creating subgraph for arc {}...".format(arc.get_id()))
-            arc_node, arc_subgraph = _arc_to_subgraph(arc, dids, dpids)
-            subgraph |= arc_subgraph
-            subgraph |= Relationship(
-                map_node, STONEnum["HAS_ARC"].value, arc_node)
+            arc_node, arc_other_nodes, arc_relationships = _arc_to_subgraph(arc, dids, dpids, make_shortcuts)
+            nodes.add(arc_node)
+            nodes |= arc_other_nodes
+            relationships |= arc_relationships
+            dids[arc.get_id()] = arc_node
+            relationships.add(Relationship(
+                map_node, STONEnum["HAS_ARC"].value, arc_node))
             dids[arc.get_id()] = arc_node
 
     for arc in sbgn_map.get_arc():
@@ -82,22 +94,27 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True, make_sbml_annota
                 arc.get_class().name != "INTERACTION":
             if verbose:
                 print("Creating subgraph for arc {}...".format(arc.get_id()))
-            arc_node, arc_subgraph = _arc_to_subgraph(
-                    arc, dids, dpids, make_shortcuts)
-            subgraph |= arc_subgraph
-            subgraph |= Relationship(
-                map_node, STONEnum["HAS_ARC"].value, arc_node)
+            arc_node, arc_other_nodes, arc_relationships = _arc_to_subgraph(arc, dids, dpids, make_shortcuts)
+            nodes.add(arc_node)
+            nodes |= arc_other_nodes
+            relationships |= arc_relationships
+            dids[arc.get_id()] = arc_node
+            relationships.add(Relationship(
+                map_node, STONEnum["HAS_ARC"].value, arc_node))
+            dids[arc.get_id()] = arc_node
 
     for arcgroup in sbgn_map.get_arcgroup():
         if verbose:
             print("Creating subgraph for arcgroup...")
-        arcgroup_node, arcgroup_subgraph = _arcgroup_to_subgraph(
-            arcgroup, dids, dpids, make_shortcuts)
-        subgraph |= arcgroup_subgraph
-        subgraph |= Relationship(
-            map_node,
-            STONEnum["HAS_ARCGROUP"].value,
-            arcgroup_node)
+            arcgroup_node, arcgroup_other_nodes, arcgroup_relationships = _arcgroup_to_subgraph(arcgroup, dids, dpids, make_shortcuts)
+            nodes.add(arcgroup_node)
+            nodes |= arcgroup_other_nodes
+            relationships |= arcgroup_relationships
+            dids[arcgroup.get_id()] = arcgroup_node
+            relationships.add(Relationship(
+                map_node, STONEnum["HAS_ARCGROUP"].value, arcgroup_node))
+            dids[arcgroup.get_id()] = arcgroup_node
+    subgraph = Subgraph(nodes, relationships)
     return subgraph
 
 def _extension_has_sbml_annotation(extension):
@@ -126,9 +143,9 @@ def _extension_as_sbml_annotation_to_subgraph(extension):
     rdf_graph = rdflib.Graph()
     rdf_graph.parse(data=rdf_string, format="application/rdf+xml")
     dnodes = {}
-    nodes = []
-    relationships = []
-    annotation_nodes = []
+    annotation_nodes = set([])
+    nodes = set([])
+    relationships = set([])
 
     for s, p, o in rdf_graph:
         if isinstance(s, rdflib.term.URIRef) and isinstance(o, rdflib.term.BNode):
@@ -149,8 +166,7 @@ def _extension_as_sbml_annotation_to_subgraph(extension):
             annotation_node[STONEnum["QUALIFIER_NS"].value] = qualifier_ns
             annotation_node[STONEnum["QUALIFIER"].value] = qualifier
             dnodes[str(o)] = annotation_node
-            nodes.append(annotation_node)
-            annotation_nodes.append(annotation_node)
+            annotation_nodes.add(annotation_node)
             # relationship = Relationship(source_node, STONEnum["HAS_ANNOTATION"].value, annotation_node)
             # relationships.append(relationship)
     for s, p, o in rdf_graph:
@@ -167,16 +183,16 @@ def _extension_as_sbml_annotation_to_subgraph(extension):
             id = l[-1]
             resource_node[STONEnum["COLLECTION_NS"].value] = collection_ns
             resource_node["id"] = id
-            nodes.append(resource_node)
+            nodes.add(resource_node)
             relationship = Relationship(dnodes[str(s)], STONEnum["HAS_RESOURCE"].value, resource_node)
-            relationships.append(relationship)
+            relationships.add(relationship)
 
-    subgraph = Subgraph(nodes=nodes, relationships=relationships)
-    return annotation_nodes, subgraph
+    return annotation_nodes, nodes, relationships
 
 def _glyph_to_subgraph(glyph, dids, dpids, subunit=False, order=None, make_sbml_annotations=True):
     node = Node()
-    subgraph = node
+    nodes = set([])
+    relationships = set([])
     ston_type = glyph.get_class().name
     if ston_type == "INTERACTION":
         ston_type = "{}_GLYPH".format(ston_type)
@@ -197,12 +213,12 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False, order=None, make_sbml_
     if glyph.get_extension() is not None:
         node[STONEnum["EXTENSION"].value] = str(glyph.get_extension())
         if make_sbml_annotations and _extension_has_sbml_annotation(glyph.get_extension()):
-            annotation_nodes, annotation_subgraph = _extension_as_sbml_annotation_to_subgraph(glyph.get_extension())
-            print(type(annotation_subgraph))
-            print(type(subgraph))
-            subgraph |= annotation_subgraph
+            annotation_nodes, annotation_other_nodes, annotation_relationships = _extension_as_sbml_annotation_to_subgraph(glyph.get_extension())
+            nodes |= annotation_nodes
+            nodes |= annotation_other_nodes
+            relationships |= annotation_relationships
             for annotation_node in annotation_nodes:
-                subgraph |= Relationship(node, STONEnum["HAS_ANNOTATION"].value, annotation_node)
+                relationships.add(Relationship(node, STONEnum["HAS_ANNOTATION"].value, annotation_node))
 
     if order is not None:
         node[STONEnum["ORDER"].value] = order
@@ -234,14 +250,14 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False, order=None, make_sbml_
         is_in_compartment = Relationship(node,
                                          STONEnum["IS_IN_COMPARTMENT"].value,
                                          dids[glyph.get_compartmentRef()])
-        subgraph |= is_in_compartment
+        relationships.add(is_in_compartment)
 
     if glyph.get_bbox():
         bbox = glyph.get_bbox()
         bbox_node = _bbox_to_node(bbox)
-        subgraph |= bbox_node
+        nodes.add(bbox_node)
         has_bbox = Relationship(node, STONEnum["HAS_BBOX"].value, bbox_node)
-        subgraph |= has_bbox
+        relationships.add(has_bbox)
 
     if glyph.orientation:
         node[STONEnum["ORIENTATION"].value] = glyph.orientation
@@ -283,41 +299,45 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False, order=None, make_sbml_
             order = i
         else:
             order = None
-        subglyph_node, subglyph_subgraph = _glyph_to_subgraph(
+        subglyph_node, subglyph_other_nodes, subglyph_relationships = _glyph_to_subgraph(
                 subglyph, dids, dpids, subunit = False, order = order)
-        subgraph |= subglyph_subgraph
+        nodes.add(subglyph_node)
+        nodes |= subglyph_other_nodes
+        relationships |= subglyph_relationships
         dids[subglyph.get_id()] = subglyph_node
-        subgraph |= Relationship(
-            node, STONEnum["HAS_STATE_VARIABLE"].value, subglyph_node)
+        relationships.add(Relationship(
+            node, STONEnum["HAS_STATE_VARIABLE"].value, subglyph_node))
 
     for subglyph in glyph.get_glyph() + svs:
         sub_ston_type = subglyph.get_class().name
         if sub_ston_type == "UNIT_OF_INFORMATION" or \
                 sub_ston_type == "TERMINAL" or \
                 sub_ston_type == "OUTCOME":
-            subglyph_node, subglyph_subgraph = _glyph_to_subgraph(
+            subglyph_node, subglyph_other_nodes, subglyph_relationships = _glyph_to_subgraph(
                 subglyph, dids, dpids)
             r_type = "HAS_{}".format(sub_ston_type)
         elif sub_ston_type == "STATE_VARIABLE":
             continue
         else:
-            subglyph_node, subglyph_subgraph = _glyph_to_subgraph(
-                subglyph, dids, dpids, subunit = True)
+            subglyph_node, subglyph_other_nodes, subglyph_relationships = _glyph_to_subgraph(
+                subglyph, dids, dpids, subunit=True)
             r_type = "HAS_SUBUNIT"
-        subgraph |= subglyph_subgraph
+        nodes.add(subglyph_node)
+        nodes |= subglyph_other_nodes
+        relationships |= subglyph_relationships
         dids[subglyph.get_id()] = subglyph_node
-        subgraph |= Relationship(
-            node, STONEnum[r_type].value, subglyph_node)
+        relationships.add(Relationship(
+            node, STONEnum[r_type].value, subglyph_node))
 
     for port in glyph.get_port():
         port_node = _port_to_node(port)
-        subgraph |= port_node
-        subgraph |= Relationship(node, STONEnum["HAS_PORT"].value, port_node)
+        nodes.add(port_node)
+        relationships.add(Relationship(node, STONEnum["HAS_PORT"].value, port_node))
         dids[port.get_id()] = port_node
         dpids[port.get_id()] = node
     dids[glyph.get_id()] = node
 
-    return node, subgraph
+    return node, nodes, relationships
 
 
 def _bbox_to_node(bbox):
@@ -341,7 +361,8 @@ def _port_to_node(port):
 
 def _arc_to_subgraph(arc, dids, dpids, make_shortcuts=True, make_sbml_annotations=True):
     node = Node()
-    subgraph = node
+    nodes = set([])
+    relationships = set([])
 
     ston_type = arc.get_class().name
     for ontology in Ontologies:
@@ -356,59 +377,63 @@ def _arc_to_subgraph(arc, dids, dpids, make_shortcuts=True, make_sbml_annotation
     if arc.get_extension() is not None:
         node[STONEnum["EXTENSION"].value] = str(arc.get_extension())
         if make_sbml_annotations and _extension_has_sbml_annotation(arc.get_extension()):
-            annotation_nodes, annotation_subgraph = _extension_as_sbml_annotation_to_subgraph(arc.get_extension())
-            subgraph |= annotation_subgraph
+            annotation_nodes, annotation_other_nodes, annotation_relationships = _extension_as_sbml_annotation_to_subgraph(arc.get_extension())
+            nodes |= annotation_nodes
+            nodes |= annotation_other_nodes
+            relationships |= annotation_relationships
             for annotation_node in annotation_nodes:
-                subgraph |= Relationship(node, STONEnum["HAS_ANNOTATION"].value, annotation_node)
+                relationships.add(Relationship(node, STONEnum["HAS_ANNOTATION"].value, annotation_node))
 
     source = dids[arc.get_source()]
-    subgraph |= Relationship(node, STONEnum["HAS_SOURCE"].value, source)
+    relationships.add(Relationship(node, STONEnum["HAS_SOURCE"].value, source))
     target = dids[arc.get_target()]
-    subgraph |= Relationship(node, STONEnum["HAS_TARGET"].value, target)
+    relationships.add(Relationship(node, STONEnum["HAS_TARGET"].value, target))
 
     start = Node()
     start.add_label(STONEnum["START"].value)
     start[STONEnum["X"].value] = arc.get_start().get_x()
     start[STONEnum["Y"].value] = arc.get_start().get_y()
-    subgraph |= start
-    subgraph |= Relationship(node, STONEnum["HAS_START"].value, start)
+    nodes.add(start)
+    relationships.add(Relationship(node, STONEnum["HAS_START"].value, start))
     end = Node()
     end.add_label(STONEnum["END"].value)
     end[STONEnum["X"].value] = arc.get_end().get_x()
     end[STONEnum["Y"].value] = arc.get_end().get_y()
-    subgraph |= end
-    subgraph |= Relationship(node, STONEnum["HAS_END"].value, end)
+    nodes.add(end)
+    relationships.add(Relationship(node, STONEnum["HAS_END"].value, end))
     prev_node = start
     for nextt in arc.get_next():
         next_node = Node()
         next_node.add_label(STONEnum["NEXT"].value)
         next_node[STONEnum["X"].value] = nextt.get_x()
         next_node[STONEnum["Y"].value] = nextt.get_y()
-        subgraph |= next_node
-        subgraph |= Relationship(
+        nodes.add(next_node)
+        relationships.add(Relationship(
             prev_node,
             STONEnum["HAS_NEXT"].value,
-            next_node)
+            next_node))
         prev_node = next_node
     if prev_node != start:
-        subgraph |= Relationship(prev_node, STONEnum["HAS_NEXT"].value, end)
+        relationships.add(Relationship(prev_node, STONEnum["HAS_NEXT"].value, end))
 
     cardinality = None
     for glyph in arc.get_glyph():
-        glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
-        subgraph |= glyph_subgraph
+        glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids)
+        nodes.add(glyphe_node)
+        nodes |= glyph_other_nodes
+        relationships |= glyph_relationships
         if glyph.get_class().name == "CARDINALITY":
-            subgraph |= Relationship(
-                node, STONEnum["HAS_CARDINALITY"].value, glyph_node)
+            relationships.add(Relationship(
+                node, STONEnum["HAS_CARDINALITY"].value, glyph_node))
             cardinality = glyph.get_label().get_text()
         elif glyph.get_class().name == "OUTCOME":
-            subgraph |= Relationship(
-                node, STONEnum["HAS_OUTCOME"].value, glyph_node)
+            relationships.add(Relationship(
+                node, STONEnum["HAS_OUTCOME"].value, glyph_node))
 
     for port in arc.get_port():
         port_node = _port_to_node(port)
-        subgraph |= port_node
-        subgraph |= Relationship(node, STONEnum["HAS_PORT"].value, port_node)
+        nodes.add(port_node)
+        relationships.add(Relationship(node, STONEnum["HAS_PORT"].value, port_node))
         dids[port.get_id()] = port_node
         dpids[port.get_id()] = node
 
@@ -438,17 +463,18 @@ def _arc_to_subgraph(arc, dids, dpids, make_shortcuts=True, make_sbml_annotation
                 start_node = source_node
                 end_node = target_node
 
-            subgraph |= Relationship(
+            relationships.add(Relationship(
                     start_node,
                     STONEnum["{}_{}".format(ston_type, "SHORTCUT")].value,
                     end_node,
-                    **props)
-    return node, subgraph
+                    **props))
+    return node, nodes, relationships
 
 
 def _arcgroup_to_subgraph(arcgroup, dids, dpids, make_shortcuts=True, make_sbml_annotations=True):
     node = Node()
-    subgraph = node
+    nodes = set([])
+    relationships = set([])
     if arcgroup.get_class() == "interaction":
         ston_type = "INTERACTION"
     else:
@@ -470,21 +496,27 @@ def _arcgroup_to_subgraph(arcgroup, dids, dpids, make_shortcuts=True, make_sbml_
     if arcgroup.get_extension():
         node[STONEnum["EXTENSION"].value] = str(arcgroup.get_extension())
         if make_sbml_annotations and _extension_has_sbml_annotation(arcgroup.get_extension()):
-            annotation_nodes, annotation_subgraph = _extension_as_sbml_annotation_to_subgraph(arcgroup.get_extension())
-            subgraph |= annotation_subgraph
+            annotation_nodes, annotation_other_nodes, annotation_relationship = _extension_as_sbml_annotation_to_subgraph(arcgroup.get_extension())
+            nodes |= annotation_nodes
+            nodes |= annotation_other_nodes
+            relationships |= annotation_relationships
             for annotation_node in annotation_nodes:
-                subgraph |= Relationship(node, STONEnum["HAS_ANNOTATION"].value, annotation_node)
+                relationships.add(Relationship(node, STONEnum["HAS_ANNOTATION"].value, annotation_node))
 
     for glyph in arcgroup.get_glyph():
-        glyph_node, glyph_subgraph = _glyph_to_subgraph(glyph, dids, dpids)
-        subgraph |= glyph_subgraph
-        subgraph |= Relationship(node, STONEnum["HAS_GLYPH"].value, glyph_node)
+        glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids)
+        nodes.add(glyph_node)
+        nodes |= glyph_other_nodes
+        relationships |= glyph_relationships
+        relationships.add(Relationship(node, STONEnum["HAS_GLYPH"].value, glyph_node))
     for arc in arcgroup.get_arc():
-        arc_node, arc_subgraph = _arc_to_subgraph(
+        arc_node, arc_other_nodes, arc_relationship = _arc_to_subgraph(
                 arc, dids, dpids, make_shortcuts)
-        subgraph |= arc_subgraph
-        subgraph |= Relationship(node, STONEnum["HAS_ARC"].value, arc_node)
-    return node, subgraph
+        nodes.add(arc_node)
+        nodes |= arc_other_nodes
+        relationships |= arc_relationships
+        relationships.add(Relationship(node, STONEnum["HAS_ARC"].value, arc_node))
+    return node, nodes, relationships
 
 
 def subgraph_to_map(subgraph):
