@@ -87,6 +87,8 @@ class STONEnum(Enum):
     ASSIGNMENT = "Assignment"
     OUTCOME = "Outcome"
     CARDINALITY = "Cardinality"
+    ANNOTATION = "Annotation"
+    RESOURCE = "Resource"
     #Relation types
     HAS_SUBUNIT = "HAS_SUBUNIT"
     HAS_STATE_VARIABLE = "HAS_STATE_VARIABLE"
@@ -106,6 +108,8 @@ class STONEnum(Enum):
     HAS_GLYPH = "HAS_GLYPH"
     HAS_ARC = "HAS_ARC"
     HAS_ARCGROUP = "HAS_ARCGROUP"
+    HAS_RESOURCE = "HAS_RESOURCE"
+    HAS_ANNOTATION = "HAS_ANNOTATION"
     #Relationships shortcut
     CATALYSIS_SHORTCUT = "CATALYZES"
     MODULATION_SHORTCUT = "MODULATES"
@@ -145,6 +149,11 @@ class STONEnum(Enum):
     ORDER = "order"
     NOTES = "notes"
     EXTENSION = "extension"
+    QUALIFIER_URI = "qualifier_uri"
+    QUALIFIER = "qualifier"
+    QUALIFIER_NS = "qualifier_ns"
+    URI = "uri"
+    COLLECTION_NS = "collection_ns"
 
 class Ontologies(Enum):
     ACTIVITY = set(["BIOLOGICAL_ACTIVITY", "PHENOTYPE"])
