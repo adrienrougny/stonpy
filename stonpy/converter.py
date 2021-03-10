@@ -55,7 +55,7 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True, make_sbml_annota
         if glyph.get_class().name == "COMPARTMENT":
             if verbose:
                 print("Creating subgraph for glyph {}...".format(glyph.get_id()))
-            glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids)
+            glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids, make_sbml_annotations=make_sbml_annotations)
             nodes.add(glyph_node)
             nodes |= glyph_other_nodes
             relationships |= glyph_relationships
@@ -67,7 +67,7 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True, make_sbml_annota
         if glyph.get_class().name != "COMPARTMENT":
             if verbose:
                 print("Creating subgraph for glyph {}...".format(glyph.get_id()))
-            glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids)
+            glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids, make_sbml_annotations=make_sbml_annotations)
             nodes.add(glyph_node)
             nodes |= glyph_other_nodes
             relationships |= glyph_relationships
@@ -80,7 +80,7 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True, make_sbml_annota
                 arc.get_class().name == "INTERACTION":
             if verbose:
                 print("Creating subgraph for arc {}...".format(arc.get_id()))
-            arc_node, arc_other_nodes, arc_relationships = _arc_to_subgraph(arc, dids, dpids, make_shortcuts)
+            arc_node, arc_other_nodes, arc_relationships = _arc_to_subgraph(arc, dids, dpids, make_shortcuts, make_sbml_annotations)
             nodes.add(arc_node)
             nodes |= arc_other_nodes
             relationships |= arc_relationships
@@ -94,7 +94,7 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True, make_sbml_annota
                 arc.get_class().name != "INTERACTION":
             if verbose:
                 print("Creating subgraph for arc {}...".format(arc.get_id()))
-            arc_node, arc_other_nodes, arc_relationships = _arc_to_subgraph(arc, dids, dpids, make_shortcuts)
+            arc_node, arc_other_nodes, arc_relationships = _arc_to_subgraph(arc, dids, dpids, make_shortcuts, make_sbml_annotations)
             nodes.add(arc_node)
             nodes |= arc_other_nodes
             relationships |= arc_relationships
@@ -106,7 +106,7 @@ def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True, make_sbml_annota
     for arcgroup in sbgn_map.get_arcgroup():
         if verbose:
             print("Creating subgraph for arcgroup...")
-            arcgroup_node, arcgroup_other_nodes, arcgroup_relationships = _arcgroup_to_subgraph(arcgroup, dids, dpids, make_shortcuts)
+            arcgroup_node, arcgroup_other_nodes, arcgroup_relationships = _arcgroup_to_subgraph(arcgroup, dids, dpids, make_shortcuts, make_sbml_annotations)
             nodes.add(arcgroup_node)
             nodes |= arcgroup_other_nodes
             relationships |= arcgroup_relationships
@@ -300,7 +300,7 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False, order=None, make_sbml_
         else:
             order = None
         subglyph_node, subglyph_other_nodes, subglyph_relationships = _glyph_to_subgraph(
-                subglyph, dids, dpids, subunit = False, order = order)
+                subglyph, dids, dpids, subunit=False, order=order, make_sbml_annotations=make_sbml_annotations)
         nodes.add(subglyph_node)
         nodes |= subglyph_other_nodes
         relationships |= subglyph_relationships
@@ -314,13 +314,13 @@ def _glyph_to_subgraph(glyph, dids, dpids, subunit=False, order=None, make_sbml_
                 sub_ston_type == "TERMINAL" or \
                 sub_ston_type == "OUTCOME":
             subglyph_node, subglyph_other_nodes, subglyph_relationships = _glyph_to_subgraph(
-                subglyph, dids, dpids)
+                subglyph, dids, dpids, make_sbml_annotations=make_sbml_annotations)
             r_type = "HAS_{}".format(sub_ston_type)
         elif sub_ston_type == "STATE_VARIABLE":
             continue
         else:
             subglyph_node, subglyph_other_nodes, subglyph_relationships = _glyph_to_subgraph(
-                subglyph, dids, dpids, subunit=True)
+                subglyph, dids, dpids, subunit=True, make_sbml_annotations=make_sbml_annotations)
             r_type = "HAS_SUBUNIT"
         nodes.add(subglyph_node)
         nodes |= subglyph_other_nodes
@@ -418,7 +418,7 @@ def _arc_to_subgraph(arc, dids, dpids, make_shortcuts=True, make_sbml_annotation
 
     cardinality = None
     for glyph in arc.get_glyph():
-        glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids)
+        glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids, make_sbml_annotations=make_sbml_annotations)
         nodes.add(glyphe_node)
         nodes |= glyph_other_nodes
         relationships |= glyph_relationships
@@ -504,14 +504,14 @@ def _arcgroup_to_subgraph(arcgroup, dids, dpids, make_shortcuts=True, make_sbml_
                 relationships.add(Relationship(node, STONEnum["HAS_ANNOTATION"].value, annotation_node))
 
     for glyph in arcgroup.get_glyph():
-        glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids)
+        glyph_node, glyph_other_nodes, glyph_relationships = _glyph_to_subgraph(glyph, dids, dpids, make_sbml_annotations=make_sbml_annotations)
         nodes.add(glyph_node)
         nodes |= glyph_other_nodes
         relationships |= glyph_relationships
         relationships.add(Relationship(node, STONEnum["HAS_GLYPH"].value, glyph_node))
     for arc in arcgroup.get_arc():
         arc_node, arc_other_nodes, arc_relationship = _arc_to_subgraph(
-                arc, dids, dpids, make_shortcuts)
+                arc, dids, dpids, make_shortcuts, make_sbml_annotations)
         nodes.add(arc_node)
         nodes |= arc_other_nodes
         relationships |= arc_relationships
