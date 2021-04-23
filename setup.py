@@ -9,5 +9,6 @@ setup(name = 'stonpy',
     install_requires = [
         "libsbgnpy",
         "py2neo",
+        "rdflib"
     ],
 )
