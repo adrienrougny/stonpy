@@ -7,7 +7,7 @@ from py2neo import Graph, Subgraph
 
 import stonpy.utils as utils
 import stonpy.converter as converter
-import stonpy.completer as completer
+import stonpy.completor as completor
 from stonpy.model import STONEnum
 
 class STON(object):
@@ -16,9 +16,6 @@ class STON(object):
         self.user = user
         self.password = password
         self.graph = Graph(uri = uri, user = user, password = password)
-        # self.graph.run(
-        #     'CREATE CONSTRAINT ON (m:{}) \
-        #     ASSERT m.{} IS UNIQUE'.format(STONEnum["MAP"].value, STONEnum["ID"].value))
 
     def has_map(self, map_id=None, sbgn_map=None):
         """Check whether the database contains a given SBGN map
@@ -52,15 +49,9 @@ class STON(object):
                 if os.path.isfile(sbgn_map):
                     sbgn_map = utils.sbgn_file_to_map(sbgn_map)
             if map_id is not None:
-                # query = 'MATCH p=(m:{} {{{}: "{}"}})-[*]->() RETURN p'.format(
-                #     STONEnum["MAP"].value, STONEnum["ID"].value, map_id)
-                # maps_to_test = list(self.query_to_map(query, merge_records=True, complete=False))
-                # FOLLOWING SEEMS FASTER THAN ABOVE, TO TEST FURTHER
                 query = 'MATCH (m:{} {{{}: "{}"}}) RETURN m'.format(
                     STONEnum["MAP"].value, STONEnum["ID"].value, map_id)
                 maps_to_test = list(self.query_to_map(query, complete=True))
-
-
             else:
                 maps_to_test = []
                 subgraph = converter.map_to_subgraph(sbgn_map)
@@ -78,10 +69,6 @@ class STON(object):
                     cursor = self.graph.run(query)
                     for record in cursor:
                         neo_id = record["id(m)"]
-                        # query = 'MATCH p=(m:{})-[*]->() WHERE id(m) = {} \
-                        #     RETURN p'.format(STONEnum["MAP"].value, neo_id)
-                        # maps_to_test += list(self.query_to_map(query, merge_records=True, complete=False))
-                        # FOLLOWING SEEMS FASTER THAN ABOVE, TO TEST FURTHER
                         query = 'MATCH (m:{}) WHERE id(m) = {} \
                             RETURN m'.format(STONEnum["MAP"].value, neo_id)
                         maps_to_test += list(self.query_to_map(query, complete=True))
@@ -167,7 +154,7 @@ class STON(object):
     def get_map(self, map_id):
         """Retrieve an SBGN map with given ID from the database and returns it.
 
-        If no map is retrieved, returns `None`.
+        If no map is retrieved, raises an exception.
         If multiple maps are retrieved, only the first one is returned.
 
         :param map_id: the ID of the SBGN map to retrieve
@@ -185,11 +172,14 @@ class STON(object):
         tx.commit()
         for record in cursor:
             subgraph = Subgraph(nodes=[record["m"]] + record["nodes"], relationships=record["relationships"])
-        sbgn_maps = converter.subgraph_to_map(subgraph)
-        try:
-            return next(sbgn_maps)
-        except:
-            return None
+            sbgn_maps = converter.subgraph_to_map(subgraph)
+            try:
+                return next(sbgn_maps)
+            except StopIteration:
+                pass
+            except Exception as e:
+                raise e
+        raise Exception(f"No map found with id '{map_id}'")
 
     def get_map_to_sbgn_file(self, map_id, sbgn_file):
         """Retrieve a map with given ID from the database and write it to the given SBGN-ML file.
@@ -203,13 +193,10 @@ class STON(object):
         :type sbgn_file: `str`
         """
         sbgn_map = self.get_map(map_id)
-        if sbgn_map is not None:
-            utils.map_to_sbgn_file(sbgn_map[0], sbgn_file)
-        else:
-            raise Exception("No map found")
+        utils.map_to_sbgn_file(sbgn_map[0], sbgn_file)
 
 
-    def query_to_map(self, query, complete=True, merge_records=False, to_top_left=False):
+    def query_to_map(self, query, complete=True, merge_records=False, to_top_left=False, complete_process_modulations=False):
         """Run a cypher query against the database and return the resulting SBGN maps.
 
         By default, each record resulting from the query is transformed to zero or more SBGN maps, one for each Map node it contains.
@@ -226,6 +213,8 @@ class STON(object):
         :type merge_records: `bool`, optional
         :param to_top_left: if set to `True`, each resulting map is moved to the top left of its canvas
         :type to_top_left: bool, optional
+        :param complete_process_modulations: option to complete processes with the modulations targetting it, default is `False`
+        :type complete_process_modulations: `bool`
         :return: the resulting SBGN maps, under the form of a generator. Each returned element is a tuple of the form (map, map_id).
         :rtype: `Iterator[(`libsbgnpy.libsbgn.map`, `str`)]`
         """
@@ -241,7 +230,7 @@ class STON(object):
         i = 0
         for subgraph in subgraphs:
             if complete:
-                subgraph = completer.complete_subgraph(subgraph, self.graph)
+                subgraph = completor.complete_subgraph(subgraph, self.graph, complete_process_modulations=complete_process_modulations)
             sbgn_maps = converter.subgraph_to_map(subgraph)
             for sbgn_map in sbgn_maps:
                 if to_top_left:
@@ -249,7 +238,7 @@ class STON(object):
                 yield sbgn_map
 
     def query_to_sbgn_file(
-            self, query, sbgn_file, complete=True, merge_records=True, to_top_left=False):
+            self, query, sbgn_file, complete=True, merge_records=True, to_top_left=False, complete_process_modulations=False):
         """Run a cypher query against the database and write the resulting SBGN maps to one or more SBGN-ML files.
 
         By default, each record resulting from the query is transformed to zero or more SBGN maps, one for each Map node it contains, and each SBGN map is written to a distinct SBGN-ML file.
@@ -268,20 +257,28 @@ class STON(object):
         :type merge_records: `bool`, optional
         :param to_top_left: if set to `True`, each resulting map is moved to the top left of its canvas
         :type to_top_left: `bool`, optional
+        :param complete_process_modulations: option to complete processes with the modulations targetting it, default is `False`
+        :type complete_process_modulations: `bool`
         """
 
         sbgn_maps = self.query_to_map(
                 query, complete=complete, merge_records=merge_records,
-                to_top_left=to_top_left)
+                to_top_left=to_top_left,
+                complete_process_modulations=complete_process_modulations
+        )
         try:
             sbgn_map1 = next(sbgn_maps)
-        except:
+        except StopIteration:
             pass
+        except Exception as e:
+            raise e
         else:
             try:
                 sbgn_map2 = next(sbgn_maps)
-            except:
+            except StopIteration:
                 utils.map_to_sbgn_file(sbgn_map1[0], sbgn_file)
+            except Exception as e:
+                raise e
             else:
                 ext = "sbgn"
                 l = sbgn_file.split('.')
