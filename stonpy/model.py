@@ -141,8 +141,6 @@ class STONEnum(Enum):
     LABEL_PROP = "label"
     ID = "id"
     CLASS = "class"
-    SOURCE = "source"
-    TARGET = "target"
     CLONE = "clone"
     CLONE_LABEL = "cloneLabel"
     VALUE = "value"
