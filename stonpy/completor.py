@@ -233,7 +233,7 @@ def _complete_subgraph_with_glyph_node(node, subgraph, db_graph, completed, comp
             start_node = node,
             end_node = None,
             complete_start_node = False,
-            complete_end_node = True)
+            complete_end_node = False)
 
     # MODULATION ARCS targetting a process, only if node is a process and complete_process_modulations is True
     if node.has_label(STONEnum["STOICHIOMETRIC_PROCESS"].value) and complete_process_modulations:
@@ -489,21 +489,9 @@ def _complete_subgraph_with_arcgroup_node(node, subgraph, db_graph, completed, c
         complete_start_node = False,
         complete_end_node = True)
 
-    # GLYPHs
+    # OWNING MAP
     subgraph = _find_relationship_and_complete_subgraph(
-        "HAS_GLYPH",
-        subgraph,
-        db_graph,
-        completed,
-        nary = True,
-        start_node = node,
-        end_node = None,
-        complete_start_node = False,
-        complete_end_node = True)
-
-    # MAP
-    subgraph = _find_relationship_and_complete_subgraph(
-        "HAS_MAP",
+        "HAS_ARCGROUP",
         subgraph,
         db_graph,
         completed,
