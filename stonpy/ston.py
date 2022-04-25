@@ -1,3 +1,7 @@
+"""The main module for stonpy.
+The STON class is the interface with the Neo4j database.
+"""
+
 import os.path
 import time
 
@@ -11,6 +15,8 @@ import stonpy.completor as completor
 from stonpy.model import STONEnum
 
 class STON(object):
+    """Main class for storing, retrieving and querying maps from a Neo4j database"""
+
     def __init__(self, uri=None, user=None, password=None):
         self.uri = uri
         self.user = user
