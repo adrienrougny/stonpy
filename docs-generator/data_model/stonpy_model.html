@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 7.3.0.3 (Linux)"/>
+	<meta name="created" content="2022-02-07T17:33:44.243373104"/>
+	<meta name="changed" content="2022-02-21T16:29:57.857133348"/>
+	
+	<style type="text/css">
+		body,div,table,thead,tbody,tfoot,tr,th,td,p { font-family:"Liberation Sans"; font-size:x-small }
+		a.comment-indicator:hover + comment { background:#ffd; position:absolute; display:block; border:1px solid black; padding:0.5em;  } 
+		a.comment-indicator { background:red; display:inline-block; border:1px solid black; width:0.5em; height:0.5em;  } 
+		comment { display:none;  } 
+	</style>
+	
+</head>
+
+<body>
+<hr>
+	<p><center>
+		<h1>Overview</h1>
+		<A HREF="#table0">Nodes</A><br>
+		<A HREF="#table1">Relationships</A><br>
+		<A HREF="#table2">Properties</A><br>
+		
+	</center></p>
+<hr>
+<A NAME="table0"><h1>Sheet 1: <em>Nodes</em></h1></A>
+<table cellspacing="0" border="0">
+	<colgroup width="144"></colgroup>
+	<colgroup width="85"></colgroup>
+	<colgroup width="145"></colgroup>
+	<colgroup width="234"></colgroup>
+	<colgroup width="184"></colgroup>
+	<colgroup width="344"></colgroup>
+	<colgroup width="243"></colgroup>
+	<colgroup width="236"></colgroup>
+	<tr>
+		<td height="17" align="left"><b>Description</b></td>
+		<td align="left"><b>Language</b></td>
+		<td align="left"><b>Inherits</b></td>
+		<td align="left"><b>Label</b></td>
+		<td align="left"><b>Attributes</b></td>
+		<td align="left"><b>Relationships</b></td>
+		<td align="left"><b>Additional relationships</b></td>
+		<td align="left"><b>Comment</b></td>
+	</tr>
+	<tr>
+		<td height="77" align="left">Map</td>
+		<td align="left">All</td>
+		<td align="left"><br></td>
+		<td align="left">Map</td>
+		<td align="left">notes: str<br>extension: str<br>id: str<br>language: Language</td>
+		<td align="left">HAS_ANNOTATION * Annotation<br>HAS_GLYPH * Glyph<br>HAS_ARC * Arc<br>HAS_ARCGROUP * Arcgroup<br>HAS_ANNOTATION * Annotation</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="181" align="left">Glyph</td>
+		<td align="left">All</td>
+		<td align="left"><br></td>
+		<td align="left">Glyph</td>
+		<td align="left">notes: str<br>extension: str<br>id: str<br>label: str (except for UnitOfInformation)<br>class: GlyphClass<br>clone: bool<br>clone_label: str<br>compartmentOrder: float<br>oritentation: Orientation</td>
+		<td align="left">HAS_ANNOTATION * Annotation<br>HAS_STATE_VARIABLE * StateVariable<br>HAS_EXISTENCE 1 Existence<br>HAS_LOCATION 1 Location<br>HAS_UNIT_OF_INFORMATION * UnitOfInformation<br>HAS_PORT * Port<br>HAS_BBOX 1 Bbox<br>HAS_LABEL 1 Label<br>HAS_SUBUNIT * Subunit</td>
+		<td align="left"><i>HAS_INPUT 1 Glyph<br>CATALYZES 1 Glyph<br>MODULATES 1 Glyph<br>INHIBITS 1 Glyph<br>NECESSARY_STIMULATES 1 Glyph<br>CONSUMES 1 Glyph<br>PRODUCES 1 Glyph<br>NEGATIVELY_INFLUENCES 1 Glyph<br>POSITIVELY_INFLUENCES 1 Glyph<br>INFLUENCES 1 Glyph<br>IS_ASSIGNED_TO 1 Glyph<br>INTERACTS_WITH 1 Glyph</i></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="151" align="left">Arc</td>
+		<td align="left">All</td>
+		<td align="left"><br></td>
+		<td align="left">Arc</td>
+		<td align="left">notes: str<br>extension: str<br>id: str<br>class: ArcClass</td>
+		<td align="left">HAS_ANNOTATION * Annotation<br>HAS_GLYPH * Glyph<br>HAS_PORT * Port<br>HAS_SOURCE 1 Glyph or Port<br>HAS_TARGET 1 Glyph or Port<br>HAS_START 1 Point<br>HAS_NEXT 1 Point<br>HAS_END 1 Point<br>HAS_CARDINALITY 1 Cardinality<br>HAS_OUTCOME 1 Outcome</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="62" align="left">Arcgroup</td>
+		<td align="left">All</td>
+		<td align="left"><br></td>
+		<td align="left">Arcgroup</td>
+		<td align="left">notes: str<br>extension: str<br>id: str<br>class: ArcGroupType</td>
+		<td align="left">HAS_ANNOTATION * Annotation<br>HAS_GLYPH * Glyph<br>HAS_ARC * Arc</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="62" align="left">Bbox</td>
+		<td align="left">All</td>
+		<td align="left"><br></td>
+		<td align="left">Bbox</td>
+		<td align="left">x: float<br>y: float<br>w: float<br>h: float</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="47" align="left">Port</td>
+		<td align="left">All</td>
+		<td align="left"><br></td>
+		<td align="left">Port</td>
+		<td align="left">id: str<br>x: float<br>y: float</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Label</td>
+		<td align="left">All</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left">text: str</td>
+		<td align="left">HAS_BBOX 1 Bbox</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="47" align="left">Annotation (SBML style)</td>
+		<td align="left">All</td>
+		<td align="left"><br></td>
+		<td align="left">Annotation</td>
+		<td align="left">qualifier_uri: str<br>qualifier_ns: str<br>qualifier: str</td>
+		<td align="left">HAS_RESOURCE * Resource</td>
+		<td align="left"><br></td>
+		<td align="left">See SBML documentation</td>
+	</tr>
+	<tr>
+		<td height="47" align="left">Resource (inside SBML style annotation)</td>
+		<td align="left">All</td>
+		<td align="left"><br></td>
+		<td align="left">Resource</td>
+		<td align="left">id: str<br>uri: str<br>collection_ns: str</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left">See SBML documentation</td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Logical operator</i></td>
+		<td align="left"><i>All</i></td>
+		<td align="left"><i>Glyph</i></td>
+		<td align="left"><i>LogicalOperator</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Or operator</td>
+		<td align="left">All</td>
+		<td align="left">LogicalOperator</td>
+		<td align="left">OrOperator</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">And operator</td>
+		<td align="left">All</td>
+		<td align="left">LogicalOperator</td>
+		<td align="left">AndOperator</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Not operator</td>
+		<td align="left">All</td>
+		<td align="left">LogicalOperator</td>
+		<td align="left">NotOperator</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Delay</td>
+		<td align="left">All</td>
+		<td align="left">LogicalOperator</td>
+		<td align="left">DelayOperator</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Equivalence operator</td>
+		<td align="left">PD</td>
+		<td align="left">Glyph</td>
+		<td align="left">EquivalenceOperator</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Compartment</td>
+		<td align="left">PD, AF</td>
+		<td align="left">Glyph</td>
+		<td align="left">Compartment</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Auxilliary unit</i></td>
+		<td align="left"><i>All</i></td>
+		<td align="left"><i>Glyph</i></td>
+		<td align="left"><i>AuxilliaryUnit</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="47" align="left">Unit of information</td>
+		<td align="left">All</td>
+		<td align="left">AuxilliaryUnit</td>
+		<td align="left">UnitOfInformation</td>
+		<td align="left">prefix: str<br>value: str<br>type: EntityType (AF only)</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="32" align="left">State variable</td>
+		<td align="left">PD, ER</td>
+		<td align="left">AuxilliaryUnit</td>
+		<td align="left">StateVariable</td>
+		<td align="left">value: str<br>variable: str</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Location</td>
+		<td align="left">ER</td>
+		<td align="left">StateVariable</td>
+		<td align="left">Location</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Existence</td>
+		<td align="left">ER</td>
+		<td align="left">StateVariable</td>
+		<td align="left">Existence</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Cardinality</td>
+		<td align="left">PD, ER</td>
+		<td align="left">AuxilliaryUnit</td>
+		<td align="left">Cardinality</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Terminal</td>
+		<td align="left">All</td>
+		<td align="left">AuxilliaryUnit</td>
+		<td align="left">Terminal</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Biological activity</td>
+		<td align="left">AF</td>
+		<td align="left">Activity</td>
+		<td align="left">BiologicalActivity</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Phenotype</td>
+		<td align="left">AF</td>
+		<td align="left">Activity</td>
+		<td align="left">Phenotype</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Influence</i></td>
+		<td align="left"><i>AF</i></td>
+		<td align="left"><i>Arc</i></td>
+		<td align="left"><i>Influence</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Unknown influence</td>
+		<td align="left">AF</td>
+		<td align="left">Influence</td>
+		<td align="left">UnknownInfluence</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Positive influence</td>
+		<td align="left">AF</td>
+		<td align="left">Influence</td>
+		<td align="left">PositiveInfluence</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Negative influence</td>
+		<td align="left">AF</td>
+		<td align="left">Influence</td>
+		<td align="left">NegativeInfluence</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Entity pool node</i></td>
+		<td align="left"><i>PD</i></td>
+		<td align="left"><i>Glyph</i></td>
+		<td align="left"><i>Epn</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Unspecified entity</td>
+		<td align="left">PD</td>
+		<td align="left">Epn</td>
+		<td align="left">UnspecifiedEntity</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Simple chemical</td>
+		<td align="left">PD</td>
+		<td align="left">Epn</td>
+		<td align="left">SimpleChemical</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Macromolecule</td>
+		<td align="left">PD</td>
+		<td align="left">Epn</td>
+		<td align="left">Macromolecule</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Nucleic acid feature</td>
+		<td align="left">PD</td>
+		<td align="left">Epn</td>
+		<td align="left">NucleicAcidFeature</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Complex</td>
+		<td align="left">PD</td>
+		<td align="left">Epn</td>
+		<td align="left">Complex</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Empty set</td>
+		<td align="left">PD</td>
+		<td align="left">Epn</td>
+		<td align="left">EmptySet</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Perturbing agent</td>
+		<td align="left">PD</td>
+		<td align="left">Epn</td>
+		<td align="left">PerurbingAgent</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Multimer</i></td>
+		<td align="left"><i>PD</i></td>
+		<td align="left"><i>Epn</i></td>
+		<td align="left"><i>Multimer</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Simple chemical multimer</td>
+		<td align="left">PD</td>
+		<td align="left">Multimer</td>
+		<td align="left">SimpleChemicalMultimer</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Macromolecule multimer</td>
+		<td align="left">PD</td>
+		<td align="left">Multimer</td>
+		<td align="left">MacromoleculeMultimer</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Nucleic acid feature multimer</td>
+		<td align="left">PD</td>
+		<td align="left">Multimer</td>
+		<td align="left">NucleicAcidFeatureMultimer</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Complex multimer</td>
+		<td align="left">PD</td>
+		<td align="left">Multimer</td>
+		<td align="left">ComplexMultimer</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Process</i></td>
+		<td align="left"><i>PD</i></td>
+		<td align="left"><i>Glyph</i></td>
+		<td align="left"><i>Process</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Stoichiometric process</i></td>
+		<td align="left"><i>PD</i></td>
+		<td align="left"><i>Process</i></td>
+		<td align="left"><i>StoichiometricProcess</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Generic process</td>
+		<td align="left">PD</td>
+		<td align="left">StoichiometricProcess</td>
+		<td align="left">GenericProcess</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Omitted process</td>
+		<td align="left">PD</td>
+		<td align="left">StoichiometricProcess</td>
+		<td align="left">OmittedProcess</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Uncertain process</td>
+		<td align="left">PD</td>
+		<td align="left">StoichiometricProcess</td>
+		<td align="left">UncertainProcess</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Association</td>
+		<td align="left">PD</td>
+		<td align="left">StoichiometricProcess</td>
+		<td align="left">Association</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Dissociation</td>
+		<td align="left">PD</td>
+		<td align="left">StoichiometricProcess</td>
+		<td align="left">Dissociation</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Phenotype</td>
+		<td align="left">PD</td>
+		<td align="left">Process</td>
+		<td align="left">Phenotype</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Subunit</i></td>
+		<td align="left"><i>PD</i></td>
+		<td align="left"><i>AuxilliaryUnit</i></td>
+		<td align="left"><i>Subunit</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Unspecified entity subunit</td>
+		<td align="left">PD</td>
+		<td align="left">Subunit</td>
+		<td align="left">UnspecifiedEntitySubunit</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Simple chemical subunit</td>
+		<td align="left">PD</td>
+		<td align="left">Subunit</td>
+		<td align="left">SimpleChemicalSubunit</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Macromolecule subunit</td>
+		<td align="left">PD</td>
+		<td align="left">Subunit</td>
+		<td align="left">MacromoleculeSubunit</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Nucleic acid feature subunit</td>
+		<td align="left">PD</td>
+		<td align="left">Subunit</td>
+		<td align="left">NucleicAcidFeatureSubunit</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Complex subunit</td>
+		<td align="left">PD</td>
+		<td align="left">Subunit</td>
+		<td align="left">ComplexSubunit</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Simple chemical multimer subunit</td>
+		<td align="left">PD</td>
+		<td align="left">Subunit</td>
+		<td align="left">SimpleChemicalMultimerSubunit</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Macromolecule multimer subunit</td>
+		<td align="left">PD</td>
+		<td align="left">Subunit</td>
+		<td align="left">MacromoleculeMultimerSubunit</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Nucleic acid feature multimer subunit</td>
+		<td align="left">PD</td>
+		<td align="left">Subunit</td>
+		<td align="left">NucleicAcidFeatureMultimerSubunit</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Complex multimer subunit</td>
+		<td align="left">PD</td>
+		<td align="left">Subunit</td>
+		<td align="left">ComplexMultimerSubunit</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Phenotype subunit</td>
+		<td align="left">PD</td>
+		<td align="left">Subunit</td>
+		<td align="left">PhenotypeSubunit</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left">For compatibility with some CellDesigner maps</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Modulation</td>
+		<td align="left">PD</td>
+		<td align="left">Arc</td>
+		<td align="left">Modulation</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Stimulation</td>
+		<td align="left">PD, ER</td>
+		<td align="left">Modulation</td>
+		<td align="left">Stimulation</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Inhibition</td>
+		<td align="left">PD, ER</td>
+		<td align="left">Modulation</td>
+		<td align="left">Inhibition</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Catalysis</td>
+		<td align="left">PD</td>
+		<td align="left">Stimulation</td>
+		<td align="left">Catalysis</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Necessary stimulation</td>
+		<td align="left">PD, ER</td>
+		<td align="left">Stimulation</td>
+		<td align="left">NecessaryStimulation</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Absolute stimulation</td>
+		<td align="left">ER</td>
+		<td align="left">Stimulation</td>
+		<td align="left">AbsoluteStimulation</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Absolute inhibition</td>
+		<td align="left">ER</td>
+		<td align="left">Inhibition</td>
+		<td align="left">AbsoluteInhibition</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Flux arc</i></td>
+		<td align="left"><i>PD</i></td>
+		<td align="left"><i>Arc</i></td>
+		<td align="left"><i>FluxArc</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Consumption</td>
+		<td align="left">PD</td>
+		<td align="left">FluxArc</td>
+		<td align="left">Consumption</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Production</td>
+		<td align="left">PD</td>
+		<td align="left">FluxArc</td>
+		<td align="left">Production</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Outcome</td>
+		<td align="left">ER</td>
+		<td align="left">Glyph</td>
+		<td align="left">Outcome</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Entity node</i></td>
+		<td align="left"><i>ER</i></td>
+		<td align="left"><i>Glyph</i></td>
+		<td align="left"><i>EntityNode</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Interactor</i></td>
+		<td align="left"><i>ER</i></td>
+		<td align="left"><i>EntityNode</i></td>
+		<td align="left"><i>Interactor</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Perturbing agent</td>
+		<td align="left">ER</td>
+		<td align="left">EntityNode</td>
+		<td align="left">PerturbingAgent</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Entity</td>
+		<td align="left">ER</td>
+		<td align="left">Interactor</td>
+		<td align="left">Entity</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Interaction glyph</td>
+		<td align="left">ER</td>
+		<td align="left">Glyph</td>
+		<td align="left">InteractionGlyph</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Variable value</td>
+		<td align="left">ER</td>
+		<td align="left">Glyph</td>
+		<td align="left">VariableValue</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Submap</td>
+		<td align="left">All</td>
+		<td align="left">Glyph</td>
+		<td align="left">Submap</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Tag</td>
+		<td align="left">All</td>
+		<td align="left">Glyph</td>
+		<td align="left">Tag</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Interaction arcgroup</td>
+		<td align="left">ER</td>
+		<td align="left">Arcgroup</td>
+		<td align="left">InteractionArcgroup</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Relationship</i></td>
+		<td align="left"><i>ER</i></td>
+		<td align="left"><i>Arc</i></td>
+		<td align="left"><i>Relationship</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Statement</i></td>
+		<td align="left"><i>ER</i></td>
+		<td align="left"><i>Relationship</i></td>
+		<td align="left"><i>Statement</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left"><i>Influence</i></td>
+		<td align="left"><i>ER</i></td>
+		<td align="left"><i>Relationship</i></td>
+		<td align="left"><i>Modulation</i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+		<td align="left"><i><br></i></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Assignment</td>
+		<td align="left">ER</td>
+		<td align="left">Arc</td>
+		<td align="left">Assignment</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Interaction</td>
+		<td align="left">ER</td>
+		<td align="left">Arc</td>
+		<td align="left">Interaction</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Logic arc</td>
+		<td align="left">All</td>
+		<td align="left">Arc</td>
+		<td align="left">LogicArc</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Equivalence arc</td>
+		<td align="left">PD</td>
+		<td align="left">Arc</td>
+		<td align="left">EquivalenceArc</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">Implicit xor</td>
+		<td align="left">ER</td>
+		<td align="left">Glyph</td>
+		<td align="left">ImplicitXor</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left">For compatibility with old versions of ER maps</td>
+	</tr>
+</table>
+<!-- ************************************************************************** -->
+<hr>
+<A NAME="table1"><h1>Sheet 2: <em>Relationships</em></h1></A>
+<table cellspacing="0" border="0">
+	<colgroup width="149"></colgroup>
+	<colgroup width="200"></colgroup>
+	<colgroup span="2" width="136"></colgroup>
+	<colgroup width="134"></colgroup>
+	<colgroup width="307"></colgroup>
+	<colgroup width="392"></colgroup>
+	<tr>
+		<td height="17" align="left"><b>Relationship</b></td>
+		<td align="left"><b>Language</b></td>
+		<td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><b>Source</b></td>
+		<td style="border-top: 1px solid #000000; border-right: 1px solid #000000" align="left"><b>End</b></td>
+		<td colspan=3 align="center" valign=middle><b>Description</b></td>
+		</tr>
+	<tr>
+		<td height="17" align="left"><br></td>
+		<td align="left"><br></td>
+		<td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><br></td>
+		<td style="border-top: 1px solid #000000; border-right: 1px solid #000000" align="left"><br></td>
+		<td align="center" valign=middle>PD</td>
+		<td align="left">AF</td>
+		<td align="center" valign=middle>ER</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_SUBUNIT</td>
+		<td align="left">PD</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Subunit</td>
+		<td align="left">Subunit of a complex</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_STATE_VARIABLE</td>
+		<td align="left">PD, ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">StateVariable</td>
+		<td align="left">State variable of a statefull entity pool node</td>
+		<td align="left"><br></td>
+		<td align="left">State variable of an entity</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_LOCATION</td>
+		<td align="left">ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Location</td>
+		<td align="left"><br></td>
+		<td align="left">Location state variable of an entity</td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_EXISTENCE</td>
+		<td align="left">ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Exsitence</td>
+		<td align="left"><br></td>
+		<td align="left">Existence state variable of an entity</td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_UNIT_OF_INFORMATION</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">UnitOfInformation</td>
+		<td align="left">Unit of information of a statefull entity pool node</td>
+		<td align="left">Unit of information of a biological activity</td>
+		<td align="left">Unit of information of an entity</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_PORT</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Port</td>
+		<td align="left">Port of a glyph</td>
+		<td align="left">Port of a glyph</td>
+		<td align="left">Port of a glyph</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_BBOX</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Bbox</td>
+		<td align="left">Bbox of a glyph</td>
+		<td align="left">Bbox of a glyph</td>
+		<td align="left">Bbox of a glyph</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_TERMINAL</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Terminal</td>
+		<td align="left">Terminal of a submap</td>
+		<td align="left">Terminal of a submap</td>
+		<td align="left">Terminal of a submap</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">IS_IN_COMPARTMENT</td>
+		<td align="left">PD, AF</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Compartment</td>
+		<td align="left">Compartment an entity pool node belongs to</td>
+		<td align="left">Compartment of an activity</td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_CARDINALITY</td>
+		<td align="left">PD, ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Arc</td>
+		<td style="border-right: 1px solid #000000" align="left">Cardinality</td>
+		<td align="left">Cardinality of an arc</td>
+		<td align="left"><br></td>
+		<td align="left">Cardinality of an arc</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_OUTCOME</td>
+		<td align="left">ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph or Arc</td>
+		<td style="border-right: 1px solid #000000" align="left">Outcome</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left">Outcome of a statement</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_SOURCE</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Arc</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph or Port</td>
+		<td align="left">Source of an arc</td>
+		<td align="left">Source of an arc</td>
+		<td align="left">Source of an arc</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_TARGET</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Arc</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph or Port</td>
+		<td align="left">Target of an arc</td>
+		<td align="left">Target of an arc</td>
+		<td align="left">Target of an arc</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_START</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Arc</td>
+		<td style="border-right: 1px solid #000000" align="left">Start</td>
+		<td align="left">Starting point of an arc</td>
+		<td align="left">Starting point of an arc</td>
+		<td align="left">Starting point of an arc</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_END</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Arc</td>
+		<td style="border-right: 1px solid #000000" align="left">End</td>
+		<td align="left">Ending point of an arc</td>
+		<td align="left">Ending point of an arc</td>
+		<td align="left">Ending point of an arc</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_NEXT</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Arc</td>
+		<td style="border-right: 1px solid #000000" align="left">Next</td>
+		<td align="left">Intermediate point of an arc</td>
+		<td align="left">Intermediate point of an arc</td>
+		<td align="left">Intermediate point of an arc</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_VALUE</td>
+		<td align="left">ER</td>
+		<td style="border-left: 1px solid #000000" align="left"><br></td>
+		<td style="border-right: 1px solid #000000" align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_GLYPH</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Map</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left">Glyph of a map</td>
+		<td align="left">Glyph of a map</td>
+		<td align="left">Glyph of a map</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_ARC</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Map or Arcgroup</td>
+		<td style="border-right: 1px solid #000000" align="left">Arc</td>
+		<td align="left">Arc of a map</td>
+		<td align="left">Arc of a map</td>
+		<td align="left">Arc of a map or arcgroup</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_ARCGROUP</td>
+		<td align="left">ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Map</td>
+		<td style="border-right: 1px solid #000000" align="left">Arcgroup</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left">Arcgroup of a map</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_RESOURCE</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Annotation</td>
+		<td style="border-right: 1px solid #000000" align="left">Resource</td>
+		<td align="left">Resource of an annotation</td>
+		<td align="left">Resource of an annotation</td>
+		<td align="left">Resource of an annotation</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_ANNOTATION</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Map or Glyph or Arc</td>
+		<td style="border-right: 1px solid #000000" align="left">Annotation</td>
+		<td align="left">Annotation of a map, an arc, or a glyph</td>
+		<td align="left">Annotation of a map, an arc, or a glyph</td>
+		<td align="left">Annotation of a map, an arc, a glyph, or an arcgroup</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">CATALYZES</td>
+		<td align="left">PD</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left">Catalysis between an entity pool node or logical operator and a process</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">MODULATES</td>
+		<td align="left">PD, ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left">Modulation between an entity pool node or logical operator and a process</td>
+		<td align="left"><br></td>
+		<td align="left">Modulation between an entity node and a relationship</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">STIMULATES</td>
+		<td align="left">PD, ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left">Stimulation between an entity pool node or logical operator and a process</td>
+		<td align="left"><br></td>
+		<td align="left">Stimulation between an entity node and a relationship</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">INHIBITS</td>
+		<td align="left">PD, ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left">Inhibition between an entity pool node or logical operator and a process</td>
+		<td align="left"><br></td>
+		<td align="left">Inhibition between an entity node and a relationship</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">NECESSARY_STIMULATES</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left">Necessary stimulation between an entity pool node or logical operator and a process</td>
+		<td align="left">Necessary stimulation between a biological activity or a logical operator and an activity</td>
+		<td align="left">Necessary stimulation between an entity node and a relationship</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">CONSUMES</td>
+		<td align="left">PD</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left">Consumption of an entity pool node by a process</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">PRODUCES</td>
+		<td align="left">PD</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left">Production of an entity pool node by a process</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">HAS_INPUT</td>
+		<td align="left">All</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left">Logic arc between a logical operator and an entity pool node or another logical operator</td>
+		<td align="left">Logic arc between a logical operator and an activity or another logical operator</td>
+		<td align="left">Logic arc between a logical operator and an outcome or another logical operator</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">NEGATIVELY_INFLUENCES</td>
+		<td align="left">AF</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left"><br></td>
+		<td align="left">Negative influence between a biological activity or a logical operator and an activity</td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">POSITIVELY_INFLUENCES</td>
+		<td align="left">AF</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left"><br></td>
+		<td align="left">Positive influence between a biological activity or a logical operator and an activity</td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">INFLUENCES</td>
+		<td align="left">AF</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left"><br></td>
+		<td align="left">Influence between a biological activity or a logical operator and an activity</td>
+		<td align="left"><br></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">IS_ASSIGNED_TO</td>
+		<td align="left">ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left">Assignment between a variable value and a state variable</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">INTERACTS_WITH</td>
+		<td align="left">ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left">Interaction between an interactor and another interactor</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">ABSOLUTE_STIMULATES</td>
+		<td align="left">ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left">Absolute stimulation between an entity node and a relationship</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">ABSOLUTE_INHIBITS</td>
+		<td align="left">ER</td>
+		<td style="border-left: 1px solid #000000" align="left">Glyph</td>
+		<td style="border-right: 1px solid #000000" align="left">Glyph</td>
+		<td align="left"><br></td>
+		<td align="left"><br></td>
+		<td align="left">Absolute inhibition between an entity node and a relationship</td>
+	</tr>
+</table>
+<!-- ************************************************************************** -->
+<hr>
+<A NAME="table2"><h1>Sheet 3: <em>Properties</em></h1></A>
+<table cellspacing="0" border="0">
+	<colgroup width="329"></colgroup>
+	<colgroup width="200"></colgroup>
+	<colgroup width="366"></colgroup>
+	<tr>
+		<td height="17" align="left"><b>Property</b></td>
+		<td align="left"><b>Type</b></td>
+		<td align="center" valign=middle><b>Description</b></td>
+	</tr>
+	<tr>
+		<td height="17" align="left">label</td>
+		<td align="left">str</td>
+		<td align="left">Text of the label element</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">id</td>
+		<td align="left">str</td>
+		<td align="left">Id of the element</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">class</td>
+		<td align="left">GlyphClass or ArcClass</td>
+		<td align="left">SBGN class of the element</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">clone</td>
+		<td align="left">bool</td>
+		<td align="left">Whether the element has a clone or not</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">cloneLabel</td>
+		<td align="left">str</td>
+		<td align="left">Label of the element’s clone subelement</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">value</td>
+		<td align="left">str</td>
+		<td align="left">Value of the state variable or unit of information</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">variable</td>
+		<td align="left">str</td>
+		<td align="left">Variable of the state variable</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">prefix</td>
+		<td align="left">str</td>
+		<td align="left">Prefix of the unit of information</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">compartmentOrder</td>
+		<td align="left">float</td>
+		<td align="left">order of the glyph (for compartments)</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">language</td>
+		<td align="left">Language</td>
+		<td align="left">SBGN language of the map (PD, AF or ER)</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">x</td>
+		<td align="left">float</td>
+		<td align="left">x coordinate</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">y</td>
+		<td align="left">float</td>
+		<td align="left">y coordinate</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">w</td>
+		<td align="left">float</td>
+		<td align="left">Width value</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">h</td>
+		<td align="left">float</td>
+		<td align="left">Height value</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">orientation</td>
+		<td align="left">Orientation</td>
+		<td align="left">Orientation of the glyph</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">cardinality</td>
+		<td align="left">str</td>
+		<td align="left">Cardinality of the arc (stoichiometry in PD, cis/trans in ER)</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">type</td>
+		<td align="left">EntityType</td>
+		<td align="left">Type of the AF unit of information</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">order</td>
+		<td align="left">int</td>
+		<td align="left">Order of the state variable or of the next element</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">notes</td>
+		<td align="left">str</td>
+		<td align="left">Notes of the element</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">extension</td>
+		<td align="left">str</td>
+		<td align="left">Extension of the element (XML string)</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">qualifier_uri</td>
+		<td align="left">str</td>
+		<td align="left">Qualifier URI</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">qualifier</td>
+		<td align="left">str</td>
+		<td align="left">Qualifier name</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">qualifier_ns</td>
+		<td align="left">str</td>
+		<td align="left">Qualifier namespace</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">uri</td>
+		<td align="left">str</td>
+		<td align="left">Uri of the resource</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">collection_ns</td>
+		<td align="left">str</td>
+		<td align="left">Collection namespace of the resource</td>
+	</tr>
+	<tr>
+		<td height="17" align="left">text</td>
+		<td align="left">str</td>
+		<td align="left">Text value of the label</td>
+	</tr>
+</table>
+<!-- ************************************************************************** -->
+</body>
+
+</html>

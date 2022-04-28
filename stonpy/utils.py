@@ -183,7 +183,7 @@ def reduce_compartments_of_map(sbgnmap, margin=10):
                         bbox.get_w()
                 if dcompartments[compartment_id]["max_y"] < bbox.get_y() + \
                         bbox.get_h():
-                    dcompartments[compartment_id]["max_x"] = bbox.get_y() + \
+                    dcompartments[compartment_id]["max_y"] = bbox.get_y() + \
                         bbox.get_h()
             for subglyph in glyph.get_glyph():
                 bbox = subglyph.get_bbox()
@@ -197,7 +197,7 @@ def reduce_compartments_of_map(sbgnmap, margin=10):
                         bbox.get_w()
                 if dcompartments[compartment_id]["max_y"] < bbox.get_y() + \
                         bbox.get_h():
-                    dcompartments[compartment_id]["max_x"] = bbox.get_y() + \
+                    dcompartments[compartment_id]["max_y"] = bbox.get_y() + \
                         bbox.get_h()
     for glyph in sbgnmap.get_glyph():
         if glyph.get_class().name == "COMPARTMENT":
@@ -238,6 +238,9 @@ def map_to_top_left(sbgnmap):
             bbox.set_y(bbox.get_y() - min_y)
         for subglyph in glyph.get_glyph():
             _glyph_to_top_left(subglyph, min_x, min_y)
+        for port in glyph.get_port():
+            port.set_x(port.get_x() - min_x)
+            port.set_y(port.get_y() - min_y)
 
     def _arc_to_top_left(arc, min_x, min_y):
         points = [arc.get_start(), arc.get_end()] + arc.get_next()

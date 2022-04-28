@@ -1,0 +1,153 @@
+Description;Language;Inherits;Label;Attributes;Relationships;Additional relationships;Comment
+Map;All;;Map;"notes: str
+extension: str
+id: str
+language: Language";"HAS_ANNOTATION * Annotation
+HAS_GLYPH * Glyph
+HAS_ARC * Arc
+HAS_ARCGROUP * Arcgroup
+HAS_ANNOTATION * Annotation";;
+Glyph;All;;Glyph;"notes: str
+extension: str
+id: str
+label: str (except for UnitOfInformation)
+class: GlyphClass
+clone: bool
+clone_label: str
+compartmentOrder: float
+oritentation: Orientation";"HAS_ANNOTATION * Annotation
+HAS_STATE_VARIABLE * StateVariable
+HAS_EXISTENCE 1 Existence
+HAS_LOCATION 1 Location
+HAS_UNIT_OF_INFORMATION * UnitOfInformation
+HAS_PORT * Port
+HAS_BBOX 1 Bbox
+HAS_LABEL 1 Label
+HAS_SUBUNIT * Subunit";"HAS_INPUT 1 Glyph
+CATALYZES 1 Glyph
+MODULATES 1 Glyph
+INHIBITS 1 Glyph
+NECESSARY_STIMULATES 1 Glyph
+CONSUMES 1 Glyph
+PRODUCES 1 Glyph
+NEGATIVELY_INFLUENCES 1 Glyph
+POSITIVELY_INFLUENCES 1 Glyph
+INFLUENCES 1 Glyph
+IS_ASSIGNED_TO 1 Glyph
+INTERACTS_WITH 1 Glyph";
+Arc;All;;Arc;"notes: str
+extension: str
+id: str
+class: ArcClass";"HAS_ANNOTATION * Annotation
+HAS_GLYPH * Glyph
+HAS_PORT * Port
+HAS_SOURCE 1 Glyph or Port
+HAS_TARGET 1 Glyph or Port
+HAS_START 1 Point
+HAS_NEXT 1 Point
+HAS_END 1 Point
+HAS_CARDINALITY 1 Cardinality
+HAS_OUTCOME 1 Outcome";;
+Arcgroup;All;;Arcgroup;"notes: str
+extension: str
+id: str
+class: ArcGroupType";"HAS_ANNOTATION * Annotation
+HAS_GLYPH * Glyph
+HAS_ARC * Arc";;
+Bbox;All;;Bbox;"x: float
+y: float
+w: float
+h: float";;;
+Port;All;;Port;"id: str
+x: float
+y: float";;;
+Label;All;;;text: str;HAS_BBOX 1 Bbox;;
+Annotation (SBML style);All;;Annotation;"qualifier_uri: str
+qualifier_ns: str
+qualifier: str";HAS_RESOURCE * Resource;;See SBML documentation
+Resource (inside SBML style annotation);All;;Resource;"id: str
+uri: str
+collection_ns: str";;;See SBML documentation
+Logical operator;All;Glyph;LogicalOperator;;;;
+Or operator;All;LogicalOperator;OrOperator;;;;
+And operator;All;LogicalOperator;AndOperator;;;;
+Not operator;All;LogicalOperator;NotOperator;;;;
+Delay;All;LogicalOperator;DelayOperator;;;;
+Equivalence operator;PD;Glyph;EquivalenceOperator;;;;
+Compartment;PD, AF;Glyph;Compartment;;;;
+Auxilliary unit;All;Glyph;AuxilliaryUnit;;;;
+Unit of information;All;AuxilliaryUnit;UnitOfInformation;"prefix: str
+value: str
+type: EntityType (AF only)";;;
+State variable;PD, ER;AuxilliaryUnit;StateVariable;"value: str
+variable: str";;;
+Location;ER;StateVariable;Location;;;;
+Existence;ER;StateVariable;Existence;;;;
+Cardinality;PD, ER;AuxilliaryUnit;Cardinality;;;;
+Terminal;All;AuxilliaryUnit;Terminal;;;;
+Biological activity;AF;Activity;BiologicalActivity;;;;
+Phenotype;AF;Activity;Phenotype;;;;
+Influence;AF;Arc;Influence;;;;
+Unknown influence;AF;Influence;UnknownInfluence;;;;
+Positive influence;AF;Influence;PositiveInfluence;;;;
+Negative influence;AF;Influence;NegativeInfluence;;;;
+Entity pool node;PD;Glyph;Epn;;;;
+Unspecified entity;PD;Epn;UnspecifiedEntity;;;;
+Simple chemical;PD;Epn;SimpleChemical;;;;
+Macromolecule;PD;Epn;Macromolecule;;;;
+Nucleic acid feature;PD;Epn;NucleicAcidFeature;;;;
+Complex;PD;Epn;Complex;;;;
+Empty set;PD;Epn;EmptySet;;;;
+Perturbing agent;PD;Epn;PerurbingAgent;;;;
+Multimer;PD;Epn;Multimer;;;;
+Simple chemical multimer;PD;Multimer;SimpleChemicalMultimer;;;;
+Macromolecule multimer;PD;Multimer;MacromoleculeMultimer;;;;
+Nucleic acid feature multimer;PD;Multimer;NucleicAcidFeatureMultimer;;;;
+Complex multimer;PD;Multimer;ComplexMultimer;;;;
+Process;PD;Glyph;Process;;;;
+Stoichiometric process;PD;Process;StoichiometricProcess;;;;
+Generic process;PD;StoichiometricProcess;GenericProcess;;;;
+Omitted process;PD;StoichiometricProcess;OmittedProcess;;;;
+Uncertain process;PD;StoichiometricProcess;UncertainProcess;;;;
+Association;PD;StoichiometricProcess;Association;;;;
+Dissociation;PD;StoichiometricProcess;Dissociation;;;;
+Phenotype;PD;Process;Phenotype;;;;
+Subunit;PD;AuxilliaryUnit;Subunit;;;;
+Unspecified entity subunit;PD;Subunit;UnspecifiedEntitySubunit;;;;
+Simple chemical subunit;PD;Subunit;SimpleChemicalSubunit;;;;
+Macromolecule subunit;PD;Subunit;MacromoleculeSubunit;;;;
+Nucleic acid feature subunit;PD;Subunit;NucleicAcidFeatureSubunit;;;;
+Complex subunit;PD;Subunit;ComplexSubunit;;;;
+Simple chemical multimer subunit;PD;Subunit;SimpleChemicalMultimerSubunit;;;;
+Macromolecule multimer subunit;PD;Subunit;MacromoleculeMultimerSubunit;;;;
+Nucleic acid feature multimer subunit;PD;Subunit;NucleicAcidFeatureMultimerSubunit;;;;
+Complex multimer subunit;PD;Subunit;ComplexMultimerSubunit;;;;
+Phenotype subunit;PD;Subunit;PhenotypeSubunit;;;;For compatibility with some CellDesigner maps
+Modulation;PD;Arc;Modulation;;;;
+Stimulation;PD, ER;Modulation;Stimulation;;;;
+Inhibition;PD, ER;Modulation;Inhibition;;;;
+Catalysis;PD;Stimulation;Catalysis;;;;
+Necessary stimulation;PD, ER;Stimulation;NecessaryStimulation;;;;
+Absolute stimulation;ER;Stimulation;AbsoluteStimulation;;;;
+Absolute inhibition;ER;Inhibition;AbsoluteInhibition;;;;
+Flux arc;PD;Arc;FluxArc;;;;
+Consumption;PD;FluxArc;Consumption;;;;
+Production;PD;FluxArc;Production;;;;
+Outcome;ER;Glyph;Outcome;;;;
+Entity node;ER;Glyph;EntityNode;;;;
+Interactor;ER;EntityNode;Interactor;;;;
+Perturbing agent;ER;EntityNode;PerturbingAgent;;;;
+Entity;ER;Interactor;Entity;;;;
+Interaction glyph;ER;Glyph;InteractionGlyph;;;;
+Variable value;ER;Glyph;VariableValue;;;;
+Submap;All;Glyph;Submap;;;;
+Tag;All;Glyph;Tag;;;;
+Interaction arcgroup;ER;Arcgroup;InteractionArcgroup;;;;
+Relationship;ER;Arc;Relationship;;;;
+Statement;ER;Relationship;Statement;;;;
+Influence;ER;Relationship;Modulation;;;;
+Assignment;ER;Arc;Assignment;;;;
+Interaction;ER;Arc;Interaction;;;;
+Logic arc;All;Arc;LogicArc;;;;
+Equivalence arc;PD;Arc;EquivalenceArc;;;;
+Implicit xor;ER;Glyph;ImplicitXor;;;;For compatibility with old versions of ER maps

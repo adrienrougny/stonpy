@@ -1,0 +1,37 @@
+"Relationship [str]";"Language [str]";"Source PD [str]";"End PD [str]";"Source AF [str]";"End AF [str]";"Source ER [str]";"End ER [str]";"Description PD [str]";"Description AF [str]";"Description ER [str]"
+"HAS_SUBUNIT";"PD";"Complex (1)";"Subunit (*)";;;;;"Subunit of a complex";;
+"HAS_STATE_VARIABLE";"PD, ER";"Epn (1)";"StateVariable (*)";;;"Entity (1)";"StateVariable (*)";"State variable of a statefull entity pool node";;"State variable of an entity"
+"HAS_LOCATION";"ER";;;;;"Entity (1)";"Location (1)";;"Location state variable of an entity";
+"HAS_EXISTENCE";"ER";;;;;"Entity (1)";"Existence (1)";;"Existence state variable of an entity";
+"HAS_UNIT_OF_INFORMATION";"All";"Epn (1)";"UnitOfInformation (*)";"Activity (1)";"UnitOfInformation (*)";"Entity (1)";"UnitOfInformation (*)";"Unit of information of a statefull entity pool node";"Unit of information of a biological activity";"Unit of information of an entity"
+"HAS_PORT";"All";"Glyph or Arc (1)";"Port (*)";"Glyph or Arc (1)";"Port (*)";"Glyph or Arc (1)";"Port (*)";"Port of a glyph";"Port of a glyph";"Port of a glyph"
+"HAS_BBOX";"All";"Glyph (1)";"Bbox (1)";"Glyph (1)";"Bbox (1)";"Glyph (1)";"Bbox (1)";"Bbox of a glyph";"Bbox of a glyph";"Bbox of a glyph"
+"HAS_TERMINAL";"All";"Submap (1)";"Terminal (*)";"Submap (1)";"Terminal (*)";"Submap (1)";"Terminal (*)";"Terminal of a submap";"Terminal of a submap";"Terminal of a submap"
+"IS_IN_COMPARTMENT";"PD, AF";"Epn (*)";"Compartment (1)";"Activity (*)";"Compartment (1)";;;"Compartment an entity pool node belongs to";"Compartment of an activity";
+"HAS_CARDINALITY";"PD, ER";"FluxArc (1)";"Cardinality (1)";;;"Modulation (1)";"Cardinality (1)";"Cardinality of an arc";;"Cardinality of an arc"
+"HAS_OUTCOME";"ER";;;;;"InteractionGlyph or Statement (1)";"Outcome (*)";;;"Outcome of a statement"
+"HAS_SOURCE";"All";"Arc (1)";"Glyph or Port (1)";"Arc (1)";"Glyph or Port (1)";"Arc (1)";"Glyph or Port (1)";"Source of an arc";"Source of an arc";"Source of an arc"
+"HAS_TARGET";"All";"Arc (1)";"Glyph or Port (1)";"Arc (1)";"Glyph or Port (1)";"Arc (1)";"Glyph or Port (1)";"Target of an arc";"Target of an arc";"Target of an arc"
+"HAS_START";"All";"Arc (1)";"Start (1)";"Arc (1)";"Start (1)";"Arc (1)";"Start (1)";"Starting point of an arc";"Starting point of an arc";"Starting point of an arc"
+"HAS_END";"All";"Arc (1)";"End (1)";"Arc (1)";"End (1)";"Arc (1)";"End (1)";"Ending point of an arc";"Ending point of an arc";"Ending point of an arc"
+"HAS_NEXT";"All";"Arc (1)";"Next (*)";"Arc (1)";"Next (*)";"Arc (1)";"Next (*)";"Intermediate point of an arc";"Intermediate point of an arc";"Intermediate point of an arc"
+"HAS_GLYPH";"All";"Map (1)";"Glyph (*)";"Map (1)";"Glyph (*)";"Map (1)";"Glyph (*)";"Glyph of a map";"Glyph of a map";"Glyph of a map"
+"HAS_ARC";"All";"Map (1)";"Arc (*)";"Map (1)";"Arc (*)";"Map or Arcgroup (1)";"Arc (*)";"Arc of a map";"Arc of a map";"Arc of a map or arcgroup"
+"HAS_ARCGROUP";"ER";;;;;"Map (1)";"Arcgroup (*)";;;"Arcgroup of a map"
+"HAS_RESOURCE";"All";"Annotation (1)";"Resource (*)";"Annotation (1)";"Resource (*)";"Annotation (1)";"Resource (*)";"Resource of an annotation";"Resource of an annotation";"Resource of an annotation"
+"HAS_ANNOTATION";"All";"Map or Glyph or Arc (1)";"Annotation (*)";"Map or Glyph or Arc (1)";"Annotation (*)";"Map or Glyph or Arc (1)";"Annotation (*)";"Annotation of a map, an arc, or a glyph";"Annotation of a map, an arc, or a glyph";"Annotation of a map, an arc, a glyph, or an arcgroup"
+"CATALYZES";"PD";"Epn or LogicalOperator (*)";"Process (*)";;;;;"Catalysis between an entity pool node or logical operator and a process";;
+"MODULATES";"PD, ER";"Epn or LogicalOperator (*)";"Process (*)";;;"EntityNode (*)";"Relationship (*)";"Modulation between an entity pool node or logical operator and a process";;"Modulation between an entity node and a relationship"
+"STIMULATES";"PD, ER";"Epn or LogicalOperator (*)";"Process (*)";;;"EntityNode (*)";"Relationship (*)";"Stimulation between an entity pool node or logical operator and a process";;"Stimulation between an entity node and a relationship"
+"INHIBITS";"PD, ER";"Epn or LogicalOperator (*)";"Process (*)";;;"EntityNode (*)";"Relationship (*)";"Inhibition between an entity pool node or logical operator and a process";;"Inhibition between an entity node and a relationship"
+"NECESSARY_STIMULATES";"All";"Epn or LogicalOperator (*)";"Process (*)";"BiologicalActivity or LogicalOperator (*)";"Activity (*)";"EntityNode (*)";"Relationship (*)";"Necessary stimulation between an entity pool node or logical operator and a process";"Necessary stimulation between a biological activity or a logical operator and an activity";"Necessary stimulation between an entity node and a relationship"
+"CONSUMES";"PD";"StoichiometricProcess (*)";"Epn (*)";;;;;"Consumption of an entity pool node by a process";;
+"PRODUCES";"PD";"StoichiometricProcess (*)";"Epn (*)";;;;;"Production of an entity pool node by a process";;
+"HAS_INPUT";"All";"LogicalOperator or EquivalenceOperator (*)";"Epn or LogicalOperator (*)";"LogicalOperator (*)";"Activity (*)";"LogicalOperator (*)";"EntityNode (*)";"Logic arc between a logical operator and an entity pool node or another logical operator";"Logic arc between a logical operator and an activity or another logical operator";"Logic arc between a logical operator and an outcome or another logical operator"
+"NEGATIVELY_INFLUENCES";"AF";;;"BiologicalActivity or LogicalOperator (*)";"Activity (*)";;;;"Negative influence between a biological activity or a logical operator and an activity";
+"POSITIVELY_INFLUENCES";"AF";;;"BiologicalActivity or LogicalOperator (*)";"Activity (*)";;;;"Positive influence between a biological activity or a logical operator and an activity";
+"INFLUENCES";"AF";;;"BiologicalActivity or LogicalOperator (*)";"Activity (*)";;;;"Influence between a biological activity or a logical operator and an activity";
+"IS_ASSIGNED_TO";"ER";;;;;"VariableValue (*)";"StateVariable (1)";;;"Assignment between a variable value and a state variable"
+"INTERACTS_WITH";"ER";;;;;"Interactor (*)";"Interactor (*)";;;"Interaction between an interactor and another interactor"
+"ABSOLUTE_STIMULATES";"ER";;;;;"EntityNode (*)";"Relationship (*)";;;"Absolute stimulation between an entity node and a relationship"
+"ABSOLUTE_INHIBITS";"ER";;;;;"EntityNode (*)";"Relationship (*)";;;"Absolute inhibition between an entity node and a relationship"
