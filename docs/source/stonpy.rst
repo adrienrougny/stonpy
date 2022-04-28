@@ -8,6 +8,7 @@ Submodules
    :maxdepth: 4
 
    stonpy.ston
+   stonpy.converter
 
 Completion
 ----------
