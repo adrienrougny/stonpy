@@ -208,7 +208,7 @@ class STON(object):
         By default, each record resulting from the query is transformed to zero or more SBGN maps, one for each Map node it contains.
         The resulting SBGN maps are then returned one by one. Only distinct SBGN maps are returned.
         When `merge_records` is set to `True`, records are merged before being transformed to SBGN maps.
-        When `complete` is set to `True`, records are completed before being transformed; a node or a relationship of a record is always completed by the Map node it belongs to, and by all other nodes and relationships that are ultimately necessary to form a valid map from it.
+        When `complete` is set to `True`, records are completed before being transformed; a node or a relationship of a record is always completed by all other nodes and relationships that are ultimately necessary to form a valid map from it (see :ref:`completion` for more details).
         Hence if `complete` is set to `True`, at least one valid SBGN map will be returned as long as at least one record contains a node or a relationship.
 
         :param query: the cypher query
@@ -249,7 +249,7 @@ class STON(object):
 
         By default, each record resulting from the query is transformed to zero or more SBGN maps, one for each Map node it contains, and each SBGN map is written to a distinct SBGN-ML file.
         When `merge_records` is set to `True`, records are merged before being transformed to SBGN maps.
-        When `complete` is set to `True`, records are completed before being transformed; a node or a relationship of a record is always completed by the Map node it belongs to, and by all other nodes and relationships that are ultimately necessary to form a valid map from it.
+        When `complete` is set to `True`, records are completed before being transformed; a node or a relationship of a record is always completed by all other nodes and relationships that are ultimately necessary to form a valid map from it (see :ref:`completion` for more details).
         Hence if `complete` is set to `True`, at least one valid SBGN map will be written as long as at least one record contains a node or a relationship.
         If there is only one resulting SBGN map, it is written to sbgn_file.
         If there are multiple resulting SBGN maps, each distinct SBGN map is written to a different file formatted as follows: the ith distinct SBGN map is written to file <name>-i.<ext> if `sbgn_file` is of the form <name>.<ext>, and to file `sbgn_file`-i.sbgn otherwise.

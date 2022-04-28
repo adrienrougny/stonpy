@@ -1,3 +1,5 @@
+"""The module for converting SBGN maps to a subgraphs and vice-versa."""
+
 from py2neo import Graph, Node, Relationship, Subgraph
 
 import rdflib
@@ -10,7 +12,7 @@ import stonpy.utils as utils
 
 
 def map_to_subgraph(sbgn_map, map_id=None, make_shortcuts=True, make_sbml_annotations=True, verbose=False):
-    """Converts an SBGN map to a subgraph and returns it.
+    """Convert an SBGN map to a subgraph and return it.
 
     :param sbgn_map: the SBGN map
     :type sbgn_map: `libsbgnpy.libsbgn.map`
@@ -568,7 +570,7 @@ def _arcgroup_to_subgraph(arcgroup, dids, dpids, ontology, make_shortcuts=True, 
 
 
 def subgraph_to_map(subgraph):
-    """Converts a subgraph to zero or more SBGN maps and returns them.
+    """Convert a subgraph to zero or more SBGN maps and return them.
 
     :param subgraph: the subgraph
     :type subgraph: `py2neo.Subgraph`

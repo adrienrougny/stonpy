@@ -1,3 +1,6 @@
+"""The module for completing subgraphs to form complete subgraphs that can be 
+converted to SBGN maps."""
+
 from stonpy.model import STONEnum
 
 import stonpy.utils as utils
@@ -11,17 +14,9 @@ def _choose_node_completion_function(node):
 
 
 def complete_subgraph(subgraph, db_graph, complete_process_modulations=False):
-    """Completes a subgraph w.r.t to a graph and returns it.
+    """Complete a subgraph w.r.t to a graph and returns it.
 
-    A relationship is completed by its start node and its end node (by default, in subgraphs).
-    A shortucut relationship is also completed by the Arc node it corresponds to.
-    In the following, when a node is completed by another node is shares a relationship with, the node is also completed by this relationship.
-    A Map node is completed with all the Glyph, Arc and Arcgroup nodes it owns, which are themselves completed recursively.
-    A Glyph node is completed with all its decorating Auxiliary unit and subglyph nodes, which are themselves completed recursively, with its Bbox node, with all its Port nodes, which are not completed recursively (except for the Process, Logical operator and Equivalence nodes, for which they are completed recursively), and with its owning Map node (if it is not a subglyph of another glyph or arcgroup).
-    Among the Glyph nodes, the EPN and Activity nodes are also completed by the Compartment node they belong to, which is itself completed recursively, and the Process node may also be optionally completed with the Arc nodes targetting it.
-    An Arc node is completed with its source, target, Start, End, Next and Cardinality nodes, the latter being completed recursively, and with its owning Map node (if it is not a subglyph of an arcgroup).
-    An Arcgroup node is completed with all the Glyph and Arc nodes it owns, which are themselves completed recursively.
-    Finally, a Port node is completed with the Glyph or Arc node that owns it, and with the Arc nodes whom it is a source or target node of.
+    See :ref:`completion` for more details.
 
     :param subgraph: the subgraph to complete
     :type subgraph: `py2neo.Subgraph`
