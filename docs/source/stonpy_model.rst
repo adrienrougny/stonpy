@@ -1,5 +1,5 @@
 stonpy's data model
-==============
+===================
 
 Stonpy’s data model was built following the SBGN-ML data model.
 The figure below shows an excerpt of a Neo4j graph built from an SBGN PD map using stonpy.

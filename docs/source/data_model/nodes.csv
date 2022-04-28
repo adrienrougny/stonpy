@@ -1,0 +1,127 @@
+"Description [str]";"Abstract [bool]";"Language [str]";"Inherits [str]";"Label [str]";"Attributes [list]";"Comment [str]"
+"Map";"0";"All";;"Map";"notes: str
+extension: str
+id: str
+language: Language";
+"Glyph";"1";"All";;"Glyph";"notes: str
+extension: str
+id: str
+class: GlyphClass
+clone: bool
+clone_label: str
+compartmentOrder: float
+oritentation: Orientation";
+"Arc";"1";"All";;"Arc";"notes: str
+extension: str
+id: str
+class: ArcClass";
+"Arcgroup";"1";"All";;"Arcgroup";"notes: str
+extension: str
+id: str
+class: ArcGroupType";
+"Bbox";"0";"All";;"Bbox";"x: float
+y: float
+w: float
+h: float";
+"Port";"0";"All";;"Port";"id: str
+x: float
+y: float";
+"Label";"0";"All";;"Label";"text: str";
+"Annotation (SBML style)";"0";"All";;"Annotation";"qualifier_uri: str
+qualifier_ns: str
+qualifier: str";"See SBML documentation"
+"Resource (inside SBML style annotation)";"0";"All";;"Resource";"id: str
+uri: str
+collection_ns: str";"See SBML documentation"
+"Start";"0";"All";;"Start";"x: float
+y: float";
+"Next";"0";"All";;"Next";"x: float
+y: float
+order: int";
+"End";"0";"All";;"End";"x: float
+y: float";
+"Logical operator";"1";"PD, AF";"Glyph";"LogicalOperator";;
+"Logical operator";"1";"ER";"EntityNode";"LogicalOperator";;
+"Or operator";"0";"All";"LogicalOperator";"OrOperator";;
+"And operator";"0";"All";"LogicalOperator";"AndOperator";;
+"Not operator";"0";"All";"LogicalOperator";"NotOperator";;
+"Delay";"0";"All";"LogicalOperator";"DelayOperator";;
+"Equivalence operator";"0";"PD";"Glyph";"EquivalenceOperator";;
+"Compartment";"0";"PD, AF";"Glyph";"Compartment";"label: str";
+"Auxilliary unit";"1";"All";"Glyph";"AuxilliaryUnit";;
+"Unit of information";"0";"All";"AuxilliaryUnit";"UnitOfInformation";"prefix: str
+value: str
+type: EntityType (AF only)";
+"State variable";"0";"PD, ER";"AuxilliaryUnit";"StateVariable";"value: str
+variable: str";
+"Location";"0";"ER";"StateVariable";"Location";;
+"Existence";"0";"ER";"StateVariable";"Existence";;
+"Cardinality";"0";"PD, ER";"AuxilliaryUnit";"Cardinality";"label: str";
+"Terminal";"0";"All";"AuxilliaryUnit";"Terminal";"label: str";
+"Activity";"1";"AF";"Glyph";"Activity";"label: str";
+"Biological activity";"0";"AF";"Activity";"BiologicalActivity";;
+"Phenotype";"0";"AF";"Activity";"Phenotype";;
+"Influence";"0";"AF";"Arc";"Influence";;
+"Unknown influence";"0";"AF";"Influence";"UnknownInfluence";;
+"Positive influence";"0";"AF";"Influence";"PositiveInfluence";;
+"Negative influence";"0";"AF";"Influence";"NegativeInfluence";;
+"Entity pool node";"1";"PD";"Glyph";"Epn";"label: str";
+"Unspecified entity";"0";"PD";"Epn";"UnspecifiedEntity";;
+"Simple chemical";"0";"PD";"Epn";"SimpleChemical";;
+"Macromolecule";"0";"PD";"Epn";"Macromolecule";;
+"Nucleic acid feature";"0";"PD";"Epn";"NucleicAcidFeature";;
+"Complex";"0";"PD";"Epn";"Complex";;
+"Empty set";"0";"PD";"Epn";"EmptySet";;
+"Perturbing agent";"0";"PD";"Epn";"PerurbingAgent";;
+"Multimer";"1";"PD";"Epn";"Multimer";;
+"Simple chemical multimer";"0";"PD";"Multimer";"SimpleChemicalMultimer";;
+"Macromolecule multimer";"0";"PD";"Multimer";"MacromoleculeMultimer";;
+"Nucleic acid feature multimer";"0";"PD";"Multimer";"NucleicAcidFeatureMultimer";;
+"Complex multimer";"0";"PD";"Multimer";"ComplexMultimer";;
+"Process";"1";"PD";"Glyph";"Process";;
+"Stoichiometric process";"1";"PD";"Process";"StoichiometricProcess";;
+"Generic process";"0";"PD";"StoichiometricProcess";"GenericProcess";;
+"Omitted process";"0";"PD";"StoichiometricProcess";"OmittedProcess";;
+"Uncertain process";"0";"PD";"StoichiometricProcess";"UncertainProcess";;
+"Association";"0";"PD";"StoichiometricProcess";"Association";;
+"Dissociation";"0";"PD";"StoichiometricProcess";"Dissociation";;
+"Phenotype";"0";"PD";"Process";"Phenotype";"label: str";
+"Subunit";"1";"PD";"AuxilliaryUnit";"Subunit";"label: str";
+"Unspecified entity subunit";"0";"PD";"Subunit";"UnspecifiedEntitySubunit";;
+"Simple chemical subunit";"0";"PD";"Subunit";"SimpleChemicalSubunit";;
+"Macromolecule subunit";"0";"PD";"Subunit";"MacromoleculeSubunit";;
+"Nucleic acid feature subunit";"0";"PD";"Subunit";"NucleicAcidFeatureSubunit";;
+"Complex subunit";"0";"PD";"Subunit";"ComplexSubunit";;
+"Simple chemical multimer subunit";"0";"PD";"Subunit";"SimpleChemicalMultimerSubunit";;
+"Macromolecule multimer subunit";"0";"PD";"Subunit";"MacromoleculeMultimerSubunit";;
+"Nucleic acid feature multimer subunit";"0";"PD";"Subunit";"NucleicAcidFeatureMultimerSubunit";;
+"Complex multimer subunit";"0";"PD";"Subunit";"ComplexMultimerSubunit";;
+"Phenotype subunit";"0";"PD";"Subunit";"PhenotypeSubunit";;"For compatibility with some CellDesigner maps"
+"Modulation";"0";"PD";"Arc";"Modulation";;
+"Stimulation";"0";"PD, ER";"Modulation";"Stimulation";;
+"Inhibition";"0";"PD, ER";"Modulation";"Inhibition";;
+"Catalysis";"0";"PD";"Stimulation";"Catalysis";;
+"Necessary stimulation";"0";"PD, ER";"Stimulation";"NecessaryStimulation";;
+"Absolute stimulation";"0";"ER";"Stimulation";"AbsoluteStimulation";;
+"Absolute inhibition";"0";"ER";"Inhibition";"AbsoluteInhibition";;
+"Flux arc";"1";"PD";"Arc";"FluxArc";;
+"Consumption";"0";"PD";"FluxArc";"Consumption";;
+"Production";"0";"PD";"FluxArc";"Production";;
+"Outcome";"0";"ER";"Glyph";"Outcome";;
+"Entity node";"1";"ER";"Glyph";"EntityNode";;
+"Interactor";"1";"ER";"EntityNode";"Interactor";;
+"Perturbing agent";"0";"ER";"EntityNode";"PerturbingAgent";"label: str";
+"Entity";"0";"ER";"Interactor";"Entity";"label: str";
+"Interaction glyph";"0";"ER";"Glyph";"InteractionGlyph";;
+"Variable value";"0";"ER";"Glyph";"VariableValue";"label: str";
+"Submap";"0";"All";"Glyph";"Submap";"label: str";
+"Tag";"0";"All";"Glyph";"Tag";"label: str";
+"Interaction arcgroup";"0";"ER";"Arcgroup";"InteractionArcgroup";;
+"Relationship";"1";"ER";"Arc";"Relationship";;
+"Statement";"1";"ER";"Relationship";"Statement";;
+"Influence";"1";"ER";"Relationship";"Modulation";;
+"Assignment";"0";"ER";"Statement";"Assignment";;
+"Interaction";"0";"ER";"Statement";"Interaction";;
+"Logic arc";"0";"All";"Arc";"LogicArc";;
+"Equivalence arc";"0";"PD";"Arc";"EquivalenceArc";;
+"Implicit xor";"0";"ER";"Glyph";"ImplicitXor";;"For compatibility with old versions of ER maps"
