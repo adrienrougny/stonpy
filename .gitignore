@@ -8,3 +8,4 @@ stonpy.egg-info/
 stonpy/__pycache__/
 dist/
 Pipfile*
+docs/build
