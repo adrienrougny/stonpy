@@ -15,13 +15,23 @@ import stonpy.completor as completor
 from stonpy.model import STONEnum
 
 class STON(object):
-    """Main class for storing, retrieving and querying maps from a Neo4j database"""
+    """
+    Main class for storing, retrieving and querying maps from a Neo4j database
 
-    def __init__(self, uri=None, user=None, password=None):
-        self.uri = uri
-        self.user = user
-        self.password = password
-        self.graph = Graph(uri = uri, user = user, password = password)
+    :ivar uri: the URI of the running Neo4j database
+    :ivar user: the username
+    :ivar password: the password
+    """
+
+    def __init__(self, uri, user, password):
+        self._graph = Graph(uri=uri, user=user, password=password)
+
+    @property
+    def graph(self):
+        """
+        The graph
+        """
+        return self._graph
 
     def has_map(self, map_id=None, sbgn_map=None):
         """Check whether the database contains a given SBGN map
@@ -265,6 +275,8 @@ class STON(object):
         :type to_top_left: `bool`, optional
         :param complete_process_modulations: option to complete processes with the modulations targetting it, default is `False`
         :type complete_process_modulations: `bool`
+        :return: the resulting SBGN-ML file names
+        :rtype: `list[`str`]`
         """
 
         sbgn_maps = self.query_to_map(
@@ -272,6 +284,7 @@ class STON(object):
                 to_top_left=to_top_left,
                 complete_process_modulations=complete_process_modulations
         )
+        sbgn_files = []
         try:
             sbgn_map1 = next(sbgn_maps)
         except StopIteration:
@@ -293,7 +306,14 @@ class STON(object):
                     root = ''.join(l[:-1])
                 else:
                     root = sbgn_file
-                utils.map_to_sbgn_file(sbgn_map1[0], "{}_1.{}".format(root, ext))
-                utils.map_to_sbgn_file(sbgn_map2[0], "{}_2.{}".format(root, ext))
+                sbgn_file1 = f"{root}_1.{ext}"
+                sbgn_file2 = f"{root}_2.{ext}"
+                sbgn_files.append(sbgn_file1)
+                sbgn_files.append(sbgn_file2)
+                utils.map_to_sbgn_file(sbgn_map1[0], sbgn_file1)
+                utils.map_to_sbgn_file(sbgn_map2[0], sbgn_file2)
                 for i, sbgn_map in enumerate(sbgn_maps):
-                    utils.map_to_sbgn_file(sbgn_map[0], "{}_{}.{}".format(root, i + 3, ext))
+                    sbgn_filen = f"{root}_{i + 3}.{ext}"
+                    sbgn_files.append(sbgn_filen)
+                    utils.map_to_sbgn_file(sbgn_map[0], sbgn_filen)
+            return sbgn_files
