@@ -281,24 +281,28 @@ class STON(object):
         """
 
         sbgn_maps = self.query_to_map(
-                query, complete=complete, merge_records=merge_records,
-                to_top_left=to_top_left,
-                complete_process_modulations=complete_process_modulations
+            query=query,
+            complete=complete,
+            merge_records=merge_records,
+            to_top_left=to_top_left,
+            complete_process_modulations=complete_process_modulations
         )
         sbgn_files = []
         try:
             sbgn_map1 = next(sbgn_maps)
         except StopIteration:
-            pass
-        except Exception as e:
-            raise e
+            return sbgn_files
+        except:
+            raise
         else:
             try:
                 sbgn_map2 = next(sbgn_maps)
             except StopIteration:
+                sbgn_files.append(sbgn_file)
                 utils.map_to_sbgn_file(sbgn_map1[0], sbgn_file)
-            except Exception as e:
-                raise e
+                return sbgn_files
+            except:
+                raise
             else:
                 ext = "sbgn"
                 l = sbgn_file.split('.')
@@ -317,4 +321,4 @@ class STON(object):
                     sbgn_filen = f"{root}_{i + 3}.{ext}"
                     sbgn_files.append(sbgn_filen)
                     utils.map_to_sbgn_file(sbgn_map[0], sbgn_filen)
-            return sbgn_files
+                return sbgn_files
