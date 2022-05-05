@@ -44,7 +44,7 @@ class STON(object):
         :param map_id: the ID of the SBGN map, default is `None`
         :type map_id: `str`, optional
         :param sbgn_map: the SBGN map, either a path to an SBGN-ML file or an SBGN map object, default is `None`
-        :type sbgn_map: `str` or `libsbgnpy.libsbgn.map`
+        :type sbgn_map: `str` or `libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_
         :return: `True` if the database contains the SBGN map, `False` otherwise
         :rtype: `bool`
         """
@@ -99,7 +99,7 @@ class STON(object):
         """Add an SBGN map to the database (with the CREATE instruction).
 
         :param sbgn_map: the SBGN map, either a path to an SBGN-ML file or an SBGN map object
-        :type sbgn_map: `str` or `libsbgnpy.libsbgn.map`
+        :type sbgn_map: `str` or `libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_
         :param map_id: the ID of the SBGN map
         :type map_id: `str`, optional
         """
@@ -126,7 +126,7 @@ class STON(object):
         """Add an SBGN map to the database (with the MERGE instruction).
 
         :param sbgn_map: the SBGN map, either a path to an SBGN-ML file or an SBGN map object
-        :type sbgn_map: `str` or `libsbgnpy.libsbgn.map`
+        :type sbgn_map: `str` or `libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_
         :param map_id: the ID of the SBGN map, default is `None`
         :type map_id: `str`, optional
         """
@@ -149,7 +149,7 @@ class STON(object):
         :param map_id: the ID of the SBGN map, default is `None`
         :type map_id: `str`, optional
         :param sbgn_map: the SBGN map, either a path to an SBGN-ML file or an SBGN map object
-        :type sbgn_map: `str` or `libsbgnpy.libsbgn.map`
+        :type sbgn_map: `str` or `libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_
         """
         if sbgn_map is None and map_id is not None:
             tx = self.graph.begin()
@@ -177,7 +177,7 @@ class STON(object):
         :param map_id: the ID of the SBGN map to retrieve
         :type map_id: `str`
         :return: the SBGN map or `None`
-        :rtype: `libsbgnpy.libsbgn.map` or `None`
+        :rtype: `libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_ or `None`
         """
         tx = self.graph.begin()
         query = 'MATCH (m:{} {{id: "{}"}}) \
@@ -233,7 +233,7 @@ class STON(object):
         :param complete_process_modulations: option to complete processes with the modulations targetting it, default is `False`
         :type complete_process_modulations: `bool`
         :return: the resulting SBGN maps, under the form of a generator. Each returned element is a tuple of the form (map, map_id).
-        :rtype: `Iterator[(`libsbgnpy.libsbgn.map`, `str`)]`
+        :rtype: `Iterator[(`libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_, `str`)]`
         """
         tx = self.graph.begin()
         cursor = tx.run(query)
