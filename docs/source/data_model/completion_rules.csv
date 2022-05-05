@@ -10,7 +10,7 @@
 "Glyph";"HAS_EXISTENCE";"Source";"Yes"
 "Glyph";"HAS_LOCATION";"Source";"Yes"
 "Glyph (if not AuxilliaryUnit)";"HAS_GLYPH";"Target";"No"
-"StoichiometricProcess";"HAS_PORT";"Source";"No"
+"StoichiometricProcess";"HAS_PORT";"Source";"Yes"
 "StoichiometricProcess (if complete_process_modulations is True)";"HAS_TARGET";"Target";"Yes"
 "LogicalOperator";"HAS_PORT";"Source";"Yes"
 "EquivalenceOperator";"HAS_PORT";"Source";"Yes"
