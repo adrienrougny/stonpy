@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbgn xmlns="http://sbgn.org/libsbgn/0.2">
+    <map language="process description">
+        <glyph class="macromolecule" id="glyph24">
+            <label text="MEK"/>
+            <bbox w="100.0" h="60.0" x="310.0" y="380.0"/>
+            <glyph class="state variable" id="glyph24a">
+                <state value="P"/>
+                <bbox w="25.0" h="22.0" x="322.5" y="429.0"/>
+            </glyph>
+        </glyph>
+        <glyph class="simple chemical" id="glyph7">
+            <label text="ATP"/>
+            <clone/>
+            <bbox w="60.0" h="60.0" x="120.0" y="500.0"/>
+        </glyph>
+        <glyph class="process" id="glyph8">
+            <bbox w="20.0" h="20.0" x="220.0" y="400.0"/>
+            <port id="glyph8.2" x="250.0" y="410.0"/>
+            <port id="glyph8.1" x="210.0" y="410.0"/>
+        </glyph>
+        <glyph class="macromolecule" id="glyph23">
+            <label text="MEK"/>
+            <bbox w="100.0" h="60.0" x="30.0" y="380.0"/>
+            <glyph class="state variable" id="glyph23a">
+                <state/>
+                <bbox w="20.0" h="22.0" x="45.0" y="429.0"/>
+            </glyph>
+        </glyph>
+        <glyph class="simple chemical" id="glyph6">
+            <label text="ADP"/>
+            <clone/>
+            <bbox w="60.0" h="60.0" x="280.0" y="500.0"/>
+        </glyph>
+        <arc class="production" id="arc5" source="glyph8.2" target="glyph6">
+            <start x="250.0" y="410.0"/>
+            <end x="293.35899999999998" y="505.038479999999993"/>
+        </arc>
+        <arc class="consumption" id="arc4" source="glyph7" target="glyph8.1">
+            <start x="163.416410000000013" y="503.167179999999973"/>
+            <end x="210.0" y="410.0"/>
+        </arc>
+        <arc class="production" id="arc20" source="glyph8.2" target="glyph24">
+            <start x="250.0" y="410.0"/>
+            <end x="310.0" y="410.0"/>
+        </arc>
+        <arc class="consumption" id="arc23" source="glyph23" target="glyph8.1">
+            <start x="130.0" y="410.0"/>
+            <end x="210.0" y="410.0"/>
+        </arc>
+    </map>
+</sbgn>

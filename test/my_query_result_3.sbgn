@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbgn xmlns="http://sbgn.org/libsbgn/0.2">
+    <map language="process description">
+        <glyph class="simple chemical" id="glyph4">
+            <label text="ATP"/>
+            <clone/>
+            <bbox w="60.0" h="60.0" x="270.0" y="260.0"/>
+        </glyph>
+        <glyph class="macromolecule" id="glyph25">
+            <label text="RAF"/>
+            <bbox w="100.0" h="60.0" x="180.0" y="140.0"/>
+            <glyph class="state variable" id="glyph25a">
+                <state/>
+                <bbox w="20.0" h="22.0" x="220.0" y="189.0"/>
+            </glyph>
+        </glyph>
+        <glyph class="process" id="glyph3">
+            <bbox w="20.0" h="20.0" x="370.0" y="160.0"/>
+            <port id="glyph3.2" x="400.0" y="170.0"/>
+            <port id="glyph3.1" x="360.0" y="170.0"/>
+        </glyph>
+        <glyph class="macromolecule" id="glyph2">
+            <label text="RAF"/>
+            <bbox w="100.0" h="60.0" x="480.0" y="140.0"/>
+            <glyph class="state variable" id="glyph2a">
+                <state value="P"/>
+                <bbox w="25.0" h="22.0" x="517.5" y="189.0"/>
+            </glyph>
+        </glyph>
+        <glyph class="simple chemical" id="glyph5">
+            <label text="ADP"/>
+            <clone/>
+            <bbox w="60.0" h="60.0" x="430.0" y="260.0"/>
+        </glyph>
+        <arc class="consumption" id="arc1" source="glyph4" target="glyph3.1">
+            <start x="313.41640000000001" y="263.167179999999973"/>
+            <end x="360.0" y="170.0"/>
+        </arc>
+        <arc class="consumption" id="arc22" source="glyph25" target="glyph3.1">
+            <start x="280.0" y="170.0"/>
+            <end x="360.0" y="170.0"/>
+        </arc>
+        <arc class="production" id="arc0" source="glyph3.2" target="glyph2">
+            <start x="400.0" y="170.0"/>
+            <end x="480.0" y="170.0"/>
+        </arc>
+        <arc class="production" id="arc2" source="glyph3.2" target="glyph5">
+            <start x="400.0" y="170.0"/>
+            <end x="443.35899999999998" y="265.038479999999993"/>
+        </arc>
+    </map>
+</sbgn>
