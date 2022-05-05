@@ -12,7 +12,7 @@ stonpy can be installed using `pip`:
 
 ## Quickstart
 
-```python:
+```python
 
    from stonpy.ston import STON
 
