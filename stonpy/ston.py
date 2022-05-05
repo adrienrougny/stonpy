@@ -29,7 +29,8 @@ class STON(object):
     @property
     def graph(self):
         """
-        The graph
+        The handle to the graph in the database.
+        The graph is of type `py2neo.Graph <https://py2neo.org/2021.1/workflow.html#graphservice-objects>`_.
         """
         return self._graph
 
@@ -276,7 +277,7 @@ class STON(object):
         :param complete_process_modulations: option to complete processes with the modulations targetting it, default is `False`
         :type complete_process_modulations: `bool`
         :return: the resulting SBGN-ML file names
-        :rtype: `list[`str`]`
+        :rtype: `list[str]`
         """
 
         sbgn_maps = self.query_to_map(
