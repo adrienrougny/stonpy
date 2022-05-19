@@ -234,14 +234,15 @@ class STON(object):
             for record in cursor:
                 subgraphs.add(record.to_subgraph())
         i = 0
-        for subgraph in subgraphs:
-            if complete:
-                subgraph = completor.complete_subgraph(subgraph, self.graph, complete_process_modulations=complete_process_modulations)
-            sbgn_maps = converter.subgraph_to_map(subgraph)
-            for sbgn_map in sbgn_maps:
-                if to_top_left:
-                    utils.map_to_top_left(sbgn_map[0])
-                yield sbgn_map
+        if complete:
+            for subgraph in subgraphs:
+                if subgraph is not None:
+                    subgraph = completor.complete_subgraph(subgraph, self.graph, complete_process_modulations=complete_process_modulations)
+                    sbgn_maps = converter.subgraph_to_map(subgraph)
+                    for sbgn_map in sbgn_maps:
+                        if to_top_left:
+                            utils.map_to_top_left(sbgn_map[0])
+                        yield sbgn_map
 
     def query_to_sbgn_file(
             self, query, sbgn_file, complete=True, merge_records=True, to_top_left=False, complete_process_modulations=False):
