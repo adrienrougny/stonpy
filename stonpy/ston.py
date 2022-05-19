@@ -171,7 +171,7 @@ class STON(object):
     def get_map(self, map_id):
         """Retrieve an SBGN map with given ID from the database and returns it.
 
-        If no map is retrieved, raises an exception.
+        If no map is retrieved, returns None.
         If multiple maps are retrieved, only the first one is returned.
 
         :param map_id: the ID of the SBGN map to retrieve
@@ -196,7 +196,8 @@ class STON(object):
                 pass
             except Exception as e:
                 raise e
-        raise Exception(f"No map found with id '{map_id}'")
+        return None
+
 
     def get_map_to_sbgn_file(self, map_id, sbgn_file):
         """Retrieve a map with given ID from the database and write it to the given SBGN-ML file.
@@ -210,7 +211,8 @@ class STON(object):
         :type sbgn_file: `str`
         """
         sbgn_map = self.get_map(map_id)
-        utils.map_to_sbgn_file(sbgn_map[0], sbgn_file)
+        if sbgn_map is not None:
+            utils.map_to_sbgn_file(sbgn_map[0], sbgn_file)
 
 
     def query_to_map(self, query, complete=True, merge_records=False, to_top_left=False, complete_process_modulations=False):
