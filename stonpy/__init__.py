@@ -1,1 +1,1 @@
-from stonpy.ston import *
+from stonpy.core import *
