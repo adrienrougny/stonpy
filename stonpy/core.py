@@ -10,8 +10,8 @@ import libsbgnpy.libsbgn as libsbgn
 from py2neo import Graph, Subgraph
 
 import stonpy.utils as utils
-import stonpy.converter as converter
-import stonpy.completor as completor
+import stonpy.conversion as conversion
+import stonpy.completion as completion
 from stonpy.model import STONEnum
 
 class STON(object):
@@ -60,7 +60,7 @@ class STON(object):
                 maps_to_test = list(self.query_to_map(query, complete=True))
             else:
                 maps_to_test = []
-                subgraph = converter.map_to_subgraph(sbgn_map)
+                subgraph = conversion.map_to_subgraph(sbgn_map)
                 # we get the Map node and one node in rel with the Map node
                 node = None
                 for relationship in subgraph.relationships:
@@ -101,7 +101,7 @@ class STON(object):
             sbgn_map = utils.sbgn_file_to_map(sbgn_file)
         if verbose:
             print("Creating subgraph for map {}...".format(map_id))
-        subgraph = converter.map_to_subgraph(sbgn_map, map_id, verbose=verbose)
+        subgraph = conversion.map_to_subgraph(sbgn_map, map_id, verbose=verbose)
         if verbose:
             print("Adding subgraph to database...")
         tx = self.graph.begin()
@@ -122,7 +122,7 @@ class STON(object):
         if os.path.isfile(sbgn_map):
             sbgn_file = sbgn_map
             sbgn_map = utils.sbgn_file_to_map(sbgn_file)
-        subgraph = converter.map_to_subgraph(sbgn_map, map_id)
+        subgraph = conversion.map_to_subgraph(sbgn_map, map_id)
         tx = self.graph.begin()
         tx.merge(subgraph)
         tx.commit()
@@ -151,7 +151,7 @@ class STON(object):
             if isinstance(sbgn_map, str):
                 if os.path.isfile(sbgn_map):
                     sbgn_map = utils.sbgn_file_to_map(sbgn_map)
-            subgraph = converter.map_to_subgraph(sbgn_map, map_id=map_id)
+            subgraph = conversion.map_to_subgraph(sbgn_map, map_id=map_id)
             return utils.exists_subgraph(subgraph, self.graph)
         else:
             return False
@@ -178,7 +178,7 @@ class STON(object):
         tx.commit()
         for record in cursor:
             subgraph = Subgraph(nodes=[record["m"]] + record["nodes"], relationships=record["relationships"])
-            sbgn_maps = converter.subgraph_to_map(subgraph)
+            sbgn_maps = conversion.subgraph_to_map(subgraph)
             try:
                 return next(sbgn_maps)
             except StopIteration:
@@ -237,8 +237,8 @@ class STON(object):
         if complete:
             for subgraph in subgraphs:
                 if subgraph is not None:
-                    subgraph = completor.complete_subgraph(subgraph, self.graph, complete_process_modulations=complete_process_modulations)
-                    sbgn_maps = converter.subgraph_to_map(subgraph)
+                    subgraph = completion.complete_subgraph(subgraph, self.graph, complete_process_modulations=complete_process_modulations)
+                    sbgn_maps = conversion.subgraph_to_map(subgraph)
                     for sbgn_map in sbgn_maps:
                         if to_top_left:
                             utils.map_to_top_left(sbgn_map[0])
