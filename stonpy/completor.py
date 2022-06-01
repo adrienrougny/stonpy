@@ -228,7 +228,7 @@ def _complete_subgraph_with_glyph_node(node, subgraph, db_graph, completed, comp
             start_node = node,
             end_node = None,
             complete_start_node = False,
-            complete_end_node = False)
+            complete_end_node = True)
 
     # MODULATION ARCS targetting a process, only if node is a process and complete_process_modulations is True
     if node.has_label(STONEnum["STOICHIOMETRIC_PROCESS"].value) and complete_process_modulations:
