@@ -202,23 +202,24 @@ def _complete_subgraph_with_glyph_node(node, subgraph, db_graph, completed, comp
         complete_start_node = False,
         complete_end_node = False)
 
-    # COMPARTMENT
-    subgraph = _find_relationship_and_complete_subgraph(
-        "IS_IN_COMPARTMENT",
-        subgraph,
-        db_graph,
-        completed,
-        nary = False,
-        start_node = node,
-        end_node = None,
-        complete_start_node = False,
-        complete_end_node = True)
+    # COMPARTMENT only if node is an entity pool or an activity
+    if node.has_label(STONEnum["EPN"].value) or \
+            node.has_label(STONEnum["ACTIVITY"].value):
+        subgraph = _find_relationship_and_complete_subgraph(
+            "IS_IN_COMPARTMENT",
+            subgraph,
+            db_graph,
+            completed,
+            nary = False,
+            start_node = node,
+            end_node = None,
+            complete_start_node = False,
+            complete_end_node = True)
 
     # PORTs only if node is a process or a logical/equivalence operator
     if node.has_label(STONEnum["STOICHIOMETRIC_PROCESS"].value) or \
             node.has_label(STONEnum["LOGICAL_OPERATOR"].value) or \
             node.has_label(STONEnum["EQUIVALENCE"].value):
-
         subgraph = _find_relationship_and_complete_subgraph(
             "HAS_PORT",
             subgraph,
