@@ -127,70 +127,65 @@ def _extension_has_sbml_annotation(extension):
 
 
 def _get_rdf_from_string(s):
-    in_rdf = False
-    rdf_string = ""
-    for line in str(s).split("\n"):
-        line = line.lstrip(" ")
-        if line.startswith("<rdf:RDF"):
-            in_rdf = True
-        elif line.startswith("</rdf:RDF"):
-            rdf_string += "{}\n".format(line)
-            in_rdf = False
-        if in_rdf:
-            rdf_string += "{}\n".format(line)
-    return rdf_string
+    while not s.startswith("<rdf:RDF") and len(s) > 0:
+        s = s[1:]
+    while not s.endswith("</rdf:RDF>") and len(s) > 0:
+        s = s[:-1]
+    return s
+    #
+    # in_rdf = False
+    # rdf_string = ""
+    # for line in str(s).split("\n"):
+    #     line = line.lstrip(" ")
+    #     if line.startswith("<rdf:RDF"):
+    #         in_rdf = True
+    #     elif line.startswith("</rdf:RDF"):
+    #         rdf_string += "{}\n".format(line)
+    #         in_rdf = False
+    #     if in_rdf:
+    #         rdf_string += "{}\n".format(line)
+    # return rdf_string
 
 
 def _extension_as_sbml_annotation_to_subgraph(extension):
-    rdf_string = _get_rdf_from_string(str(extension))
-    rdf_graph = rdflib.Graph()
-    rdf_graph.parse(data=rdf_string, format="application/rdf+xml")
-    dnodes = {}
-    annotation_nodes = set([])
     nodes = set([])
     relationships = set([])
-
-    for s, p, o in rdf_graph:
-        if isinstance(s, rdflib.term.URIRef) and isinstance(o, rdflib.term.BNode):
-            # if str(s) not in d:
-            #     source_node = Node()
-            #     source_node.add_label("Source")
-            #     source_node["id"] = str(s)
-            #     dnodes[str(s)] = source_node
-            #     nodes.append(source_node)
-            # else:
-            #     source_node = d[str(s)]
-            annotation_node = Node()
-            annotation_node.add_label(STONEnum["ANNOTATION"].value)
-            annotation_node[STONEnum["QUALIFIER_URI"].value] = str(p)
-            l = str(p).split("/")
-            qualifier = l[-1]
-            qualifier_ns = "/".join(l[:-1])
-            annotation_node[STONEnum["QUALIFIER_NS"].value] = qualifier_ns
-            annotation_node[STONEnum["QUALIFIER"].value] = qualifier
-            dnodes[str(o)] = annotation_node
-            annotation_nodes.add(annotation_node)
-            # relationship = Relationship(source_node, STONEnum["HAS_ANNOTATION"].value, annotation_node)
-            # relationships.append(relationship)
-    for s, p, o in rdf_graph:
-        if isinstance(o, rdflib.term.URIRef) and isinstance(s, rdflib.term.BNode) and not str(p).endswith("#type"):
-            resource_node = Node()
-            resource_node.add_label(STONEnum["RESOURCE"].value)
-            resource_node[STONEnum["URI"].value] = str(o)
-            if str(o).startswith("urn"):
-                l = str(o).split(":")
-                collection_ns = ":".join(l[:-1])
-            else:
-                l = str(o).split("/")
-                collection_ns = "/".join(l[:-1])
-            id = l[-1]
-            resource_node[STONEnum["COLLECTION_NS"].value] = collection_ns
-            resource_node["id"] = id
-            nodes.add(resource_node)
-            relationship = Relationship(
-                dnodes[str(s)], STONEnum["HAS_RESOURCE"].value, resource_node)
-            relationships.add(relationship)
-
+    annotation_nodes = set([])
+    rdf_string = _get_rdf_from_string(str(extension))
+    if len(rdf_string) > 0:
+        rdf_graph = rdflib.Graph()
+        rdf_graph.parse(data=rdf_string, format="application/rdf+xml")
+        dnodes = {}
+        for s, p, o in rdf_graph:
+            if isinstance(s, rdflib.term.URIRef) and isinstance(o, rdflib.term.BNode):
+                annotation_node = Node()
+                annotation_node.add_label(STONEnum["ANNOTATION"].value)
+                annotation_node[STONEnum["QUALIFIER_URI"].value] = str(p)
+                l = str(p).split("/")
+                qualifier = l[-1]
+                qualifier_ns = "/".join(l[:-1])
+                annotation_node[STONEnum["QUALIFIER_NS"].value] = qualifier_ns
+                annotation_node[STONEnum["QUALIFIER"].value] = qualifier
+                dnodes[str(o)] = annotation_node
+                annotation_nodes.add(annotation_node)
+        for s, p, o in rdf_graph:
+            if isinstance(o, rdflib.term.URIRef) and isinstance(s, rdflib.term.BNode) and not str(p).endswith("#type"):
+                resource_node = Node()
+                resource_node.add_label(STONEnum["RESOURCE"].value)
+                resource_node[STONEnum["URI"].value] = str(o)
+                if str(o).startswith("urn"):
+                    l = str(o).split(":")
+                    collection_ns = ":".join(l[:-1])
+                else:
+                    l = str(o).split("/")
+                    collection_ns = "/".join(l[:-1])
+                id = l[-1]
+                resource_node[STONEnum["COLLECTION_NS"].value] = collection_ns
+                resource_node["id"] = id
+                nodes.add(resource_node)
+                relationship = Relationship(
+                    dnodes[str(s)], STONEnum["HAS_RESOURCE"].value, resource_node)
+                relationships.add(relationship)
     return annotation_nodes, nodes, relationships
 
 

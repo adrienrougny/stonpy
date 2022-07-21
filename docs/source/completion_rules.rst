@@ -3,8 +3,8 @@
 Completion rules
 ================
 
-When the result of a query is a subgraph (including a unique node or relationship), it may be completed to form a "complete subgraph" using the :ref:`stonpy-completor`.
-The "complete subgraph" can then be converted to a valid SBGN map using the :ref:`stonpy-converter`.
+When the result of a query is a subgraph (including a unique node or relationship), it may be completed to form a "complete subgraph" using the :ref:`stonpy-completion`.
+The "complete subgraph" can then be converted to a valid SBGN map using the :ref:`stonpy-conversion`.
 To form the "complete subgraph", the completion algorithm runs through all relationships and nodes of the input subgraph and completes them (i.e. adds nodes and relationships to the subgraph) following the completion rules described below.
 Completion may be recursive: a completion rule may add a node or a relationship to the list of nodes to be completed.
 

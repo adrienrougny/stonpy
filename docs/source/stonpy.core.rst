@@ -1,7 +1,7 @@
-stonpy.ston module
+stonpy.core module
 ==================
 
-.. automodule:: stonpy.ston
+.. automodule:: stonpy.core
    :members:
    :undoc-members:
    :show-inheritance:
