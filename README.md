@@ -13,7 +13,7 @@ pip install stonpy
 ## Quickstart
 
 ```python
-from stonpy.ston import STON
+from stonpy.core import STON
 
 ston = STON("URI", "USER", "PASSWORD")
 ston.create_map(sbgn_map="my_sbgn_file.sbgn", map_id="my_map_id")
