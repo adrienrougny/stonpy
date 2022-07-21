@@ -273,6 +273,7 @@ class STON(object):
                 to_top_left=to_top_left,
                 complete_process_modulations=complete_process_modulations
         )
+        sbgn_files = []
         try:
             sbgn_map1 = next(sbgn_maps)
         except StopIteration:
@@ -284,6 +285,7 @@ class STON(object):
                 sbgn_map2 = next(sbgn_maps)
             except StopIteration:
                 utils.map_to_sbgn_file(sbgn_map1[0], sbgn_file)
+                sbgn_files.append(sbgn_file)
             except Exception as e:
                 raise e
             else:
@@ -294,7 +296,14 @@ class STON(object):
                     root = ''.join(l[:-1])
                 else:
                     root = sbgn_file
-                utils.map_to_sbgn_file(sbgn_map1[0], "{}_1.{}".format(root, ext))
-                utils.map_to_sbgn_file(sbgn_map2[0], "{}_2.{}".format(root, ext))
+                sbgn_file1 = "{}_1.{}".format(root, ext)
+                sbgn_file2 = "{}_2.{}".format(root, ext)
+                utils.map_to_sbgn_file(sbgn_map1[0], sbgn_file1)
+                utils.map_to_sbgn_file(sbgn_map2[0], sbgn_file2)
+                sbgn_files.append(sbgn_file1)
+                sbgn_files.append(sbgn_file2)
                 for i, sbgn_map in enumerate(sbgn_maps):
-                    utils.map_to_sbgn_file(sbgn_map[0], "{}_{}.{}".format(root, i + 3, ext))
+                    sbgn_file = "{}_{}.{}".format(root, i + 3, ext)
+                    utils.map_to_sbgn_file(sbgn_map[0], sbgn_file)
+                    sbgn_files.append(sbgn_file)
+        return sbgn_files

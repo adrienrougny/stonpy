@@ -7,9 +7,9 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   stonpy.ston
-   stonpy.converter
-   stonpy.completor
+   stonpy.core
+   stonpy.conversion
+   stonpy.completion
    stonpy.model
    stonpy.sbgn
    stonpy.utils
