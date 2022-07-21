@@ -103,23 +103,14 @@ class STON(object):
         :param map_id: the ID of the SBGN map
         :type map_id: `str`, optional
         """
-        if verbose:
-            t = time.time()
         if os.path.isfile(sbgn_map):
-            if verbose:
-                print("Reading file {}...".format(sbgn_map))
-            sbgn_file = sbgn_map
-            sbgn_map = utils.sbgn_file_to_map(sbgn_file)
-        if verbose:
-            print("Creating subgraph for map {}...".format(map_id))
+            sbgn_map = utils.sbgn_file_to_map(sbgn_map)
+        elif not isinstance(sbgn_map, libsbgn.map):
+            raise ValueError("map must be a valid file or libsbgn.map object")
         subgraph = conversion.map_to_subgraph(sbgn_map, map_id, verbose=verbose)
-        if verbose:
-            print("Adding subgraph to database...")
         tx = self.graph.begin()
         tx.create(subgraph)
         tx.commit()
-        if verbose:
-            print("Done in {}s".format(time.time() - t))
 
 
     def merge_map(self, sbgn_map, map_id):
