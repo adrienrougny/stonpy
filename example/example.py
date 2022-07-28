@@ -1,10 +1,10 @@
 import stonpy
 
-uri = "bolt://localhost:7687"
-user = "neo4j"
-password = "neofourj"
+URI = "MY_URI"
+USER = "MY_USER"
+PASSWORD = "MY_PASSWORD"
 
-ston = stonpy.STON(uri, user, password)
+ston = stonpy.STON(URI, USER, PASSWORD)
 
 sbgn_file = "insulin.sbgn"
 
