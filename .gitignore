@@ -10,4 +10,3 @@ build/
 dist/
 test/
 docs/build/
-MANIFEST.in
