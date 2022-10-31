@@ -43,4 +43,14 @@ Completion
 
    completion_rules
 
+Command line interface
+----------
 
+The stonpy package includes a command line interface (CLI) which allows users to perform most of the operations supported by the library.
+stonpy's CLI is installed with the packaged.
+For more details on how to use stonpy's CLI, please refer to it's documentation:
+
+
+.. code-block:: shell
+
+   stonpy --help
