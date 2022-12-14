@@ -14,6 +14,7 @@ import stonpy.conversion as conversion
 import stonpy.completion as completion
 from stonpy.model import STONEnum
 
+
 class STON(object):
     """
     Main class for storing, retrieving and querying maps from a Neo4j database
@@ -21,6 +22,13 @@ class STON(object):
     :ivar uri: the URI of the running Neo4j database
     :ivar user: the username
     :ivar password: the password
+    ::
+        import stonpy
+
+        URI = "my_uri"
+        USER = "my_user"
+        PASSWORD = "my_password"
+        ston = stonpy.STON(URI, USER, PASSWORD)
     """
 
     def __init__(self, uri, user, password):
@@ -31,6 +39,9 @@ class STON(object):
         """
         The handle to the graph in the database.
         The graph is of type `py2neo.Graph <https://py2neo.org/2021.1/workflow.html#graphservice-objects>`_.
+
+        The `graph` handle can be used to delete all data from the database, for example::
+            ston.graph.delete_all()
         """
         return self._graph
 
@@ -54,7 +65,8 @@ class STON(object):
             else:
                 tx = self.graph.begin()
                 query = 'MATCH (m:{} {{{}: "{}"}}) RETURN m'.format(
-                    STONEnum["MAP"].value, STONEnum["ID"].value, map_id)
+                    STONEnum["MAP"].value, STONEnum["ID"].value, map_id
+                )
                 res = tx.evaluate(query)
                 tx.commit()
                 if res is None:
@@ -67,7 +79,8 @@ class STON(object):
                     sbgn_map = utils.sbgn_file_to_map(sbgn_map)
             if map_id is not None:
                 query = 'MATCH (m:{} {{{}: "{}"}}) RETURN m'.format(
-                    STONEnum["MAP"].value, STONEnum["ID"].value, map_id)
+                    STONEnum["MAP"].value, STONEnum["ID"].value, map_id
+                )
                 maps_to_test = list(self.query_to_map(query, complete=True))
             else:
                 maps_to_test = []
@@ -75,25 +88,33 @@ class STON(object):
                 # we get the Map node and one node in rel with the Map node
                 node = None
                 for relationship in subgraph.relationships:
-                    if relationship.start_node.has_label(STONEnum["MAP"].value) and \
-                            type(relationship).__name__ == STONEnum["HAS_GLYPH"].value:
+                    if (
+                        relationship.start_node.has_label(STONEnum["MAP"].value)
+                        and type(relationship).__name__
+                        == STONEnum["HAS_GLYPH"].value
+                    ):
                         node = relationship.end_node
                         break
-                if node is not None: # i.e. the map is not empty
-                    query = 'MATCH (m:{})-[{}]->{} RETURN id(m)'.format(
-                        STONEnum["MAP"].value, STONEnum["HAS_GLYPH"].value,
-                        utils.node_to_cypher(node))
+                if node is not None:  # i.e. the map is not empty
+                    query = "MATCH (m:{})-[{}]->{} RETURN id(m)".format(
+                        STONEnum["MAP"].value,
+                        STONEnum["HAS_GLYPH"].value,
+                        utils.node_to_cypher(node),
+                    )
                     cursor = self.graph.run(query)
                     for record in cursor:
                         neo_id = record["id(m)"]
-                        query = 'MATCH (m:{}) WHERE id(m) = {} \
-                            RETURN m'.format(STONEnum["MAP"].value, neo_id)
-                        maps_to_test += list(self.query_to_map(query, complete=True))
+                        query = "MATCH (m:{}) WHERE id(m) = {} \
+                            RETURN m".format(
+                            STONEnum["MAP"].value, neo_id
+                        )
+                        maps_to_test += list(
+                            self.query_to_map(query, complete=True)
+                        )
             for sbgn_map2 in maps_to_test:
                 if utils.are_maps_equal(sbgn_map, sbgn_map2[0]):
                     return True
             return False
-
 
     def create_map(self, sbgn_map, map_id, verbose=False):
         """Add an SBGN map to the database (with the CREATE instruction).
@@ -112,24 +133,6 @@ class STON(object):
         tx.create(subgraph)
         tx.commit()
 
-
-    def merge_map(self, sbgn_map, map_id):
-        """Add an SBGN map to the database (with the MERGE instruction).
-
-        :param sbgn_map: the SBGN map, either a path to an SBGN-ML file or an SBGN map object
-        :type sbgn_map: `str` or `libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_
-        :param map_id: the ID of the SBGN map, default is `None`
-        :type map_id: `str`, optional
-        """
-        if os.path.isfile(sbgn_map):
-            sbgn_file = sbgn_map
-            sbgn_map = utils.sbgn_file_to_map(sbgn_file)
-        subgraph = conversion.map_to_subgraph(sbgn_map, map_id)
-        tx = self.graph.begin()
-        tx.merge(subgraph)
-        tx.commit()
-
-
     def delete_map(self, map_id=None, sbgn_map=None):
         """Delete an SBGN map from the database.
 
@@ -144,9 +147,10 @@ class STON(object):
         """
         if sbgn_map is None and map_id is not None:
             tx = self.graph.begin()
-            query = 'MATCH p=(m:{} {{id: "{}"}})-[*]->() \
-                    FOREACH(n IN nodes(p) | DETACH DELETE n'.format(
-                        STONEnum["MAP"].value, map_id)
+            query = "MATCH p=(m:{} {{id: '{}'}})-[*]->() \
+                    FOREACH(n IN nodes(p) | DETACH DELETE n)".format(
+                STONEnum["MAP"].value, map_id
+            )
             cursor = tx.run(query)
             tx.commit()
         elif sbgn_map is not None:
@@ -157,7 +161,6 @@ class STON(object):
             return utils.exists_subgraph(subgraph, self.graph)
         else:
             return False
-
 
     def get_map(self, map_id):
         """Retrieve an SBGN map with given ID from the database and returns it.
@@ -175,11 +178,15 @@ class STON(object):
                 CALL apoc.path.subgraphAll(m, {{relationshipFilter: ">"}}) \
                 YIELD nodes, relationships \
                 RETURN m, nodes, relationships'.format(
-                    STONEnum["MAP"].value, map_id)
+            STONEnum["MAP"].value, map_id
+        )
         cursor = tx.run(query)
         tx.commit()
         for record in cursor:
-            subgraph = Subgraph(nodes=[record["m"]] + record["nodes"], relationships=record["relationships"])
+            subgraph = Subgraph(
+                nodes=[record["m"]] + record["nodes"],
+                relationships=record["relationships"],
+            )
             sbgn_maps = conversion.subgraph_to_map(subgraph)
             try:
                 return next(sbgn_maps)
@@ -188,7 +195,6 @@ class STON(object):
             except Exception as e:
                 raise e
         return None
-
 
     def get_map_to_sbgn_file(self, map_id, sbgn_file):
         """Retrieve a map with given ID from the database and write it to the given SBGN-ML file.
@@ -205,8 +211,14 @@ class STON(object):
         if sbgn_map is not None:
             utils.map_to_sbgn_file(sbgn_map[0], sbgn_file)
 
-
-    def query_to_map(self, query, complete=True, merge_records=False, to_top_left=False, complete_process_modulations=False):
+    def query_to_map(
+        self,
+        query,
+        complete=True,
+        merge_records=False,
+        to_top_left=False,
+        complete_process_modulations=False,
+    ):
         """Run a cypher query against the database and return the resulting SBGN maps.
 
         By default, each record resulting from the query is transformed to zero or more SBGN maps, one for each Map node it contains.
@@ -241,7 +253,11 @@ class STON(object):
         if complete:
             for subgraph in subgraphs:
                 if subgraph is not None:
-                    subgraph = completion.complete_subgraph(subgraph, self.graph, complete_process_modulations=complete_process_modulations)
+                    subgraph = completion.complete_subgraph(
+                        subgraph,
+                        self.graph,
+                        complete_process_modulations=complete_process_modulations,
+                    )
                     sbgn_maps = conversion.subgraph_to_map(subgraph)
                     for sbgn_map in sbgn_maps:
                         if to_top_left:
@@ -249,7 +265,14 @@ class STON(object):
                         yield sbgn_map
 
     def query_to_sbgn_file(
-            self, query, sbgn_file, complete=True, merge_records=True, to_top_left=False, complete_process_modulations=False):
+        self,
+        query,
+        sbgn_file,
+        complete=True,
+        merge_records=True,
+        to_top_left=False,
+        complete_process_modulations=False,
+    ):
         """Run a cypher query against the database and write the resulting SBGN maps to one or more SBGN-ML files.
 
         By default, each record resulting from the query is transformed to zero or more SBGN maps, one for each Map node it contains, and each SBGN map is written to a distinct SBGN-ML file.
@@ -279,7 +302,7 @@ class STON(object):
             complete=complete,
             merge_records=merge_records,
             to_top_left=to_top_left,
-            complete_process_modulations=complete_process_modulations
+            complete_process_modulations=complete_process_modulations,
         )
         sbgn_files = []
         try:
@@ -298,10 +321,10 @@ class STON(object):
                 raise
             else:
                 ext = "sbgn"
-                l = sbgn_file.split('.')
+                l = sbgn_file.split(".")
                 if len(l) > 1:
                     ext = l[-1]
-                    root = ''.join(l[:-1])
+                    root = "".join(l[:-1])
                 else:
                     root = sbgn_file
                 sbgn_file1 = f"{root}_1.{ext}"
