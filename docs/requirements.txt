@@ -1,2 +1,2 @@
 -i https://pypi.org/simple
-stonpy==0.1
+stonpy==0.1.1
