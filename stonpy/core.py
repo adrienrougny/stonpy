@@ -22,12 +22,17 @@ class STON(object):
     :ivar uri: the URI of the running Neo4j database
     :ivar user: the username
     :ivar password: the password
-    ::
+
+    Here is an example:
+
+    .. code-block:: python
+
         import stonpy
 
         URI = "my_uri"
         USER = "my_user"
         PASSWORD = "my_password"
+
         ston = stonpy.STON(URI, USER, PASSWORD)
     """
 
@@ -40,7 +45,10 @@ class STON(object):
         The handle to the graph in the database.
         The graph is of type `py2neo.Graph <https://py2neo.org/2021.1/workflow.html#graphservice-objects>`_.
 
-        The `graph` handle can be used to delete all data from the database, for example::
+        The `graph` handle can be used to delete all data from the database, for example:
+
+        .. code-block:: python
+
             ston.graph.delete_all()
         """
         return self._graph
@@ -58,6 +66,19 @@ class STON(object):
         :type sbgn_map: `str` or `libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_
         :return: `True` if the database contains the SBGN map, `False` otherwise
         :rtype: `bool`
+
+        Here is an example:
+
+        .. code-block:: python
+
+            sbgn_file = "insulin.sbgn"
+            ston.graph.delete_all()
+            ston.create_map(sbgn_file, map_id="id1")
+
+            assert ston.has_map("id1") is True
+            assert ston.has_map(sbgn_map=sbgn_file) is True
+            assert ston.has_map(map_id="id1", sbgn_map=sbgn_file) is True
+            assert ston.has_map(map_id="id2", sbgn_map=sbgn_file) is False
         """
         if sbgn_map is None:
             if map_id is None:
@@ -123,6 +144,18 @@ class STON(object):
         :type sbgn_map: `str` or `libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_
         :param map_id: the ID of the SBGN map
         :type map_id: `str`, optional
+
+        Here is an example:
+
+        .. code-block:: python
+
+            sbgn_file = "insulin.sbgn"
+            ston.graph.delete_all()
+
+            ston.create_map(sbgn_file, map_id="id1")
+
+            assert ston.has_map("id1") is True
+
         """
         if os.path.isfile(sbgn_map):
             sbgn_map = utils.sbgn_file_to_map(sbgn_map)
@@ -133,34 +166,34 @@ class STON(object):
         tx.create(subgraph)
         tx.commit()
 
-    def delete_map(self, map_id=None, sbgn_map=None):
+    def delete_map(self, map_id):
         """Delete an SBGN map from the database.
 
-        If only a map ID is provided, deletes all maps with this ID from the database.
-        If only an SBGN map is provided, deletes this map from the database.
-        If both a map ID and an SBGN map are provided, deletes the map from the database onlty if it has this ID.
+        Deletes all maps with this ID from the database.
 
-        :param map_id: the ID of the SBGN map, default is `None`
-        :type map_id: `str`, optional
-        :param sbgn_map: the SBGN map, either a path to an SBGN-ML file or an SBGN map object
-        :type sbgn_map: `str` or `libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_
+        :param map_id: the ID of the SBGN map
+        :type map_id: `str`
+
+        Here is an example:
+
+        .. code-block:: python
+
+            sbgn_file = "insulin.sbgn"
+            ston.graph.delete_all()
+            ston.create_map(sbgn_file, "id1")
+
+            ston.delete_map("id1")
+
+            assert ston.has_map("id1") is False
+
         """
-        if sbgn_map is None and map_id is not None:
-            tx = self.graph.begin()
-            query = "MATCH p=(m:{} {{id: '{}'}})-[*]->() \
-                    FOREACH(n IN nodes(p) | DETACH DELETE n)".format(
-                STONEnum["MAP"].value, map_id
-            )
-            cursor = tx.run(query)
-            tx.commit()
-        elif sbgn_map is not None:
-            if isinstance(sbgn_map, str):
-                if os.path.isfile(sbgn_map):
-                    sbgn_map = utils.sbgn_file_to_map(sbgn_map)
-            subgraph = conversion.map_to_subgraph(sbgn_map, map_id=map_id)
-            return utils.exists_subgraph(subgraph, self.graph)
-        else:
-            return False
+        tx = self.graph.begin()
+        query = "MATCH p=(m:{} {{id: '{}'}})-[*]->() \
+                FOREACH(n IN nodes(p) | DETACH DELETE n)".format(
+            STONEnum["MAP"].value, map_id
+        )
+        cursor = tx.run(query)
+        tx.commit()
 
     def get_map(self, map_id):
         """Retrieve an SBGN map with given ID from the database and returns it.
@@ -168,32 +201,60 @@ class STON(object):
         If no map is retrieved, returns None.
         If multiple maps are retrieved, only the first one is returned.
 
+
+        Note: This method is significantly faster when the Neo4j APOC core
+        Library optional dependency is installed.
+
         :param map_id: the ID of the SBGN map to retrieve
         :type map_id: `str`
         :return: the SBGN map or `None`
         :rtype: `libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_ or `None`
+
+        Here is an example:
+
+        .. code-block:: python
+
+            sbgn_file = "insulin.sbgn"
+            ston.create_map(sbgn_file, "id1")
+
+            sbgn_map = ston.get_map("id1")
+            print(sbgn_map)
+
         """
-        tx = self.graph.begin()
-        query = 'MATCH (m:{} {{id: "{}"}}) \
+        try:
+            query = 'MATCH (m:{} {{id: "{}"}}) \
                 CALL apoc.path.subgraphAll(m, {{relationshipFilter: ">"}}) \
                 YIELD nodes, relationships \
                 RETURN m, nodes, relationships'.format(
-            STONEnum["MAP"].value, map_id
-        )
-        cursor = tx.run(query)
-        tx.commit()
-        for record in cursor:
-            subgraph = Subgraph(
-                nodes=[record["m"]] + record["nodes"],
-                relationships=record["relationships"],
+                STONEnum["MAP"].value, map_id
             )
-            sbgn_maps = conversion.subgraph_to_map(subgraph)
-            try:
-                return next(sbgn_maps)
-            except StopIteration:
-                pass
-            except Exception as e:
-                raise e
+            tx = self.graph.begin()
+            cursor = tx.run(query)
+            tx.commit()
+            for record in cursor:
+                subgraph = Subgraph(
+                    nodes=[record["m"]] + record["nodes"],
+                    relationships=record["relationships"],
+                )
+                sbgn_maps = conversion.subgraph_to_map(subgraph)
+                for sbgn_map in sbgn_maps:
+                    return sbgn_map
+        except:
+            query = 'MATCH (m:{} {{id: "{}"}}) RETURN m'.format(
+                STONEnum["MAP"].value, map_id
+            )
+            tx = self.graph.begin()
+            cursor = tx.run(query)
+            tx.commit()
+            for record in cursor:
+                subgraph = record.to_subgraph()
+                if subgraph is not None:
+                    subgraph = completion.complete_subgraph(
+                        subgraph, self.graph, complete_process_modulations=True
+                    )
+                    sbgn_maps = conversion.subgraph_to_map(subgraph)
+                    for sbgn_map in sbgn_maps:
+                        return sbgn_map
         return None
 
     def get_map_to_sbgn_file(self, map_id, sbgn_file):
@@ -206,6 +267,19 @@ class STON(object):
         :type map_id: `str`
         :param sbgn_file: the path of the the SBGN-ML where to write the retrieved map
         :type sbgn_file: `str`
+
+        Here is an example:
+
+        .. code-block:: python
+
+            sbgn_file = "insulin.sbgn"
+            ston.graph.delete_all()
+            ston.create_map(sbgn_file, "id1")
+
+            ston.get_map_to_sbgn_file("id1", "insulin_exported.sbgn")
+            with open("insulin_exported.sbgn") as f:
+                print("".join(f.readlines()[:10]))
+
         """
         sbgn_map = self.get_map(map_id)
         if sbgn_map is not None:
@@ -238,7 +312,44 @@ class STON(object):
         :param complete_process_modulations: option to complete processes with the modulations targetting it, default is `False`
         :type complete_process_modulations: `bool`
         :return: the resulting SBGN maps, under the form of a generator. Each returned element is a tuple of the form (map, map_id).
-        :rtype: `Iterator[(`libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_, `str`)]`
+        :rtype: `Iterator[(`libsbgnpy.libsbgn.map <https://libsbgn-python.readthedocs.io/en/latest/libsbgnpy.html#libsbgnpy.libsbgn.map>`_, str)]`
+
+        Here is an example:
+
+        .. code-block:: python
+
+            sbgn_file = "insulin.sbgn"
+            ston.graph.delete_all()
+            ston.create_map(sbgn_file, map_id="id1")
+
+            # phosphorylation process
+            query = '''MATCH (process)-[:CONSUMES]->(reactant),
+                (process)-[:PRODUCES]->(product),
+                (reactant)-[:HAS_STATE_VARIABLE]-(reactant_sv),
+                (product)-[:HAS_STATE_VARIABLE]-(product_sv)
+                WHERE reactant.label = product.label
+                AND reactant_sv.value IS NULL
+                AND product_sv.value = "P"
+                AND (product_sv.variable IS NULL
+                    AND reactant_sv.variable IS NULL
+                    AND product_sv.order = reactant_sv.order
+                    OR product_sv.variable = reactant_sv.variable)
+                RETURN process;'''
+
+            # with merge_records set to False
+            sbgn_maps = ston.query_to_map(query, merge_records=False)
+            # iterator with three sbgn maps, one for each phosphorylation process of the map
+            print(sbgn_maps)
+            for sbgn_map in sbgn_maps:
+                print(sbgn_map) # (<id>, <sbgn_map>)
+
+            # with merge_records set to False
+            sbgn_maps = ston.query_to_map(query, merge_records=True)
+            # iterator with only one sbgn map containing the three phosphorylation processes
+            print(sbgn_maps)
+            for sbgn_map in sbgn_maps:
+                print(sbgn_map) # (<id>, <sbgn_map>)
+
         """
         tx = self.graph.begin()
         cursor = tx.run(query)
@@ -295,6 +406,43 @@ class STON(object):
         :type complete_process_modulations: `bool`
         :return: the resulting SBGN-ML file names
         :rtype: `list[str]`
+
+        Here is an example:
+
+        .. code-block:: python
+
+            sbgn_file = "insulin.sbgn"
+            ston.graph.delete_all()
+            ston.create_map(sbgn_file, map_id="id1")
+
+            # phosphorylation process
+            query = '''MATCH (process)-[:CONSUMES]->(reactant),
+                (process)-[:PRODUCES]->(product),
+                (reactant)-[:HAS_STATE_VARIABLE]-(reactant_sv),
+                (product)-[:HAS_STATE_VARIABLE]-(product_sv)
+                WHERE reactant.label = product.label
+                AND reactant_sv.value IS NULL
+                AND product_sv.value = "P"
+                AND (product_sv.variable IS NULL
+                    AND reactant_sv.variable IS NULL
+                    AND product_sv.order = reactant_sv.order
+                    OR product_sv.variable = reactant_sv.variable)
+                RETURN process;'''
+
+            # with merge_records set to False
+            sbgn_files = ston.query_to_map(
+                query, "result.sbgn", merge_records=False
+            )
+            # three sbgn files are returned, one for each phosphorylation process of the map
+            print(sbgn_files) # ["result_1.sbgn", "result_2.sbgn", "result_3.sbgn"]
+
+            # with merge_records set to False
+            sbgn_maps = ston.query_to_sbgn_file(
+                query, "result.sbgn", merge_records=True
+            )
+            # only one sbgn file is returned, containing the three phosphorylation processes
+            print(sbgn_files) # ["result.sbgn"]
+
         """
 
         sbgn_maps = self.query_to_map(
