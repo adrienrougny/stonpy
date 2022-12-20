@@ -10,3 +10,4 @@ build/
 dist/
 test/
 docs/build/
+notebooks/.ipynb_checkpoints/
