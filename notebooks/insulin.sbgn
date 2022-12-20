@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn xmlns="http://sbgn.org/libsbgn/0.2">
+    <map language="process description">
+        <glyph compartmentOrder="-41.0" id="glyph5" class="compartment">
+            <label text="CYTOSOL">
+            </label>
+            <bbox y="170.0" x="20.0" h="1140.0" w="1460.0"/>
+        </glyph>
+        <glyph compartmentOrder="-40.0" id="glyph2" class="compartment">
+            <label text="EXTRACELLULAR">
+            </label>
+            <bbox y="60.0" x="20.0" h="110.0" w="1460.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph12" class="macromolecule">
+            <label text="IGFR"/>
+            <bbox y="180.0" x="66.0" h="60.0" w="108.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph2" id="glyph6" class="macromolecule">
+            <label text="IGF"/>
+            <bbox y="90.0" x="81.0" h="60.0" w="108.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph32" class="simple chemical">
+            <label text="ADP"/>
+            <clone/>
+            <bbox y="335.0" x="515.0" h="60.0" w="60.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph10" class="macromolecule">
+            <label text="IRS1-4"/>
+            <bbox y="445.0" x="216.0" h="60.0" w="108.0"/>
+            <glyph id="glyph10a" class="state variable">
+                <bbox y="435.0" x="287.0" h="20.0" w="20.0"/>
+            </glyph>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph30" class="simple chemical">
+            <label text="ATP"/>
+            <clone/>
+            <bbox y="335.0" x="295.0" h="60.0" w="60.0"/>
+        </glyph>
+        <glyph id="glyph38" class="process">
+            <bbox y="463.0" x="418.0" h="24.0" w="24.0"/>
+            <port y="475.0" x="454.0" id="glyph38.2"/>
+            <port y="475.0" x="406.0" id="glyph38.1"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph14" class="macromolecule">
+            <label text="Grb2"/>
+            <bbox y="575.0" x="721.0" h="60.0" w="108.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph7" class="macromolecule">
+            <label text="IRS1-4"/>
+            <bbox y="445.0" x="551.0" h="60.0" w="108.0"/>
+            <glyph id="glyph7a" class="state variable">
+                <state value="P"/>
+                <bbox y="435.0" x="620.0" h="20.0" w="24.0"/>
+            </glyph>
+        </glyph>
+        <glyph id="glyph40" class="process">
+            <bbox y="593.0" x="593.0" h="24.0" w="24.0"/>
+            <port y="605.0" x="629.0" id="glyph40.2"/>
+            <port y="605.0" x="581.0" id="glyph40.1"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph9" class="macromolecule">
+            <label text="SOS"/>
+            <bbox y="580.0" x="86.0" h="60.0" w="108.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph20" class="macromolecule">
+            <label text="Grb2"/>
+            <bbox y="575.0" x="386.0" h="60.0" w="108.0"/>
+        </glyph>
+        <glyph id="glyph39" orientation="vertical" class="association">
+            <bbox y="708.0" x="263.0" h="24.0" w="24.0"/>
+            <port y="696.0" x="275.0" id="glyph39.1"/>
+            <port y="744.0" x="275.0" id="glyph39.2"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph1" class="complex">
+            <bbox y="780.0" x="145.0" h="100.0" w="260.0"/>
+            <glyph id="glyph19" class="macromolecule">
+                <label text="SOS"/>
+                <bbox y="800.0" x="161.0" h="60.0" w="108.0"/>
+            </glyph>
+            <glyph id="glyph24" class="macromolecule">
+                <label text="Grb2"/>
+                <bbox y="800.0" x="281.0" h="60.0" w="108.0"/>
+            </glyph>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph26" class="simple chemical">
+            <label text="GDP"/>
+            <bbox y="1055.0" x="345.0" h="60.0" w="60.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph18" class="macromolecule">
+            <label text="RAS"/>
+            <bbox y="960.0" x="391.0" h="60.0" w="108.0"/>
+        </glyph>
+        <glyph id="glyph4" class="submap">
+            <label text=" MAPK &#xA; cascade"/>
+            <bbox y="930.0" x="575.0" h="120.0" w="220.0"/>
+            <glyph id="glyph33" orientation="right" class="terminal">
+                <label text="RAS"/>
+                <bbox y="970.0" x="575.0" h="40.0" w="60.0"/>
+            </glyph>
+            <glyph id="glyph34" orientation="left" class="terminal">
+                <label text="ERK"/>
+                <bbox y="970.0" x="735.0" h="40.0" w="60.0"/>
+            </glyph>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph8" class="macromolecule">
+            <label text="RSK"/>
+            <bbox y="800.0" x="741.0" h="60.0" w="108.0"/>
+            <glyph id="glyph8a" class="state variable">
+                <bbox y="790.0" x="812.0" h="20.0" w="20.0"/>
+            </glyph>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph28" class="simple chemical">
+            <label text="ATP"/>
+            <clone/>
+            <bbox y="690.0" x="825.0" h="60.0" w="60.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph31" class="simple chemical">
+            <label text="ADP"/>
+            <clone/>
+            <bbox y="690.0" x="1045.0" h="60.0" w="60.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph16" class="macromolecule">
+            <label text="ERK"/>
+            <bbox y="960.0" x="906.0" h="60.0" w="108.0"/>
+            <glyph id="glyph16a" class="state variable">
+                <state value="2P"/>
+                <bbox y="950.0" x="972.0" h="20.0" w="30.0"/>
+            </glyph>
+        </glyph>
+        <glyph id="glyph36" class="process">
+            <bbox y="818.0" x="948.0" h="24.0" w="24.0"/>
+            <port y="830.0" x="936.0" id="glyph36.1"/>
+            <port y="830.0" x="984.0" id="glyph36.2"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph22" class="macromolecule">
+            <label text="c-Fos"/>
+            <bbox y="1070.0" x="971.0" h="60.0" w="108.0"/>
+            <glyph id="glyph22a" class="state variable">
+                <bbox y="1060.0" x="1042.0" h="20.0" w="20.0"/>
+            </glyph>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph23" class="macromolecule">
+            <label text="RSK"/>
+            <bbox y="800.0" x="1146.0" h="60.0" w="108.0"/>
+            <glyph id="glyph23a" class="state variable">
+                <state value="P"/>
+                <bbox y="790.0" x="1215.0" h="20.0" w="24.0"/>
+            </glyph>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph15" class="macromolecule">
+            <label text="c-Fos"/>
+            <bbox y="1070.0" x="1331.0" h="60.0" w="108.0"/>
+            <glyph id="glyph15a" class="state variable">
+                <state value="P"/>
+                <bbox y="1060.0" x="1400.0" h="20.0" w="24.0"/>
+            </glyph>
+        </glyph>
+        <glyph id="glyph17" class="phenotype">
+            <label text=" gene &#xA; expression"/>
+            <bbox y="1190.0" x="1310.0" h="80.0" w="150.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph25" class="simple chemical">
+            <label text="ADP"/>
+            <clone/>
+            <bbox y="960.0" x="1310.0" h="60.0" w="60.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph27" class="simple chemical">
+            <label text="ATP"/>
+            <clone/>
+            <bbox y="965.0" x="1060.0" h="60.0" w="60.0"/>
+        </glyph>
+        <glyph id="glyph35" class="process">
+            <bbox y="1088.0" x="1188.0" h="24.0" w="24.0"/>
+            <port y="1100.0" x="1176.0" id="glyph35.1"/>
+            <port y="1100.0" x="1224.0" id="glyph35.2"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph21" class="macromolecule">
+            <label text="RAS"/>
+            <bbox y="960.0" x="66.0" h="60.0" w="108.0"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph29" class="simple chemical">
+            <label text="GTP"/>
+            <bbox y="1055.0" x="150.0" h="60.0" w="60.0"/>
+        </glyph>
+        <glyph id="glyph41" class="process">
+            <bbox y="978.0" x="263.0" h="24.0" w="24.0"/>
+            <port y="990.0" x="299.0" id="glyph41.2"/>
+            <port y="990.0" x="251.0" id="glyph41.1"/>
+        </glyph>
+        <glyph id="glyph37" class="association">
+            <bbox y="198.0" x="263.0" h="24.0" w="24.0"/>
+            <port y="210.0" x="251.0" id="glyph37.1"/>
+            <port y="210.0" x="299.0" id="glyph37.2"/>
+        </glyph>
+        <glyph compartmentRef="glyph5" id="glyph3" class="complex">
+            <bbox y="135.0" x="360.0" h="150.0" w="130.0"/>
+            <glyph id="glyph13" class="macromolecule">
+                <label text="IGF"/>
+                <bbox y="145.0" x="371.0" h="60.0" w="108.0"/>
+            </glyph>
+            <glyph id="glyph11" class="macromolecule">
+                <label text="IGFR"/>
+                <bbox y="215.0" x="371.0" h="60.0" w="108.0"/>
+            </glyph>
+        </glyph>
+        <arc target="glyph37.1" source="glyph12" id="arc1" class="consumption">
+            <start y="210.0" x="174.0"/>
+            <end y="210.0" x="251.0"/>
+        </arc>
+        <arc target="glyph37.1" source="glyph6" id="arc2" class="consumption">
+            <start y="150.0" x="165.0"/>
+            <end y="210.0" x="251.0"/>
+        </arc>
+        <arc target="glyph7" source="glyph38.2" id="arc4" class="production">
+            <start y="475.0" x="454.0"/>
+            <end y="475.0" x="551.0"/>
+        </arc>
+        <arc target="glyph32" source="glyph38.2" id="arc5" class="production">
+            <start y="475.0" x="454.0"/>
+            <end y="391.33685" x="530.63446"/>
+        </arc>
+        <arc target="glyph38" source="glyph3" id="arc6" class="catalysis">
+            <start y="285.0" x="426.4151"/>
+            <end y="463.0" x="429.7736"/>
+        </arc>
+        <arc target="glyph38.1" source="glyph10" id="arc7" class="consumption">
+            <start y="475.0" x="324.0"/>
+            <end y="475.0" x="406.0"/>
+        </arc>
+        <arc target="glyph38.1" source="glyph30" id="arc8" class="consumption">
+            <start y="392.311" x="337.4141"/>
+            <end y="475.0" x="406.0"/>
+        </arc>
+        <arc target="glyph40.2" source="glyph14" id="arc9" class="consumption">
+            <start y="605.0" x="721.0"/>
+            <end y="605.0" x="629.0"/>
+        </arc>
+        <arc target="glyph20" source="glyph40.1" id="arc10" class="production">
+            <start y="605.0" x="581.0"/>
+            <end y="605.0" x="494.0"/>
+        </arc>
+        <arc target="glyph40" source="glyph7" id="arc11" class="stimulation">
+            <start y="505.0" x="605.0"/>
+            <end y="593.0" x="605.0"/>
+        </arc>
+        <arc target="glyph39.1" source="glyph9" id="arc12" class="consumption">
+            <start y="640.0" x="187.09302"/>
+            <end y="696.0" x="275.0"/>
+        </arc>
+        <arc target="glyph39.1" source="glyph20" id="arc13" class="consumption">
+            <start y="634.7818" x="386.0"/>
+            <end y="696.0" x="275.0"/>
+        </arc>
+        <arc target="glyph1" source="glyph39.2" id="arc14" class="production">
+            <start y="744.0" x="275.0"/>
+            <end y="780.0" x="275.0"/>
+        </arc>
+        <arc target="glyph41" source="glyph1" id="arc15" class="stimulation">
+            <start y="880.0" x="275.0"/>
+            <end y="978.0" x="275.0"/>
+        </arc>
+        <arc target="glyph18" source="glyph41.2" id="arc17" class="production">
+            <start y="990.0" x="299.0"/>
+            <end y="990.0" x="391.0"/>
+        </arc>
+        <arc target="glyph26" source="glyph41.2" id="arc19" class="production">
+            <start y="990.0" x="299.0"/>
+            <end y="1059.6354" x="358.98022"/>
+        </arc>
+        <arc target="glyph4" source="glyph18" id="arc20" class="consumption">
+            <start y="990.0" x="499.0"/>
+            <end y="990.0" x="575.0"/>
+        </arc>
+        <arc target="glyph4" source="glyph16" id="arc21" class="consumption">
+            <start y="990.0" x="906.0"/>
+            <end y="990.0" x="795.0"/>
+        </arc>
+        <arc target="glyph36.1" source="glyph8" id="arc22" class="consumption">
+            <start y="830.0" x="849.0"/>
+            <end y="830.0" x="936.0"/>
+        </arc>
+        <arc target="glyph23" source="glyph36.2" id="arc23" class="production">
+            <start y="830.0" x="984.0"/>
+            <end y="830.0" x="1146.0"/>
+        </arc>
+        <arc target="glyph36.1" source="glyph28" id="arc24" class="consumption">
+            <start y="744.15717" x="872.78845"/>
+            <end y="830.0" x="936.0"/>
+        </arc>
+        <arc target="glyph31" source="glyph36.2" id="arc25" class="production">
+            <start y="830.0" x="984.0"/>
+            <end y="740.7367" x="1053.3208"/>
+        </arc>
+        <arc target="glyph36" source="glyph16" id="arc26" class="catalysis">
+            <start y="960.0" x="960.0"/>
+            <end y="842.0" x="960.0"/>
+        </arc>
+        <arc target="glyph35.1" source="glyph22" id="arc27" class="consumption">
+            <start y="1100.0" x="1079.0"/>
+            <end y="1100.0" x="1176.0"/>
+        </arc>
+        <arc target="glyph15" source="glyph35.2" id="arc28" class="production">
+            <start y="1100.0" x="1224.0"/>
+            <end y="1100.0" x="1331.0"/>
+        </arc>
+        <arc target="glyph35" source="glyph23" id="arc29" class="catalysis">
+            <start y="860.0" x="1200.0"/>
+            <end y="1088.0" x="1200.0"/>
+        </arc>
+        <arc target="glyph17" source="glyph15" id="arc30" class="production">
+            <start y="1130.0" x="1385.0"/>
+            <end y="1190.0" x="1385.0"/>
+        </arc>
+        <arc target="glyph25" source="glyph35.2" id="arc31" class="production">
+            <start y="1100.0" x="1224.0"/>
+            <end y="1008.53467" x="1316.4104"/>
+        </arc>
+        <arc target="glyph35.1" source="glyph27" id="arc32" class="consumption">
+            <start y="1018.20886" x="1109.0092"/>
+            <end y="1100.0" x="1176.0"/>
+        </arc>
+        <arc target="glyph41.1" source="glyph21" id="arc16" class="consumption">
+            <start y="990.0" x="174.0"/>
+            <end y="990.0" x="251.0"/>
+        </arc>
+        <arc target="glyph41.1" source="glyph29" id="arc18" class="consumption">
+            <start y="1057.8878" x="192.84259"/>
+            <end y="990.0" x="251.0"/>
+        </arc>
+        <arc target="glyph3" source="glyph37.2" id="arc3" class="production">
+            <start y="210.0" x="299.0"/>
+            <end y="210.0" x="360.0"/>
+        </arc>
+    </map>
+</sbgn>

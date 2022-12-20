@@ -8,6 +8,7 @@ libsbgnpy = "*"
 py2neo = "*"
 rdflib = "*"
 stonpy = {editable = true, path = "."}
+ipykernel = "*"
 
 [dev-packages]
 
