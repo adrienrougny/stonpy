@@ -15,6 +15,7 @@ setup(
         "bs4",
         "python-magic",
         "pandas",
+        "python-magic-bin; sys_platform == 'win32'",
     ],
     entry_points={
         "console_scripts": [
