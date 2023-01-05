@@ -13,10 +13,14 @@ import zipfile
 import stonpy
 import libsbgnpy.utils
 
-CD2SBGNML = os.path.realpath(os.path.join(os.path.dirname(__file__), "thirdparty/cd2sbgnml/cd2sbgnml.sh"))
+CD2SBGNML = os.path.realpath(
+    os.path.join(os.path.dirname(__file__), "thirdparty/cd2sbgnml/cd2sbgnml.sh")
+)
 REPOSITORIES = {
     "panther": ["http://data.pantherdb.org/ftp/pathway/3.6/CD4.1/"],
-    "acsn_master": ["https://acsn.curie.fr/ACSN2/downloads/SBGNMLs/ACSN_denovo_annotations.sbgn"],
+    "acsn_master": [
+        "https://acsn.curie.fr/ACSN2/downloads/SBGNMLs/ACSN_denovo_annotations.sbgn"
+    ],
     "acsn": [
         "https://acsn.curie.fr/ACSN2/downloads/SBGNMLs/adaptive_immune_master.sbgn",
         "https://acsn.curie.fr/ACSN2/downloads/SBGNMLs/angiogenesis_master.sbgn",
@@ -30,9 +34,11 @@ REPOSITORIES = {
         "https://acsn.curie.fr/ACSN2/downloads/SBGNMLs/natural_killer_cell_master.sbgn",
         "https://acsn.curie.fr/ACSN2/downloads/SBGNMLs/rcd_master.sbgn",
         "https://acsn.curie.fr/ACSN2/downloads/SBGNMLs/survival_master.sbgn",
-        "https://acsn.curie.fr/ACSN2/downloads/SBGNMLs/telomere_maintenance_master.sbgn"
+        "https://acsn.curie.fr/ACSN2/downloads/SBGNMLs/telomere_maintenance_master.sbgn",
     ],
-    "recon": ["https://www.vmh.life/files/reconstructions/ReconMaps/ReconMap-2.01.zip"],
+    "recon": [
+        "https://www.vmh.life/files/reconstructions/ReconMaps/ReconMap-2.01.zip"
+    ],
     "asthmamap": [
         "https://asthma-map.org/images/af/F002-AirwayEpithelialCell-SBGNv02.sbgn",
         "https://asthma-map.org/images/af/F015-AirwaySmoothMuscleCell-SBGNv02.sbgn",
@@ -51,12 +57,14 @@ REPOSITORIES = {
         "https://asthma-map.org/images/af/F004-Th2-SBGNv02.sbgn",
         "https://asthma-map.org/images/af/F005-Treg-SBGNv02.sbgn",
         "https://asthma-map.org/images/pd/EicosanoidModule-0.0.42.xml",
-        "https://asthma-map.org/images/pd/MastCellModule-0.0.40.xml"
-    ]
+        "https://asthma-map.org/images/pd/MastCellModule-0.0.40.xml",
+    ],
 }
+
 
 class ConversionError(Exception):
     pass
+
 
 @dataclass
 class Target(ABC):
@@ -66,6 +74,7 @@ class Target(ABC):
     @abstractmethod
     def make(self, ston: stonpy.core.STON) -> None:
         pass
+
 
 @dataclass
 class BatchTarget(Target):
@@ -87,27 +96,27 @@ class BatchTarget(Target):
 class LocalFileTarget(Target):
     pass
 
+
 @dataclass
 class CellDesignerFileTarget(LocalFileTarget, BatchTarget):
-
     def prepare_subtargets(self):
         sbgnml_path = cd2sbgnml(self.path)
         if sbgnml_path is None:
-            raise ConversionError("CellDesigner file could not be converted to SBGN-ML")
+            raise ConversionError(
+                "CellDesigner file could not be converted to SBGN-ML"
+            )
         subtarget = target_from_path(sbgnml_path, parent_target=self)
         return [subtarget]
 
 
 @dataclass
 class SBGNMLFileTarget(LocalFileTarget):
-
     def make(self, ston):
         create_map(self.path, ston, self.name)
 
 
 @dataclass
 class RepositoryTarget(BatchTarget):
-
     def prepare_subtargets(self):
         subtargets = []
         for subtarget_path in REPOSITORIES[self.path]:
@@ -116,41 +125,37 @@ class RepositoryTarget(BatchTarget):
             )
         return subtargets
 
+
 @dataclass
 class LocalDirectoryTarget(BatchTarget):
-
     def prepare_subtargets(self):
         subtargets = []
         for subtarget_path in os.listdir(self.path):
             subtargets.append(
                 target_from_path(
-                    os.path.join(
-                        self.path,
-                        subtarget_path
-                    ),
-                    parent_target=self
+                    os.path.join(self.path, subtarget_path), parent_target=self
                 )
             )
         return subtargets
 
+
 @dataclass
 class RemoteFileTarget(BatchTarget):
-
     def prepare_subtargets(self):
         _, subtarget_path = tempfile.mkstemp()
         urllib.request.urlretrieve(self.path, subtarget_path)
         subtarget = target_from_path(subtarget_path, parent_target=self)
         return [subtarget]
 
+
 @dataclass
 class RemoteDirectoryTarget(BatchTarget):
-
     def prepare_subtargets(self):
         subtargets = []
         r = requests.get(self.path)
-        soup = bs4.BeautifulSoup(r.text, 'html.parser')
+        soup = bs4.BeautifulSoup(r.text, "html.parser")
         urls = []
-        for link in soup.find_all('a'):
+        for link in soup.find_all("a"):
             url = f"{self.path}{link.get('href')}"
             urls.append(url)
         for url in urls:
@@ -163,9 +168,9 @@ class RemoteDirectoryTarget(BatchTarget):
                 print("-> could not be converted to SBGN-ML")
         return subtargets
 
+
 @dataclass
 class ZipFileTarget(BatchTarget):
-
     def prepare_subtargets(self):
         subtargets_path = tempfile.mkdtemp()
         with zipfile.ZipFile(self.path, "r") as zip_ref:
@@ -225,46 +230,47 @@ def target_name_from_path(target_path, parent_target=None):
             return target_path
     return parent_target.path
 
+
 def target_from_path(target_path, parent_target=None):
     if parent_target is None:
-        print(f'* Preparing target from path {target_path}')
+        print(f"* Preparing target from path {target_path}")
     else:
-        print(f'* Preparing subtarget from path {target_path}')
-        print(f'-> parent of target is {parent_target}')
+        print(f"* Preparing subtarget from path {target_path}")
+        print(f"-> parent of target is {parent_target}")
     target_type = guess_target_type(target_path)
     if target_type is None:
-        raise ValueError(f'could not find type of target at path "{target_path}"')
-    print(f'-> type of target is {target_type.__name__}')
-    target_name = target_name_from_path(target_path, parent_target=parent_target)
-    print(f'-> name of target is {target_name}')
-    if issubclass(target_type, BatchTarget):
-        print(f'-> target has subtargets')
-    target = target_type(
-        target_path,
-        target_name
+        raise ValueError(
+            f'could not find type of target at path "{target_path}"'
+        )
+    print(f"-> type of target is {target_type.__name__}")
+    target_name = target_name_from_path(
+        target_path, parent_target=parent_target
     )
+    print(f"-> name of target is {target_name}")
+    if issubclass(target_type, BatchTarget):
+        print(f"-> target has subtargets")
+    target = target_type(target_path, target_name)
     return target
 
 
 def make_target(target: Target, ston: stonpy.core.STON) -> None:
-    print(f'* Making target {target}')
+    print(f"* Making target {target}")
     target.make(ston)
 
 
 def create_map(path, ston, map_id):
-    print(f'-> creating map in database with id {map_id}')
+    print(f"-> creating map in database with id {map_id}")
     ston.create_map(path, map_id)
+
 
 def cd2sbgnml(cd_path):
     _, sbgnml_path = tempfile.mkstemp()
-    r = subprocess.run(
-        [CD2SBGNML, cd_path, sbgnml_path],
-        capture_output=True
-    )
+    r = subprocess.run([CD2SBGNML, cd_path, sbgnml_path], capture_output=True)
     if r.returncode != 0:
         print(r.stderr)
         return None
     return sbgnml_path
+
 
 def list_repos():
     for repository in REPOSITORIES:
@@ -278,16 +284,23 @@ def get_map(ston, map_id, sbgn_file=None):
     else:
         ston.get_map_to_sbgn_file(map_id, sbgn_file)
 
-def query(ston,
-          query_string,
-          output_file=None,
-          convert=False,
-          complete=False,
-          merge_records=True,
-          to_top_left=False,
-          complete_process_modulations=False):
+
+def delete_map(ston, map_id):
+    ston.delete_map(map_id)
+
+
+def query(
+    ston,
+    cypher_query,
+    output_file=None,
+    convert=False,
+    complete=False,
+    merge_records=True,
+    to_top_left=False,
+    complete_process_modulations=False,
+):
     if not convert:
-        cursor = ston.graph.query(query_string)
+        cursor = ston.graph.query(cypher_query)
         s = cursor.to_data_frame().to_string()
         if output_file is not None:
             with open(output_file, "w") as f:
@@ -296,13 +309,14 @@ def query(ston,
             print(s)
     else:
         ston.query_to_sbgn_file(
-            query=query_string,
+            query=cypher_query,
             sbgn_file=output_file,
             complete=complete,
             merge_records=merge_records,
             to_top_left=to_top_left,
-            complete_process_modulations=complete_process_modulations
+            complete_process_modulations=complete_process_modulations,
         )
+
 
 def delete_all(ston):
     print(f"Deleting all data of database")
@@ -312,14 +326,15 @@ def delete_all(ston):
 def run(args):
     if args.action == "list-repos":
         list_repos()
-    elif args.action == "create" or \
-            args.action == "get" or \
-            args.action == "query" or \
-            args.action == "delete-all":
+    elif (
+        args.action == "create"
+        or args.action == "get"
+        or args.action == "query"
+        or args.action == "delete"
+        or args.action == "delete-all"
+    ):
         ston = stonpy.core.STON(
-            uri=args.uri,
-            user=args.user,
-            password=args.password
+            uri=args.uri, user=args.user, password=args.password
         )
         if args.action == "create":
             if args.delete_all:
@@ -331,47 +346,136 @@ def run(args):
             print("Done.")
         elif args.action == "get":
             get_map(ston, args.map_id, args.output)
+        elif args.action == "delete":
+            delete_map(ston, args.map_id)
+
         elif args.action == "query":
             query(
                 ston=ston,
-                query_string=args.query_string,
+                cypher_query=args.cypher_query,
                 output_file=args.output,
                 convert=args.convert,
-                complete=args.complete,
+                complete=not args.no_complete,
                 merge_records=not args.unmerge_records,
                 to_top_left=args.to_top_left,
-                complete_process_modulations=args.complete_process_modulations
+                complete_process_modulations=args.complete_process_modulations,
             )
         elif args.action == "delete-all":
             delete_all(ston)
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Tool for storing SBGN and CellDesigner maps in a Neo4j database, and query the database")
+    parser = argparse.ArgumentParser(
+        description="Tool for storing SBGN and CellDesigner maps in a Neo4j database, and query the database"
+    )
     subparsers = parser.add_subparsers(dest="action")
-    list_repos_parser = subparsers.add_parser("list-repos", help="list the available map repositories")
+    list_repos_parser = subparsers.add_parser(
+        "list-repos", help="list the available map repositories"
+    )
     with_db_conn_parser = argparse.ArgumentParser(add_help=False)
-    with_db_conn_parser.add_argument("-u", "--user", default=None, help="user name for accessing the database")
-    with_db_conn_parser.add_argument("-a", "--uri", default=None, help="URI for accessing the database")
-    with_db_conn_parser.add_argument("-p", "--password", default=None, help="password for accessing the database")
-    delete_all_parser = subparsers.add_parser("delete-all", parents=[with_db_conn_parser])
-    create_parser = subparsers.add_parser("create", parents=[with_db_conn_parser], help="create one or more maps in the database")
-    create_parser.add_argument("-d", "--delete-all", default=False, action="store_true", help="delete all data in the database before executing the action")
-    create_parser.add_argument("target_paths", nargs="+", help="target paths for the create command (SBGN-ML or CellDesigner file or URL, ZIP file, repository (see list-repos)")
-    get_parser = subparsers.add_parser("get", parents=[with_db_conn_parser], help="get a map from the database using its id")
-    get_parser.add_argument("-o", "--output", default=None, help="output SBGN-ML file where the map is written")
+    with_db_conn_parser.add_argument(
+        "-u",
+        "--user",
+        default=None,
+        help="user name for accessing the database",
+    )
+    with_db_conn_parser.add_argument(
+        "-a", "--uri", default=None, help="URI for accessing the database"
+    )
+    with_db_conn_parser.add_argument(
+        "-p",
+        "--password",
+        default=None,
+        help="password for accessing the database",
+    )
+    delete_all_parser = subparsers.add_parser(
+        "delete-all", parents=[with_db_conn_parser]
+    )
+    create_parser = subparsers.add_parser(
+        "create",
+        parents=[with_db_conn_parser],
+        help="create one or more maps in the database",
+    )
+    create_parser.add_argument(
+        "-d",
+        "--delete-all",
+        default=False,
+        action="store_true",
+        help="delete all data in the database before executing the action",
+    )
+    create_parser.add_argument(
+        "target_paths",
+        nargs="+",
+        help="target paths for the create command (SBGN-ML or CellDesigner file or URL, ZIP file, repository (see list-repos)",
+    )
+    get_parser = subparsers.add_parser(
+        "get",
+        parents=[with_db_conn_parser],
+        help="get a map from the database using its id",
+    )
+    get_parser.add_argument(
+        "-o",
+        "--output",
+        default=None,
+        help="output SBGN-ML file where the map is written",
+    )
     get_parser.add_argument("map_id", help="the id of the map to get")
-    query_parser = subparsers.add_parser("query", parents=[with_db_conn_parser], help="query the database")
-    query_parser.add_argument("-o", "--output", default=None, help="output SBGN-ML file(s) where the result of the query is written (optional, result is printed to stdout if not set)")
-    query_parser.add_argument("-c", "--convert", action="store_true", default=False, help="convert the result to SBGN-ML when possible")
-    query_parser.add_argument("-k", "--complete", action="store_true", default=False, help="complete the converted result (only if --convert is set)")
-    query_parser.add_argument("-m", "--unmerge-records", action="store_true", default=False, help="unmerge the records of the result (only if --convert is set)")
-    query_parser.add_argument("-t", "--to-top-left", action="store_true", default=False, help="moves the ouput maps to the top left (only if --convert is set)")
-    query_parser.add_argument("-n", "--complete-process-modulations", action="store_true", default=False, help="also completes processes with the modulations targeting them (only if --complete is set)")
-    query_parser.add_argument("query_string", help="the cypher query")
+    del_parser = subparsers.add_parser(
+        "delete",
+        parents=[with_db_conn_parser],
+        help="removes a map from the database using its id",
+    )
+    del_parser.add_argument("map_id", help="the id of the map to delete")
+    query_parser = subparsers.add_parser(
+        "query", parents=[with_db_conn_parser], help="query the database"
+    )
+    query_parser.add_argument(
+        "-o",
+        "--output",
+        default=None,
+        help="output file(s) where the results of the query are written (optional, result is printed to stdout if not set)",
+    )
+    query_parser.add_argument(
+        "-c",
+        "--convert",
+        action="store_true",
+        default=False,
+        help="convert the result to SBGN-ML when possible",
+    )
+    query_parser.add_argument(
+        "-k",
+        "--no-complete",
+        action="store_true",
+        default=False,
+        help="do not complete the converted result (only if --convert is set)",
+    )
+    query_parser.add_argument(
+        "-m",
+        "--unmerge-records",
+        action="store_true",
+        default=False,
+        help="unmerge the records of the result (only if --convert is set)",
+    )
+    query_parser.add_argument(
+        "-t",
+        "--to-top-left",
+        action="store_true",
+        default=False,
+        help="moves the ouput maps to the top left (only if --convert is set)",
+    )
+    query_parser.add_argument(
+        "-n",
+        "--complete-process-modulations",
+        action="store_true",
+        default=False,
+        help="also completes processes with the modulations targeting them (only if --no-complete is not set)",
+    )
+    query_parser.add_argument("cypher_query", help="the cypher query")
 
     args = parser.parse_args()
 
     run(args)
+
 
 if __name__ == "__main__":
     main()
