@@ -7,8 +7,8 @@ name = "pypi"
 libsbgnpy = "*"
 py2neo = "*"
 rdflib = "*"
-stonpy = {editable = true, path = "."}
 ipykernel = "*"
+stonpy = {editable = true, path = "."}
 
 [dev-packages]
 

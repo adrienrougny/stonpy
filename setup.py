@@ -14,6 +14,7 @@ setup(
         "rdflib",
         "bs4",
         "python-magic",
+        "pandas",
     ],
     entry_points={
         "console_scripts": [
