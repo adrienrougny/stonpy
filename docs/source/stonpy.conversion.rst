@@ -1,7 +1,7 @@
 .. _stonpy-conversion:
 
 stonpy.conversion module
-=======================
+========================
 
 .. automodule:: stonpy.conversion
    :members:
