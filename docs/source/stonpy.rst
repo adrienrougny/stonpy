@@ -48,7 +48,6 @@ The main module of the package is the :doc:`/stonpy.core`; the other modules off
 .. toctree::
    :maxdepth: 4
 
-   stonpy.core
    stonpy.conversion
    stonpy.completion
    stonpy.model
