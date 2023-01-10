@@ -1,13 +1,13 @@
 stonpy's data model
 ===================
 
-Stonpy’s data model was built following the SBGN-ML data model.
-The figure below shows an excerpt of a Neo4j graph built from an SBGN PD map using stonpy.
+StonPy’s data model was built following the SBGN-ML data model.
+The figure below shows an excerpt of a Neo4j graph built from an SBGN PD map using StonPy.
 
 .. image:: data_model/build/figure_completion.png
    :width: 600
 
-stonpy's data model is as follows:
+StonPy's data model is as follows:
 
 * Each element of a map, as well as the map itself, is modelled using a graph node
 

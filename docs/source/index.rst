@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to stonpy's documentation!
+Welcome to StonPy's documentation!
 ==================================
 
-stonpy is a package that allows users to store SBGN maps into a Neo4j database, 
+StonPy is a package that allows users to store SBGN maps into a Neo4j database, 
 query the database, and convert query results back to valid SBGN maps.
 
 .. toctree::
