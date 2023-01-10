@@ -1,8 +1,8 @@
 from distutils.core import setup
 
 setup(
-    name="stonpy",
-    version="0.1.2",
+    name="StonPy",
+    version="0.2.0",
     description="SBGN to Neo4j database",
     author="Adrien Rougny",
     author_email="adrienrougny@gmail.com",
