@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stonpy"
-version = "0.2.0"
+version = "0.2.1"
 authors = [{name="Adrien Rougny", email="adrienrougny@gmail.com"}]
 description = "SBGN to Neo4j database"
 readme = "README.md"
