@@ -1,10 +1,10 @@
-# stonpy
+# StonPy
 
-stonpy is a package that allows users to store SBGN maps into a Neo4j database, query the database, and convert query results back to valid SBGN maps.
+StonPy is a package that allows users to store SBGN maps into a Neo4j database, query the database, and convert query results back to valid SBGN maps.
 
 ## Installation
 
-stonpy can be installed using `pip`:
+StonPy can be installed using `pip`:
 
 ```
 pip install stonpy
