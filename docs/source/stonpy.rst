@@ -44,8 +44,8 @@ Package documentation
 
 The complete documentation of the different modules of the package can be found :doc:`here <stonpy_modules>`.
 
-Completion
-----------------
+Completion algorithm
+--------------------
 
 When the result of a query is a subgraph (including a unique node or relationship), it may be completed to form a “complete subgraph” using the :doc:`/stonpy.completion`.
 The documentation for the completion algorithm used in this module can be found :doc:`here <completion_rules>`.
