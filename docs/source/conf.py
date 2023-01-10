@@ -16,7 +16,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = "stonpy"
+project = "StonPy"
 copyright = "2022, Adrien Rougny"
 author = "Adrien Rougny"
 
