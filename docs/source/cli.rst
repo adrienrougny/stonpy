@@ -236,4 +236,29 @@ Currently, the following repositories are supported:
    * - `asthmamap <https://asthma-map.org/>`_
      - https://asthma-map.org/images/af/\*, https://asthma-map.org/images/pd/\*
 
+Example
+-------
 
+Following is a complete example that demonstrates the use of the different subcommands:
+
+.. code-block:: shell
+
+   # see available subcommands and options:
+   stonpy --help
+   # see available options for subcommand delete-all:
+   stonpy delete-all --help
+   # delete all data from the database
+   stonpy delete-all --uri <uri> --user <user> --password <password>
+   # list available repositories
+   stonpy list-repos
+   # create all maps of repository asthmamap in the database
+   stonpy create --uri <uri> --user <user> --password <password> asthmamap
+   # get map https://asthma-map.org/images/af/F012-MastCell-SBGNv02.sbgn,
+   # and store it in get_output.sbgn
+   stonpy get --output get_output.sbgn --uri <uri> --user <user> \
+        --password <password> https://asthma-map.org/images/af/F012-MastCell-SBGNv02.sbgn
+   # return the 10 first biological activities of the database,
+   # and store each activity in  query_output_n.sbgn
+   stonpy query --output query_output.sbgn --convert --unmerge --to-top-left \
+        --uri <uri> --user <user> --password <password> \
+        "MATCH (b:BiologicalActivity) RETURN b LIMIT 10"
