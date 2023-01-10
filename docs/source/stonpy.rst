@@ -1,4 +1,4 @@
-stonpy package
+StonPy package
 ==============
 
 Installation

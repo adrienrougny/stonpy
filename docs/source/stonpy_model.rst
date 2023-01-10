@@ -1,4 +1,4 @@
-stonpy's data model
+StonPy's data model
 ===================
 
 StonPy’s data model was built following the SBGN-ML data model.
