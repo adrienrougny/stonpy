@@ -259,6 +259,6 @@ Following is a complete example that demonstrates the use of the different subco
         --password <password> https://asthma-map.org/images/af/F012-MastCell-SBGNv02.sbgn
    # return the 10 first biological activities of the database,
    # and store each activity in  query_output_n.sbgn
-   stonpy query --output query_output.sbgn --convert --unmerge --to-top-left \
+   stonpy query --output query_output.sbgn --convert --unmerge-records --to-top-left \
         --uri <uri> --user <user> --password <password> \
         "MATCH (b:BiologicalActivity) RETURN b LIMIT 10"
