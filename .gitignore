@@ -11,3 +11,4 @@ dist/
 test/
 docs/build/
 notebooks/.ipynb_checkpoints/
+docs/source/cli_example/
