@@ -1,7 +1,7 @@
 .. _completion:
 
-Completion
-==========
+Completion algorithm
+====================
 
 When the result of a query is a subgraph (including a unique node or relationship), it may be completed to form a "complete subgraph" using the :ref:`stonpy-completion`.
 The "complete subgraph" can then be converted to a valid SBGN map using the :ref:`stonpy-conversion`.
