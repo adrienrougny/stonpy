@@ -18,7 +18,7 @@ Quickstart
 ----------
 
 The following snippet of code will make you started with StonPy.
-For a more complete tutorial, a Jupyter Notebook is available `here <https://github.com/adrienrougny/stonpy/blob/master/notebooks/demo.ipynb>`_.
+For a more complete tutorial, a Jupyter Notebook is available `here <https://github.com/adrienrougny/stonpy/blob/master/notebooks/tutorial.ipynb>`_.
 
 .. code-block:: python
 
