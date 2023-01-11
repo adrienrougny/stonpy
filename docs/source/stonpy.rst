@@ -69,6 +69,6 @@ Use cases
 StonPy has been used in several projects for the integration and analysis of SBGN and CellDesigner maps.
 One may refer to the following papers for more details:
 
-* Anna Niarakis *et al.*, A versatile and interoperable computational framework for the analysis and modeling of covid-19 disease mechanisms, *bioRxiv preprint*, 2022
-* Alexander Mazein, Adrien Rougny, Jonathan R Karr, Julio Saez-Rodriguez, Marek Ostaszewski, and Reinhard Schneider, Reusability and composability in process description maps: Ras–raf–mek–erk signalling, *Briefings in bioinformatics*, 22(5):bbab103, 2021
-* Adrien Rougny, Vasundra Touré, John Albanese, Dagmar Waltemath, Denis Shirshov, Anatoly Sorokin, Gary D Bader, Michael L Blinov, and Alexander Mazein, Sbgn bricks ontology as a tool to describe recurring concepts in molecular networks, *Briefings in bioinformatics*, 22(5):bbab049, 2021
+* Anna Niarakis *et al.*, A versatile and interoperable computational framework for the analysis and modeling of covid-19 disease mechanisms, *bioRxiv preprint*, 2022 [`link <https://www.biorxiv.org/content/10.1101/2022.12.17.520865v1>`_]
+* Alexander Mazein, Adrien Rougny, Jonathan R Karr, Julio Saez-Rodriguez, Marek Ostaszewski, and Reinhard Schneider, Reusability and composability in process description maps: Ras–raf–mek–erk signalling, *Briefings in bioinformatics*, 22(5):bbab103, 2021 [`link <https://doi.org/10.1093/bib/bbab103>`_]
+* Adrien Rougny, Vasundra Touré, John Albanese, Dagmar Waltemath, Denis Shirshov, Anatoly Sorokin, Gary D Bader, Michael L Blinov, and Alexander Mazein, Sbgn bricks ontology as a tool to describe recurring concepts in molecular networks, *Briefings in bioinformatics*, 22(5):bbab049, 2021 [`link <https://doi.org/10.1093/bib/bbab049>`_]
