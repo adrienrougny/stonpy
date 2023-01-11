@@ -61,3 +61,14 @@ StonPy's CLI is installed with the package, and may be executed with the `stonpy
    stonpy --help
 
 The complete documentation for the CLI can be found :doc:`here <cli>`.
+
+
+Use cases
+---------
+
+StonPy has been used in several projects for the integration and analysis of SBGN and CellDesigner maps.
+One may refer to the following papers for more details:
+
+* Anna Niarakis *et al.*, A versatile and interoperable computational framework for the analysis and modeling of covid-19 disease mechanisms, *bioRxiv preprint*, 2022
+* Alexander Mazein, Adrien Rougny, Jonathan R Karr, Julio Saez-Rodriguez, Marek Ostaszewski, and Reinhard Schneider, Reusability and composability in process description maps: Ras–raf–mek–erk signalling, *Briefings in bioinformatics*, 22(5):bbab103, 2021
+* Adrien Rougny, Vasundra Touré, John Albanese, Dagmar Waltemath, Denis Shirshov, Anatoly Sorokin, Gary D Bader, Michael L Blinov, and Alexander Mazein, Sbgn bricks ontology as a tool to describe recurring concepts in molecular networks, *Briefings in bioinformatics*, 22(5):bbab049, 2021
