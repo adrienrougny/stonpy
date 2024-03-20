@@ -189,6 +189,69 @@ def map_to_subgraph(
     return subgraph
 
 
+def collection_to_subgraph(
+    collection_name,
+    sbgn_maps,
+    map_ids=None,
+    make_shortcuts=True,
+    make_sbml_annotations=True,
+    verbose=False,
+):
+    """Convert a collection of SBGN maps to a subgraph and return it.
+
+    :param collection_name: the name of the collection
+    :type collection_name: `str`
+    :param sbgn_maps: the SBGN maps
+    :type sbgn_maps: `list[libsbgnpy.libsbgn.map]`
+    :param map_ids: the IDs of the SBGN maps, default is `None`
+    :type map_id: `list[str]`, optional
+    :param make_shortcuts: if set to `True`, \
+            shortcut relationships will be added. Defaults to `True`.
+    :type make_shortcuts: `bool`, optional
+    :param make_sbml_annotations: if set to `True`, \
+            SBML annotations inside extensions will be added as nodes and \
+            relationships. Defaults to `True`.
+    :type make_sbml_annotations: `bool`, optional
+    :param verbose: if set to `True`, prints operations to stdout. \
+            Defaults to `True`.
+    :type verbose: `bool`, optional
+    :return: the resulting subgraph
+    :rtype: `py2neo.Subgraph`
+    """
+    nodes = set([])
+    relationships = set([])
+    collection_node = Node()
+    collection_node.add_label(STONEnum["COLLECTION"].value)
+    collection_node[STONEnum["NAME"].value] = collection_name
+    nodes.add(collection_node)
+    for i, sbgn_map in enumerate(sbgn_maps):
+        if map_ids is not None and len(map_ids) > i:
+            map_id = map_ids[i]
+        else:
+            map_id = None
+        map_subgraph = map_to_subgraph(
+            sbgn_map,
+            map_id,
+            make_shortcuts=make_shortcuts,
+            make_sbml_annotations=make_sbml_annotations,
+            verbose=verbose,
+        )
+        nodes |= map_subgraph.nodes
+        relationships |= map_subgraph.relationships
+        map_node = None
+        for node in map_subgraph.nodes:
+            if node.has_label(STONEnum["MAP"].value):
+                map_node = node
+                break
+        if map_node is not None:
+            relationship = Relationship(
+                collection_node, STONEnum["HAS_MAP"].value, map_node
+            )
+            relationships.add(relationship)
+    subgraph = Subgraph(nodes, relationships)
+    return subgraph
+
+
 def _extension_has_sbml_annotation(extension):
     rdf_string = _get_rdf_from_string(str(extension))
     if rdf_string:

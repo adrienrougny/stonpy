@@ -166,6 +166,28 @@ class STON(object):
         tx.create(subgraph)
         tx.commit()
 
+    def create_collection(
+        self, collection_name, sbgn_maps, map_ids, verbose=False
+    ):
+        subgraph = conversion.collection_to_subgraph(
+            collection_name, verbose=verbose
+        )
+        sbgn_maps2 = []
+        for sbgn_map in sbgn_maps:
+            if os.path.isfile(sbgn_map):
+                sbgn_map = utils.sbgn_file_to_map(sbgn_map)
+            elif not isinstance(sbgn_map, libsbgn.map):
+                raise ValueError(
+                    "map must be a valid file or libsbgn.map object"
+                )
+            sbgn_maps2.append(sbgn_map)
+        subgraph = conversion.collection_to_subgraph(
+            collection_name, sbgn_maps2, map_ids, verbose=verbose
+        )
+        tx = self.graph.begin()
+        tx.create(subgraph)
+        tx.commit()
+
     def delete_map(self, map_id):
         """Delete an SBGN map from the database.
 
