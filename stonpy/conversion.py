@@ -236,8 +236,8 @@ def collection_to_subgraph(
             make_sbml_annotations=make_sbml_annotations,
             verbose=verbose,
         )
-        nodes |= map_subgraph.nodes
-        relationships |= map_subgraph.relationships
+        nodes.update(map_subgraph.nodes)
+        relationships.update(map_subgraph.relationships)
         map_node = None
         for node in map_subgraph.nodes:
             if node.has_label(STONEnum["MAP"].value):
