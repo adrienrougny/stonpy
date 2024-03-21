@@ -5,7 +5,9 @@ class STONEnum(Enum):
     """The Enum for the labels, relationship types and properties names used
     in stonpy's data model
     """
+
     # Labels
+    COLLECTION = "Collection"
     MAP = "Map"
     ACTIVITY = "Activity"
     EPN = "Epn"
@@ -58,7 +60,9 @@ class STONEnum(Enum):
     MACROMOLECULE_MULTIMER_SUBUNIT = "MacromoleculeMultimerSubunit"
     NUCLEIC_ACID_FEATURE_MULTIMER_SUBUNIT = "NucleicAcidFeatureMultimerSubunit"
     COMPLEX_MULTIMER_SUBUNIT = "ComplexMultimerSubunit"
-    PHENOTYPE_SUBUNIT = "PhenotypeSubunit" # for compatibility with some CD maps out there
+    PHENOTYPE_SUBUNIT = (
+        "PhenotypeSubunit"  # for compatibility with some CD maps out there
+    )
     PORT = "Port"
     BBOX = "Bbox"
     TAG = "Tag"
@@ -120,6 +124,7 @@ class STONEnum(Enum):
     HAS_EXISTENCE = "HAS_EXISTENCE"
     HAS_LOCATION = "HAS_LOCATION"
     HAS_LABEL = "HAS_LABEL"
+    HAS_MAP = "HAS_MAP"
     # Relationships shortcut
     CATALYSIS_SHORTCUT = "CATALYZES"
     MODULATION_SHORTCUT = "MODULATES"
@@ -140,6 +145,7 @@ class STONEnum(Enum):
     # Property names
     LABEL_PROP = "label"
     ID = "id"
+    NAME = "name"
     CLASS = "class"
     CLONE = "clone"
     CLONE_LABEL = "cloneLabel"
@@ -169,43 +175,124 @@ class STONEnum(Enum):
 
 class OntologyPD(Enum):
     """The ontology for PD"""
-    SUBUNIT = set(["UNSPECIFIED_ENTITY_SUBUNIT", "SIMPLE_CHEMICAL_SUBUNIT", "MACROMOLECULE_SUBUNIT", "NUCLEIC_ACID_FEATURE_SUBUNIT", "COMPLEX_SUBUNIT", "SIMPLE_CHEMICAL_MULTIMER_SUBUNIT", "MACROMOLECULE_MULTIMER_SUBUNIT", "NUCLEIC_ACID_FEATURE_MULTIMER_SUBUNIT", "COMPLEX_MULTIMER_SUBUNIT", "PHENOTYPE_SUBUNIT"])
-    AUXILLIARY_UNIT = SUBUNIT | set(["STATE_VARIABLE", "UNIT_OF_INFORMATION", "CARDINALITY", "TERMINAL"])
-    MULTIMER = set(["SIMPLE_CHEMICAL_MULTIMER", "MACROMOLECULE_MULTIMER", "NUCLEIC_ACID_FEATURE_MULTIMER", "COMPLEX_MULTIMER"])
-    EPN = MULTIMER | set(["UNSPECIFIED_ENTITY", "SIMPLE_CHEMICAL", "MACROMOLECULE", "NUCLEIC_ACID_FEATURE", "COMPLEX", "SOURCE_AND_SINK", "PERTURBING_AGENT"])
-    STOICHIOMETRIC_PROCESS = set(["GENERIC_PROCESS", "OMITTED_PROCESS", "UNCERTAIN_PROCESS", "ASSOCIATION", "DISSOCIATION"])
+
+    SUBUNIT = set(
+        [
+            "UNSPECIFIED_ENTITY_SUBUNIT",
+            "SIMPLE_CHEMICAL_SUBUNIT",
+            "MACROMOLECULE_SUBUNIT",
+            "NUCLEIC_ACID_FEATURE_SUBUNIT",
+            "COMPLEX_SUBUNIT",
+            "SIMPLE_CHEMICAL_MULTIMER_SUBUNIT",
+            "MACROMOLECULE_MULTIMER_SUBUNIT",
+            "NUCLEIC_ACID_FEATURE_MULTIMER_SUBUNIT",
+            "COMPLEX_MULTIMER_SUBUNIT",
+            "PHENOTYPE_SUBUNIT",
+        ]
+    )
+    AUXILLIARY_UNIT = SUBUNIT | set(
+        ["STATE_VARIABLE", "UNIT_OF_INFORMATION", "CARDINALITY", "TERMINAL"]
+    )
+    MULTIMER = set(
+        [
+            "SIMPLE_CHEMICAL_MULTIMER",
+            "MACROMOLECULE_MULTIMER",
+            "NUCLEIC_ACID_FEATURE_MULTIMER",
+            "COMPLEX_MULTIMER",
+        ]
+    )
+    EPN = MULTIMER | set(
+        [
+            "UNSPECIFIED_ENTITY",
+            "SIMPLE_CHEMICAL",
+            "MACROMOLECULE",
+            "NUCLEIC_ACID_FEATURE",
+            "COMPLEX",
+            "SOURCE_AND_SINK",
+            "PERTURBING_AGENT",
+        ]
+    )
+    STOICHIOMETRIC_PROCESS = set(
+        [
+            "GENERIC_PROCESS",
+            "OMITTED_PROCESS",
+            "UNCERTAIN_PROCESS",
+            "ASSOCIATION",
+            "DISSOCIATION",
+        ]
+    )
     PROCESS = STOICHIOMETRIC_PROCESS | set(["PHENOTYPE"])
     STIMULATION = set(["STIMULATION", "NECESSARY_STIMULATION", "CATALYSIS"])
     INHIBITION = set(["INHIBITION"])
     MODULATION = STIMULATION | INHIBITION | set(["MODULATION"])
     FLUX_ARC = set(["CONSUMPTION", "PRODUCTION"])
     LOGICAL_OPERATOR = set(["AND", "OR", "NOT", "DELAY"])
-    GLYPH = EPN | AUXILLIARY_UNIT | PROCESS | LOGICAL_OPERATOR | set(["COMPARTMENT", "EQUIVALENCE", "SUBMAP", "TAG"])
+    GLYPH = (
+        EPN
+        | AUXILLIARY_UNIT
+        | PROCESS
+        | LOGICAL_OPERATOR
+        | set(["COMPARTMENT", "EQUIVALENCE", "SUBMAP", "TAG"])
+    )
     ARC = MODULATION | FLUX_ARC | set(["LOGIC_ARC", "EQUIVALENCE_ARC"])
 
 
 class OntologyAF(Enum):
     """The ontology for AF"""
+
     ACTIVITY = set(["BIOLOGICAL_ACTIVITY", "PHENOTYPE"])
     AUXILLIARY_UNIT = set(["UNIT_OF_INFORMATION", "TERMINAL"])
-    INFLUENCE = set(["POSITIVE_INFLUENCE", "NEGATIVE_INFLUENCE", "UNKNOWN_INFLUENCE", "NECESSARY_STIMULATION"])
+    INFLUENCE = set(
+        [
+            "POSITIVE_INFLUENCE",
+            "NEGATIVE_INFLUENCE",
+            "UNKNOWN_INFLUENCE",
+            "NECESSARY_STIMULATION",
+        ]
+    )
     LOGICAL_OPERATOR = set(["AND", "OR", "NOT", "DELAY"])
-    GLYPH = AUXILLIARY_UNIT | LOGICAL_OPERATOR | ACTIVITY | set(["COMPARTMENT", "SUBMAP", "TAG"])
+    GLYPH = (
+        AUXILLIARY_UNIT
+        | LOGICAL_OPERATOR
+        | ACTIVITY
+        | set(["COMPARTMENT", "SUBMAP", "TAG"])
+    )
     ARC = INFLUENCE | set(["LOGIC_ARC", "EQUIVALENCE_ARC"])
 
 
 class OntologyER(Enum):
     """The ontology for ER"""
+
     STATE_VARIABLE = set(["EXISTENCE", "LOCATION", "STATE_VARIABLE"])
-    AUXILLIARY_UNIT = STATE_VARIABLE | set(["UNIT_OF_INFORMATION", "TERMINAL", "CARDINALITY"])
-    STIMULATION = set(["STIMULATION", "NECESSARY_STIMULATION", "ABSOLUTE_STIMULATION"])
+    AUXILLIARY_UNIT = STATE_VARIABLE | set(
+        ["UNIT_OF_INFORMATION", "TERMINAL", "CARDINALITY"]
+    )
+    STIMULATION = set(
+        ["STIMULATION", "NECESSARY_STIMULATION", "ABSOLUTE_STIMULATION"]
+    )
     INHIBITION = set(["INHIBITION", "ABSOLUTE_INHIBITION"])
     INFLUENCE = STIMULATION | INHIBITION | set(["MODULATION"])
     LOGICAL_OPERATOR = set(["AND", "OR", "NOT", "DELAY"])
     INTERACTOR = set(["ENTITY", "OUTCOME"])
     ENTITY_NODE = LOGICAL_OPERATOR | INTERACTOR | set(["PERTURBING_AGENT"])
-    GLYPH = AUXILLIARY_UNIT | LOGICAL_OPERATOR | ENTITY_NODE | set(["SUBMAP", "TAG", "INTERACTION_GLYPH", "VARIABLE_VALUE", "PHENOTYPE", "IMPLICIT_XOR"])
-    ARC = INFLUENCE | set(["ASSIGNMENT", "INTERACTION", "LOGIC_ARC", "EQUIVALENCE_ARC"])
+    GLYPH = (
+        AUXILLIARY_UNIT
+        | LOGICAL_OPERATOR
+        | ENTITY_NODE
+        | set(
+            [
+                "SUBMAP",
+                "TAG",
+                "INTERACTION_GLYPH",
+                "VARIABLE_VALUE",
+                "PHENOTYPE",
+                "IMPLICIT_XOR",
+            ]
+        )
+    )
+    ARC = INFLUENCE | set(
+        ["ASSIGNMENT", "INTERACTION", "LOGIC_ARC", "EQUIVALENCE_ARC"]
+    )
     STATEMENT = set(["ASSIGNMENT", "INTERACTION", "PHENOTYPE"])
     RELATIONSHIP = STATEMENT | INFLUENCE
 
@@ -213,5 +300,5 @@ class OntologyER(Enum):
 ontologies = {
     "process description": OntologyPD,
     "activity flow": OntologyAF,
-    "entity relationship": OntologyER
+    "entity relationship": OntologyER,
 }
