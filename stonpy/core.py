@@ -169,10 +169,7 @@ class STON(object):
     def create_collection(
         self, collection_name, sbgn_maps, map_ids, verbose=False
     ):
-        subgraph = conversion.collection_to_subgraph(
-            collection_name, verbose=verbose
-        )
-        sbgn_maps2 = []
+        sbgn_maps_objs = []
         for sbgn_map in sbgn_maps:
             if os.path.isfile(sbgn_map):
                 sbgn_map = utils.sbgn_file_to_map(sbgn_map)
@@ -180,9 +177,9 @@ class STON(object):
                 raise ValueError(
                     "map must be a valid file or libsbgn.map object"
                 )
-            sbgn_maps2.append(sbgn_map)
+            sbgn_maps_objs.append(sbgn_map)
         subgraph = conversion.collection_to_subgraph(
-            collection_name, sbgn_maps2, map_ids, verbose=verbose
+            collection_name, sbgn_maps_objs, map_ids, verbose=verbose
         )
         tx = self.graph.begin()
         tx.create(subgraph)
